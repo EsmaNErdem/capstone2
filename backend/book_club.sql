@@ -1,3 +1,5 @@
+-- \i book_club.sql
+
 \echo 'Delete and recreate book_club db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 

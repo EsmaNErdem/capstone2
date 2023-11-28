@@ -1,5 +1,5 @@
-// "use strict";
-// /** Database setup for book club. */
+"use strict";
+// /** Database setup for book club app. */
 // const { Client } = require("pg");
 // const { getDatabaseUri } = require("./config");
 
@@ -24,8 +24,7 @@
 
 
 
-"use strict";
-/** Database setup for jobly. */
+/** Database setup for development. */
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");
 

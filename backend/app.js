@@ -7,7 +7,10 @@ const express = require("express");
 const cors = require("cors");
 
 const { NotFoundError } = require("./expressError");
+
 /** IMPORT MIDDLEWARE AND ROUTES */
+const { authenticateJWT } = require("./middleware/auth");
+const usersRoutes = require("./routes/users");
 
 // morgan middleware for understanding how your Express application is behaving, diagnosing issues, ensuring security, and optimizing performance.
 const morgan = require("morgan");
@@ -18,9 +21,12 @@ app.use(cors());
 // to parse request bodies for either form data or JSON
 app.use(express.json());
 app.use(morgan("tiny"));
-/** MIDDLEWARE */
+// user token check middleware
+app.use(authenticateJWT);
 
 /** ROUTES */
+app.use("/users", usersRoutes);
+
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
