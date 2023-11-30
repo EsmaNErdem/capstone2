@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Book Filter Schema",
+    "required": [],
+    "properties": {
+        "title": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Harry Potter"
+            ]
+        },
+        "author": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Jack London"
+            ]
+        },
+        "publisher": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Penguin Random House"
+            ]
+        },
+        "category": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Business"
+            ]
+        }
+    }
+}

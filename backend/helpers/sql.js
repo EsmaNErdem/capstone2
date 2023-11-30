@@ -1,7 +1,7 @@
 const { BadRequestError } = require("../expressError");
 
 
-// in here we parameterized and jsonify queries to provide security for setting new data into our database
+/** Parameterizes dand jsonifies queries to provide security for setting new data into our database  * */ 
 function sqlForPartialUpdate(dataToUpdate, jsToSql) {
   const keys = Object.keys(dataToUpdate);
   if (keys.length === 0) throw new BadRequestError("No data");

@@ -5,15 +5,17 @@ CREATE TABLE users (
   last_name TEXT NOT NULL,
   img TEXT,
   email TEXT NOT NULL
-    CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}$')  -- Standard email validation regex
+    CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')  -- Standard email validation regex
 );
 
 CREATE TABLE books (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY,
   title TEXT NOT NULL,
   author TEXT NOT NULL,
-  img_url TEXT NOT NULL,
-  book_api_id TEXT NOT NULL UNIQUE
+  cover TEXT,
+  publisher TEXT,
+  category TEXT,
+  description TEXT
 );
 
 CREATE TABLE book_shelves (
