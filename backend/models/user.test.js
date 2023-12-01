@@ -27,7 +27,7 @@ describe("register", function () {
       firstName: "Test",
       lastName: "Tester",
       email: "test@test.com",
-      img: "testimg"
+      img: "testing"
     };
   
     test("works", async function () {
@@ -38,7 +38,7 @@ describe("register", function () {
       expect(user).toEqual(newUser);
       const found = await db.query("SELECT * FROM users WHERE username = 'new'");
       expect(found.rows.length).toEqual(1);
-      expect(found.rows[0].img).toEqual("testimg");
+      expect(found.rows[0].img).toEqual("testing");
       expect(found.rows[0].password.startsWith("$2b$")).toEqual(true);
     });
   

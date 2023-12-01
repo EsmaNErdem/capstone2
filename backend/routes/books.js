@@ -9,6 +9,7 @@ const { BadRequestError } = require("../expressError");
 
 const jsonschema = require("jsonschema");
 const bookSearchSchema = require("../schemas/bookSearch.json")
+const bookNewSchema = require("../schemas/bookNew.json")
 
 const Book = require("../models/book")
 
@@ -19,7 +20,7 @@ const Book = require("../models/book")
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-/** GET /books/ => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
+/** GET /books => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
  *
  * Return JSON list of API retrieved books data
  * Can provide search filter in query:
@@ -47,10 +48,8 @@ router.get("/", async function (req, res, next) {
  *
  * Return JSON list of API retrieved books data filter by search params
  * Can provide advense search filter in query with these terms:
- * - title
- * - author
- * - publisher
- * - subject
+ * - Body: { search: string (required) }
+ * - Query Parameters: title, author, publisher, subject
  * 
  * Authorization required: none
  */
@@ -90,6 +89,53 @@ router.get("/:id", async function (req, res, next) {
       console.error("Error in GET /books/:id:", err);
       return next(err);
     }
+});
+
+/** POST /books/:id/users/:username => { likedBook: book title }
+ * /books/IUq6BwAAQBAJ/users/test
+ * 
+ * Saves book data to database and adds book id to user's book_likes
+ * Book data will be sent from frontend
+ * 
+ * Authorization required: same-user-as-:username
+ */
+
+router.post("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
+  try {
+    const validator = jsonschema.validate(req.body, bookNewSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map(e => e.stack);
+      throw new BadRequestError(errs);
+    }
+
+    await Book.likeBook(req.body, req.params.username);
+    return res.json({ likedBook: req.params.id });
+  } catch (err) {
+    console.error("Error in POST /books/:id/username/:username", err);
+    return next(err);
+  }
+});
+
+/** DELETE /books/:id/users/:username => { unlikedBook: book title }
+ * /books/IUq6BwAAQBAJ/users/test
+ * 
+ * Removes book from user's liked list
+ * 
+ * Authorization required: same-user-as-:username
+ */
+
+router.delete("/:id/users/:username",  async function (req, res, next) {
+  try {
+    console.log("lllllllllll",
+      await Book.unlikeBook(req.params.id, req.params.username)
+
+      )
+    await Book.unlikeBook(req.params.id, req.params.username);
+    return res.json({ unlikedBook: req.params.id });
+  } catch (err) {
+    console.error("Error in DELETE /books/:id/username/:username", err);
+    return next(err);
+  }
 });
 
 

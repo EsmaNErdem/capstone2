@@ -5,7 +5,11 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 
 async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
-  await db.query("DELETE FROM users");
+  await db.query("DELETE FROM users");  
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM books");  
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM book_likes");
 
   await db.query(`
     INSERT INTO users(username,
@@ -22,7 +26,21 @@ async function commonBeforeAll() {
     await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
   ]);
 
+  await db.query(
+    `INSERT INTO books 
+    (id, title, author, publisher, description, category, cover)
+    VALUES ('1', 'Book1', 'Author1', 'Publisher1', 'Description1', 'Category1', 'Cover1'),
+           ('2', 'Book2', 'Author2', 'Publisher2', 'Description2', 'Category2', 'Cover2')`
+  );
+
+  await db.query(
+    `INSERT INTO book_likes 
+     (book_id, username)
+     VALUES ('1', 'u1'),
+             ('2', 'u1')`
+  );
   
+
 
 }
 

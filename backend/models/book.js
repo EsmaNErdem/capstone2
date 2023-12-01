@@ -1,6 +1,7 @@
 
 const BookApi = require("./bookApi")
-const { ApiNotFoundError } = require("../expressError");
+const db = require("../db");
+const { ApiNotFoundError, NotFoundError } = require("../expressError");
 
 const { queryParamsForPartialFilter } = require("../helpers/queryParams")
 
@@ -96,6 +97,77 @@ class Book {
             console.error("Error in getBook:", err);
             throw new ApiNotFoundError("External API Not Found Book Data at getBook")    
         }
+    }
+
+    /** Likes Book
+     * Saves book data to database
+     * Adds the book to user's liked list
+     * 
+     */
+    static async likeBook({ id, title, author, publisher, description, category, cover }, username) {
+        const preCheck = await db.query(
+                `SELECT username
+                FROM users
+                WHERE username = $1`, [username]
+            );
+        const user = preCheck.rows[0];
+            
+        if (!user) throw new NotFoundError(`No username: ${username}`);
+            
+        let bookId = await db.query(
+                `SELECT id
+                FROM books
+                WHERE id = $1`, [id]
+            );
+
+        if(bookId.rows[0]) {
+            await db.query(
+                `INSERT INTO book_likes (book_id, username)
+                 VALUES ($1, $2)`, [id, username]
+                );
+        } else {
+            await db.query(
+                `INSERT INTO books 
+                 (id, title, author, publisher, description, category, cover)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                [id, title, author, publisher, description, category, cover]
+            );
+            await db.query(
+                `INSERT INTO book_likes (book_id, username)
+                 VALUES ($1, $2)`, [id, username]
+            );
+        }
+        
+        return user
+    }
+
+    /** 
+     * Remove like from user's book
+     */
+    static async unlikeBook(bookId, username) {
+        const preCheck1 = await db.query(
+                `SELECT username
+                FROM users
+                WHERE username = $1`, [username]
+            );
+        const user = preCheck1.rows[0];
+            
+        if (!user) throw new NotFoundError(`No username: ${username}`);
+            
+        const preCheck2 = await db.query(
+                `SELECT id
+                FROM books
+                WHERE id = $1`, [bookId]
+            );
+        const book = preCheck2.rows[0];
+        if (!book) throw new NotFoundError(`No book: ${bookId}`);
+
+        await db.query(
+            `DELETE
+             FROM book_likes
+             WHERE book_id=$1 AND username = $2`,[bookId, username],
+        );
+        return preCheck1
     }
 }
 
