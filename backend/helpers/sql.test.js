@@ -20,7 +20,7 @@ describe("parameterizedQueries", function () {
     })
 
 
-    test("works with user data that contains all the fields", function () {
+    test("works with user data that contains partial fields", function () {
         const userData = {
             password:"test", 
             firstName:"test", 

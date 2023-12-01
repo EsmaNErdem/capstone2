@@ -1,12 +1,9 @@
-const { BadRequestError } = require("../expressError");
-
 /**
  * Updates query parameters to fit Google Books protocols.
  * 
  * @param {object} dataToFilter - The data object to be filtered.
  * @param {object} qpToQp - The mapping of keys from the incoming data to the desired keys for the query parameters.
- * @returns {object} - An object with updated keys based on the specified mapping.
- * @throws {BadRequestError} - Throws an error if the incoming data object is empty.
+ * @returns {string} - A string with updated and joined data.
  */
 function queryParamsForPartialFilter(dataToFilter, qpToQp) {
     const keys = Object.keys(dataToFilter);
@@ -19,7 +16,14 @@ function queryParamsForPartialFilter(dataToFilter, qpToQp) {
         queryParams[updatedKey] = dataToFilter[queryParam];
     });
 
-    return queryParams;
+    // Build the query string with encoded parameters
+    const queryString = Object.entries(queryParams)
+        .map(([key, value]) => `${encodeURIComponent(key)}:${encodeURIComponent(value)}`)
+        .join('+');
+
+    const termsUrl = queryString ? `+${queryString}` : '';
+
+    return termsUrl;
 }
 
 module.exports = { queryParamsForPartialFilter };

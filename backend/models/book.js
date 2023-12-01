@@ -1,5 +1,7 @@
 
 const BookApi = require("./bookApi")
+const { ApiNotFoundError } = require("../expressError");
+
 const { queryParamsForPartialFilter } = require("../helpers/queryParams")
 
 /** Related functions and API calls for books. */
@@ -13,6 +15,8 @@ class Book {
         try {  
             const books = await BookApi.getListOfBooks()
 
+            if (!books) throw new ApiNotFoundError("External API Not Found Book List Data")
+
             return books.map(book => (
                     {
                         id: book.id, 
@@ -25,20 +29,26 @@ class Book {
                     })
                 )
         } catch (err) {
-        return next(err);
+            console.error("Error in getListOfBooks:", err);
+            throw new ApiNotFoundError("External API Not Found Book List Data at getListOfBooks")
         }
     }
 
-    /** Gets a list of books from search result
+    /** Gets a list of books from search result 
      *
-     * This API Route searches books with terms given in query parameters. 
+     * This API Route searches books with data given req.body and detail search with terms given in query parameters. 
+     * Can provide advense search filter in query with these terms:
+     * - title
+     * - author
+     * - publisher
+     * - subject
      * Update data from frontend to Google Book API's syntax with queryParamsForPartialFilter helper function
      * 
      * Returns  [ { id, title, author, publisher, description, category, cover }, ...] as avaliable
      */
-    static async searchListOfBooks(search, query) {
+    static async searchListOfBooks(search, query={}) {
         try {  
-            const queryParams = queryParamsForPartialFilter(
+            const termsUrl = queryParamsForPartialFilter(
                 query,
                 {
                     title: "intitle",
@@ -46,14 +56,9 @@ class Book {
                     publisher: "inpublisher",
                 });
             
-            // Build the query string with encoded parameters
-            const queryString = Object.entries(queryParams)
-                .map(([key, value]) => `${encodeURIComponent(key)}:${encodeURIComponent(value)}`)
-                .join('+');
-    
-            const termsUrl = queryString ? `+${queryString}` : '';
-            const books = await BookApi.searchListOfBooks(search.q, termsUrl)
             
+            const books = await BookApi.searchListOfBooks(search.q, termsUrl)
+            if (!books) return [];
             return books.map(book => (
                     {
                         id: book.id, 
@@ -65,7 +70,8 @@ class Book {
                     })
                 )
         } catch (err) {
-        return next(err);
+            console.error("Error in searchListOfBooks:", err);
+            throw new ApiNotFoundError("External API Not Found Book List Search Data at searchListOfBooks")
         }
     }
 
@@ -87,7 +93,8 @@ class Book {
                 cover: book.volumeInfo.imageLinks.medium
             }
         } catch (err) {
-        return next(err);
+            console.error("Error in getBook:", err);
+            throw new ApiNotFoundError("External API Not Found Book Data at getBook")    
         }
     }
 }

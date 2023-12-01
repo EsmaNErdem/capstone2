@@ -1,4 +1,5 @@
 const axios = require("axios")
+const { ApiNotFoundError } = require("../expressError");
 
 const API_KEY = process.env.API_KEY
 const uid = process.env.uid
@@ -29,7 +30,7 @@ class BookApi {
         } catch (err) {
           console.error("API Error:", err.response);
           let message = err.response
-          throw Array.isArray(message) ? message : [message];
+          throw new ApiNotFoundError(Array.isArray(message) ? message : [message]);
         }
     }
 
@@ -47,8 +48,7 @@ class BookApi {
      * Returns array of book details in objects
      */
     static async searchListOfBooks(search, terms) {
-        const termsUrl = terms ? `+${terms}` : '';
-        const res = await this.request(`volumes?q=${encodeURIComponent(search)}${termsUrl}`, {projection:"lite"})
+        const res = await this.request(`volumes?q=${encodeURIComponent(search)}${terms}`, { projection:"lite" })
         return res.data.items
     }
 

@@ -4,8 +4,15 @@
     "type": "object",
     "default": {},
     "title": "Book Filter Schema",
-    "required": [],
+    "required": ["q"],
     "properties": {
+        "q": {
+            "type": "string",
+            "examples": [
+                "Harry Potter", 
+                "Rowling"
+            ]
+        },
         "title": {
             "type": "string",
             "default": "",
@@ -27,7 +34,7 @@
                 "Penguin Random House"
             ]
         },
-        "category": {
+        "subject": {
             "type": "string",
             "default": "",
             "examples": [

@@ -11,6 +11,14 @@ class ExpressError extends Error {
       this.status = status;
     }
   }
+
+  /** 404 EXTERNAL API DATA NOT FOUND error. */
+
+  class ApiNotFoundError extends ExpressError {
+    constructor(message = "External API Not Found") {
+      super(message, 404);
+    }
+  }
   
   /** 404 NOT FOUND error. */
   
@@ -45,6 +53,7 @@ class ExpressError extends Error {
   }
   
   module.exports = {
+    ApiNotFoundError,
     ExpressError,
     NotFoundError,
     UnauthorizedError,

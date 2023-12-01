@@ -38,6 +38,7 @@ router.get("/", async function (req, res, next) {
       const books = await Book.getListOfBooks();
       return res.json({ books });
     } catch (err) {
+      console.error("Error in GET /books:", err);
       return next(err);
     }
 });
@@ -59,7 +60,7 @@ router.get("/search", async function (req, res, next) {
     const terms = req.query;
 
     try {
-      const validator = jsonschema.validate(terms, bookSearchSchema);
+      const validator = jsonschema.validate({...search, ...terms}, bookSearchSchema);
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);
         throw new BadRequestError(errs);
@@ -68,6 +69,7 @@ router.get("/search", async function (req, res, next) {
       const books = await Book.searchListOfBooks(search, terms);
       return res.json({ books });
     } catch (err) {
+      console.error("Error in GET /books/search:", err);
       return next(err);
     }
 });
@@ -85,6 +87,7 @@ router.get("/:id", async function (req, res, next) {
       const book = await Book.getBook(req.params.id);
       return res.json({ book });
     } catch (err) {
+      console.error("Error in GET /books/:id:", err);
       return next(err);
     }
 });
