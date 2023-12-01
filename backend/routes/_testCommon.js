@@ -65,24 +65,9 @@ async function commonBeforeAll() {
     }, "u1");
 
     // await db.query( `INSERT INTO books 
-    // (id, title, author, publisher, description, category, cover)
-    // VALUES ('1', 'Book1', 'Author1', 'Publisher1', 'Description1', 'Category1', 'Cover1'),
-    //        ('2', 'Book2', 'Author2', 'Publisher2', 'Description2', 'Category2', 'Cover2')`)
-    let heyo = await db.query("SELECT * FROM books", );
-
-    console.log("**********************")
-    console.log(heyo.rows[0])
-    console.log(await Book.likeBook(
-      {
-        id: '2',
-        title: 'Book2',
-        author: 'Author2',
-        publisher: 'Publisher2',
-        description: 'Description2',
-        cover: 'Cover2',
-      }, "u1"))
-    console.log("**********************")
-
+        // (id, title, author, publisher, description, category, cover)
+        // VALUES ('1', 'Book1', 'Author1', 'Publisher1', 'Description1', 'Category1', 'Cover1'),
+        //        ('2', 'Book2', 'Author2', 'Publisher2', 'Description2', 'Category2', 'Cover2')`)
 }
 
 async function commonBeforeEach() {

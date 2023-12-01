@@ -171,21 +171,26 @@ describe("Book class", () => {
     /************************************** likeBook */
   describe('likeBook method', () => {
       test("should like book username", async function () {
-          await Book.likeBook({
-            id: '2',
-            title: 'Book2',
-            author: 'Author2',
-            publisher: 'Publisher2',
-            description: 'Description2',
-            cover: 'Cover2',
-            }, "u2");
-          const res = await db.query(
-            "SELECT * FROM book_likes WHERE book_id=$1 AND username=$2", ['2', 'u2']);
-          expect(res.rows[0]).toEqual({
-              id: expect.any(Number),
-              book_id: "2", 
-              username: "u2"
-          });
+        let res = await db.query(
+          "SELECT * FROM book_likes WHERE book_id=$1 AND username=$2", ['2', 'u2']);
+        expect(res.rowCount).toBe(0); 
+
+        const bookId = await Book.likeBook({
+          id: '2',
+          title: 'Book2',
+          author: 'Author2',
+          publisher: 'Publisher2',
+          description: 'Description2',
+          cover: 'Cover2',
+          }, "u2");
+        expect(bookId).toBe('2')
+        res = await db.query(
+          "SELECT * FROM book_likes WHERE book_id=$1 AND username=$2", ['2', 'u2']);
+        expect(res.rows[0]).toEqual({
+            id: expect.any(Number),
+            book_id: "2", 
+            username: "u2"
+        });
       });
 
       test("should like book username and add new book to database if liked book doesn't already exist", async function () {
@@ -242,20 +247,20 @@ describe("Book class", () => {
         expect(res.rowCount).toBe(0); 
     });
 
-    // test("should fail if cannot find username book username", async function () {
-    //   try {
-    //     await Book.unlikeBook("1", "nope");
-    //   }  catch (err) {
-    //     expect(err instanceof NotFoundError).toBeTruthy();
-    //   }
-    // });
+    test("should fail if cannot find username", async function () {
+      try {
+        await Book.unlikeBook("1", "nope");
+      }  catch (err) {
+        expect(err instanceof NotFoundError).toBeTruthy();
+      }
+    });
 
-  //   test("should fail if cannot find username book username", async function () {
-  //     try {
-  //       await Book.unlikeBook("nope", "u1");
-  //     }  catch (err) {
-  //       expect(err instanceof NotFoundError).toBeTruthy();
-  //     }
-  // });
+    test("should fail if cannot find book", async function () {
+      try {
+        await Book.unlikeBook("nope", "u1");
+      }  catch (err) {
+        expect(err instanceof NotFoundError).toBeTruthy();
+      }
+    });
   });
 });

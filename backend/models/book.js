@@ -126,10 +126,11 @@ class Book {
                  VALUES ($1, $2)`, [id, username]
                 );
         } else {
-            await db.query(
+            bookId = await db.query(
                 `INSERT INTO books 
                  (id, title, author, publisher, description, category, cover)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                 VALUES ($1, $2, $3, $4, $5, $6, $7)
+                 RETURNING id`,
                 [id, title, author, publisher, description, category, cover]
             );
             await db.query(
@@ -137,8 +138,7 @@ class Book {
                  VALUES ($1, $2)`, [id, username]
             );
         }
-        
-        return user
+        return bookId.rows[0].id
     }
 
     /** 
@@ -150,7 +150,7 @@ class Book {
                 FROM users
                 WHERE username = $1`, [username]
             );
-        const user = preCheck1.rows[0];
+        const user = preCheck1.rows;
             
         if (!user) throw new NotFoundError(`No username: ${username}`);
             
@@ -159,15 +159,16 @@ class Book {
                 FROM books
                 WHERE id = $1`, [bookId]
             );
-        const book = preCheck2.rows[0];
-        if (!book) throw new NotFoundError(`No book: ${bookId}`);
+
+        const book = preCheck2.rows;
+        if (book.length == 0) throw new NotFoundError(`No book: ${bookId}`);
 
         await db.query(
             `DELETE
              FROM book_likes
              WHERE book_id=$1 AND username = $2`,[bookId, username],
         );
-        return preCheck1
+        return book[0].id
     }
 }
 

@@ -91,7 +91,7 @@ router.get("/:id", async function (req, res, next) {
     }
 });
 
-/** POST /books/:id/users/:username => { likedBook: book title }
+/** POST /books/:id/users/:username => { likedBook: bookId }
  * /books/IUq6BwAAQBAJ/users/test
  * 
  * Saves book data to database and adds book id to user's book_likes
@@ -108,8 +108,8 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
       throw new BadRequestError(errs);
     }
 
-    await Book.likeBook(req.body, req.params.username);
-    return res.json({ likedBook: req.params.id });
+    const bookId = await Book.likeBook(req.body, req.params.username);
+    return res.json({ likedBook: bookId });
   } catch (err) {
     console.error("Error in POST /books/:id/username/:username", err);
     return next(err);
@@ -117,21 +117,18 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
 });
 
 /** DELETE /books/:id/users/:username => { unlikedBook: book title }
- * /books/IUq6BwAAQBAJ/users/test
+ * /books/IUq6BwAAQBAJ/users/EsmaE
  * 
  * Removes book from user's liked list
  * 
  * Authorization required: same-user-as-:username
  */
 
-router.delete("/:id/users/:username",  async function (req, res, next) {
+router.delete("/:id/users/:username", ensureCorrectUser,  async function (req, res, next) {
   try {
-    console.log("lllllllllll",
-      await Book.unlikeBook(req.params.id, req.params.username)
+    const bookId = await Book.unlikeBook(req.params.id, req.params.username);
 
-      )
-    await Book.unlikeBook(req.params.id, req.params.username);
-    return res.json({ unlikedBook: req.params.id });
+    return res.json({ unlikedBook: bookId });
   } catch (err) {
     console.error("Error in DELETE /books/:id/username/:username", err);
     return next(err);

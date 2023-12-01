@@ -14,10 +14,10 @@ CREATE TABLE books (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
   author TEXT NOT NULL,
-  cover TEXT,
   publisher TEXT,
+  description TEXT,
   category TEXT,
-  description TEXT
+  cover TEXT
 );
 
 CREATE TABLE book_shelves (
