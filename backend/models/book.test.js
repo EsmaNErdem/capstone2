@@ -77,6 +77,71 @@ describe("Book class", () => {
   afterAll(commonAfterAll);
 
 
+  /************************************** insertBook */
+  describe("insertBook method", function () {
+    test("should insert book and return book ID", async function () {
+        const books = await Book.insertBook({
+                        id: 'New',
+                        title: 'Book',
+                        author: 'Author ',
+                        publisher: 'Publisher',
+                        description: 'Description',
+                        category: 'Category',
+                        cover: 'Cover',
+                      });
+        expect(books).toEqual([ { id: 'New' } ]);
+    });
+  });
+
+  /************************************** getBookById */
+  describe("getBookById method", function () {
+    test("should checkif book exist in database", async function () {
+        const book = await Book.getBookById("1");
+        expect(book).toEqual([ { id: '1' } ]);
+    });
+
+    test("should return empty array if no bok", async function () {
+      const book = await Book.getBookById("nope");
+      expect(book).toEqual([]);
+  });
+  });
+  
+  /************************************** getAllLikeCounts */
+  describe("getAllLikeCounts method", function () {
+    test("should return External API data of list of books", async function () {
+      const booksLikesCount = await Book.getAllLikeCounts();
+      expect(booksLikesCount).toEqual([ { id: '2', count: '1' }, { id: '1', count: '2' } ]);
+    });
+  });
+  
+  /************************************** booksReviews */
+  describe("booksReviews method", function () {
+    test("should return External API review data of list of books", async function () {
+        const booksReviews = await Book.booksReviews();
+        console.log("****************")
+        console.log(booksReviews)
+        console.log("****************")
+        expect(booksReviews).toEqual([
+            {
+              id: '1',
+              reviewId: 1,
+              review: 'Review1',
+              username: 'u1',
+              date: expect.any(Date),
+              count: '1'
+            },
+            {
+              id: '1',
+              reviewId: 2,
+              review: 'Review2',
+              username: 'u2',
+              date: expect.any(Date),
+              count: '1'
+            }
+        ]);
+    });
+  });
+  
   /************************************** getListOfBooks */
   describe("getListOfBooks method", function () {
       test("should return External API data of list of books", async function () {
@@ -187,7 +252,6 @@ describe("Book class", () => {
         res = await db.query(
           "SELECT * FROM book_likes WHERE book_id=$1 AND username=$2", ['2', 'u2']);
         expect(res.rows[0]).toEqual({
-            id: expect.any(Number),
             book_id: "2", 
             username: "u2"
         });
@@ -212,7 +276,6 @@ describe("Book class", () => {
           const res = await db.query(
             "SELECT * FROM book_likes WHERE book_id=$1 AND username=$2", ['5', 'u2']);
           expect(res.rows[0]).toEqual({
-              id: expect.any(Number),
               book_id: "5", 
               username: "u2"
           });

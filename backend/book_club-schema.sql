@@ -27,28 +27,29 @@ CREATE TABLE book_shelves (
 );
 
 CREATE TABLE book_lists (
-  id SERIAL PRIMARY KEY,
   book_shelf_id INTEGER REFERENCES book_shelves(id) ON DELETE CASCADE,
-  book_id TEXT REFERENCES books(id) ON DELETE CASCADE
+  book_id TEXT REFERENCES books(id) ON DELETE CASCADE,
+  PRIMARY KEY (book_shelf_id, book_id)
 );
 
 CREATE TABLE book_likes (
-  id SERIAL PRIMARY KEY,
   username TEXT REFERENCES users(username) ON DELETE CASCADE,
-  book_id TEXT REFERENCES books(id) ON DELETE CASCADE
+  book_id TEXT REFERENCES books(id) ON DELETE CASCADE,
+  PRIMARY KEY (username, book_id)
 );
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
   username TEXT REFERENCES users(username) ON DELETE CASCADE,
   book_id TEXT REFERENCES books(id) ON DELETE CASCADE,
-  review TEXT NOT NULL
+  review TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
  
 CREATE TABLE review_likes (
-  id SERIAL PRIMARY KEY,
   username TEXT REFERENCES users(username) ON DELETE CASCADE,
-  review_id INTEGER REFERENCES reviews(id) ON DELETE CASCADE
+  review_id INTEGER REFERENCES reviews(id) ON DELETE CASCADE,
+  PRIMARY KEY (username, review_id)
 );
 
 

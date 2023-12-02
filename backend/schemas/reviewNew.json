@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Review Schema",
+    "required": [
+        "book",
+        "review"
+    ],
+    "properties": {
+        "book": {
+            "type": "object",
+            "required": [
+                "id",
+                "title", 
+                "author"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "publisher": {
+                    "type": "string",
+                    "default": ""
+                },
+                "description": {
+                    "type": "string",
+                    "default": ""
+                },
+                "category": {
+                    "type": "string",
+                    "default": ""
+                },
+                "cover": {
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
+        "review": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        }
+    }
+}

@@ -14,6 +14,22 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 /** Related functions for users. */
 class User {
 
+    /** Get Username
+     * Gets User by username
+     * 
+     */
+    static async getUserByUsername(username) { 
+      const userCheck = await db.query(
+        `SELECT username
+         FROM users
+         WHERE username = $1`,
+      [username],
+    );
+
+      return userCheck.rows[0]
+    }
+
+
   /** Register user with data { username, password, firstName, lastName, email }
    *
    * Returns { username, firstName, lastName, email }
@@ -21,13 +37,8 @@ class User {
    * Throws BadRequestError on duplicates.
    **/
    static async register({ username, password, firstName, lastName, email, img }) {
-    const duplicateCheck = await db.query(
-        `SELECT username
-         FROM users
-         WHERE username = $1`,
-      [username],
-    );
-    if (duplicateCheck.rows[0]) {
+    const userCheck = await this.getUserByUsername(username);
+    if (userCheck) {
         throw new BadRequestError(`Duplicate username: ${username}`);
     }
     

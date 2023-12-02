@@ -37,7 +37,23 @@ async function commonBeforeAll() {
     `INSERT INTO book_likes 
      (book_id, username)
      VALUES ('1', 'u1'),
+             ('1', 'u2'),
              ('2', 'u1')`
+  );
+
+  await db.query(
+    `INSERT INTO reviews 
+     (id, username, book_id, review)
+     VALUES (1, 'u1', '1', 'Review1'),
+            (2, 'u2', '1', 'Review2')`
+  );
+
+  await db.query(
+    `INSERT INTO review_likes
+     (review_id, username)
+     VALUES (1, 'u1'),
+            (1, 'u2'),
+            (2, 'u1')`
   );
   
 

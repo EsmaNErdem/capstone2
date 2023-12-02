@@ -73,7 +73,7 @@ router.get("/search", async function (req, res, next) {
     }
 });
 
-/** GET /books/:id => { book: { id, title, author, cover, publisher, category, isbn } }
+/** GET /books/:id => { book: { id, title, author, publisher, description, category, cover }}
  * /books/IUq6BwAAQBAJ
  * 
  * Return JSON list of API retrieved book data by id
@@ -109,7 +109,7 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
     }
 
     const bookId = await Book.likeBook(req.body, req.params.username);
-    return res.json({ likedBook: bookId });
+    return res.status(201).json({ likedBook: bookId });
   } catch (err) {
     console.error("Error in POST /books/:id/username/:username", err);
     return next(err);

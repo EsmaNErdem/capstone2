@@ -1,5 +1,6 @@
 
 const BookApi = require("./bookApi")
+const User = require("./user")
 const db = require("../db");
 const { ApiNotFoundError, NotFoundError } = require("../expressError");
 
@@ -8,6 +9,58 @@ const { queryParamsForPartialFilter } = require("../helpers/queryParams")
 /** Related functions and API calls for books. */
 class Book {
 
+    /** Saves book data to database */
+        static async insertBook({ id, title, author, publisher, description, category, cover }) { 
+            const bookId = await db.query(
+                `INSERT INTO books 
+                    (id, title, author, publisher, description, category, cover)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)
+                    RETURNING id`,
+                [id, title, author, publisher, description, category, cover]
+            );     
+    
+            return bookId.rows
+        }
+    
+    /**  Gets Book by Book ID */
+    static async getBookById(id) { 
+        const book = await db.query(
+            `SELECT id
+            FROM books
+            WHERE id = $1`, [id]
+        );
+
+        return book.rows
+    }
+    
+    /** Gets all like counts for all books from the database */
+    static async getAllLikeCounts() {
+        const likeCountsQuery = await db.query(
+            `SELECT book_id AS id, 
+                    COUNT(*) 
+            FROM book_likes 
+            GROUP BY book_id`
+        );
+
+        return likeCountsQuery.rows;
+    }
+
+    /** Gets all review counts for all books from the database */
+    static async booksReviews() {
+        const reviewCountsQuery = await db.query(
+            `SELECT book_id AS id, 
+                    id AS "reviewId",
+                    review,
+                    username,
+                    created_at AS date,
+                    COUNT(*) 
+            FROM reviews
+            GROUP BY book_id, id`
+        );
+
+        return reviewCountsQuery.rows;
+    }
+
     /** Gets list of books from BookApi
      * 
      * Returns [ { id, title, author, publisher, description, category, cover }, ...] 
@@ -15,20 +68,26 @@ class Book {
     static async getListOfBooks() {
         try {  
             const books = await BookApi.getListOfBooks()
-
             if (!books) throw new ApiNotFoundError("External API Not Found Book List Data")
+            const booksFromApi = books.map(book => (
+                {
+                    id: book.id, 
+                    title: book.volumeInfo.title,
+                    author: book.volumeInfo.authors[0],
+                    publisher: book.volumeInfo.publisher,
+                    description: book.volumeInfo.description,
+                    category: book.volumeInfo.categories[0],
+                    cover: book.volumeInfo.imageLinks.thumbnail
+                })
+            )
+            // Fetch all like counts and review counts from the database
+            const likeCounts = await this.getAllLikeCounts();
+            const reviews = await this.booksReviews();
 
-            return books.map(book => (
-                    {
-                        id: book.id, 
-                        title: book.volumeInfo.title,
-                        author: book.volumeInfo.authors[0],
-                        publisher: book.volumeInfo.publisher,
-                        description: book.volumeInfo.description,
-                        category: book.volumeInfo.categories[0],
-                        cover: book.volumeInfo.imageLinks.thumbnail
-                    })
-                )
+
+
+
+            return booksFromApi
         } catch (err) {
             console.error("Error in getListOfBooks:", err);
             throw new ApiNotFoundError("External API Not Found Book List Data at getListOfBooks")
@@ -104,70 +163,39 @@ class Book {
      * Adds the book to user's liked list
      * 
      */
-    static async likeBook({ id, title, author, publisher, description, category, cover }, username) {
-        const preCheck = await db.query(
-                `SELECT username
-                FROM users
-                WHERE username = $1`, [username]
-            );
-        const user = preCheck.rows[0];
+    static async likeBook({ id, ...bookData}, username) {
+        const userCheck = await User.getUserByUsername(username)      
+        if (!userCheck) throw new NotFoundError(`No username: ${username}`);
             
-        if (!user) throw new NotFoundError(`No username: ${username}`);
+        let book = await this.getBookById(id)
+        if(book.length == 0) {
+            book = await this.insertBook({ id, ...bookData })
+        } 
             
-        let bookId = await db.query(
-                `SELECT id
-                FROM books
-                WHERE id = $1`, [id]
-            );
+        await db.query(
+            `INSERT INTO book_likes (book_id, username)
+                VALUES ($1, $2)`, [book[0].id, username]
+        );
 
-        if(bookId.rows[0]) {
-            await db.query(
-                `INSERT INTO book_likes (book_id, username)
-                 VALUES ($1, $2)`, [id, username]
-                );
-        } else {
-            bookId = await db.query(
-                `INSERT INTO books 
-                 (id, title, author, publisher, description, category, cover)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7)
-                 RETURNING id`,
-                [id, title, author, publisher, description, category, cover]
-            );
-            await db.query(
-                `INSERT INTO book_likes (book_id, username)
-                 VALUES ($1, $2)`, [id, username]
-            );
-        }
-        return bookId.rows[0].id
+        return book[0].id
     }
 
     /** 
      * Remove like from user's book
      */
     static async unlikeBook(bookId, username) {
-        const preCheck1 = await db.query(
-                `SELECT username
-                FROM users
-                WHERE username = $1`, [username]
-            );
-        const user = preCheck1.rows;
+        const userCheck = await User.getUserByUsername(username)           
+        if (!userCheck) throw new NotFoundError(`No username: ${username}`);
             
-        if (!user) throw new NotFoundError(`No username: ${username}`);
-            
-        const preCheck2 = await db.query(
-                `SELECT id
-                FROM books
-                WHERE id = $1`, [bookId]
-            );
-
-        const book = preCheck2.rows;
+        const book = await this.getBookById(bookId)
         if (book.length == 0) throw new NotFoundError(`No book: ${bookId}`);
 
         await db.query(
             `DELETE
              FROM book_likes
-             WHERE book_id=$1 AND username = $2`,[bookId, username],
+             WHERE book_id = $1 AND username = $2`,[bookId, username],
         );
+
         return book[0].id
     }
 }
