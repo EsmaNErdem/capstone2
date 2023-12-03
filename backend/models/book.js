@@ -64,7 +64,7 @@ class Book {
      * 
      * Returns [ { id, reviewId, review, username, date, reviewLikeCount }, ...]
     */
-    static async booksReviews() {
+    static async getAllReviews() {
         const reviewsQuery = await db.query(
             `SELECT r.book_id AS id, 
                     r.id AS "reviewId",
@@ -141,7 +141,7 @@ class Book {
 
             // Fetch all like counts and review counts from the database
             const likeCounts = await this.getAllLikeCounts();
-            const reviews = await this.booksReviews();
+            const reviews = await this.getAllReviews();
 
             const booksFromApi = books.map(book => {
                 const bookData =  {
@@ -197,7 +197,7 @@ class Book {
 
             // Fetch all like counts and review counts from the database
             const likeCounts = await this.getAllLikeCounts();
-            const reviews = await this.booksReviews();
+            const reviews = await this.getAllReviews();
 
             const booksFromApi =  books.map(book =>{
                         const bookData =  {
@@ -238,15 +238,20 @@ class Book {
                 categories: book.volumeInfo.categories,
                 cover: book.volumeInfo.imageLinks.medium
             };
-    
-            // Fetch like counts and reviews for the specific book from the database
-            const likeCount = await this.getLikeCountForBook(id);
-            const reviews = await this.getReviewsForBook(id);
-    
+            let likeCount = "0";
+            let reviews = [];
+
+            // Fetch like counts and reviews for the specific book from the database if the book exist in the database
+            let bookId = await this.getBookById(id)
+            if(bookId.length !== 0) {
+                likeCount = await this.getLikeCountForBook(id);
+                reviews = await this.getReviewsForBook(id);
+            }
+
             return {
                 ...bookData,
                 bookLikeCount: likeCount,
-                reviews
+                reviews        
             };
         } catch (err) {
             console.error("Error in getBook:", err);

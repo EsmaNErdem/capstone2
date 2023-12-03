@@ -126,10 +126,10 @@ describe("Book class", () => {
     });
   });
   
-  /************************************** booksReviews */
-  describe("booksReviews method", function () {
+  /************************************** getAllReviews */
+  describe("getAllReviews method", function () {
     test("should return External API review data of list of books", async function () {
-        const booksReviews = await Book.booksReviews();
+        const booksReviews = await Book.getAllReviews();
         // console.log("*********");
         // console.log(booksReviews);
         // console.log("*********")
@@ -137,21 +137,21 @@ describe("Book class", () => {
           '1': [
             {
               id: '1',
-              reviewId: 1,
+              reviewId: 10000,
               review: 'Review1',
               username: 'u1',
               date: expect.any(Date),
-              reviewLikeCount: '2'
+              reviewLikeCount: '1'
             }
           ],
           '2': [
             {
               id: '2',
-              reviewId: 2,
+              reviewId: 20000,
               review: 'Review2',
               username: 'u1',
               date: expect.any(Date),
-              reviewLikeCount: '1'
+              reviewLikeCount: '2'
             }
           ]
         });
@@ -172,11 +172,11 @@ describe("Book class", () => {
           const booksReviews = await Book.getReviewsForBook('1');
           expect(booksReviews).toEqual([
               {
-                reviewId: 1,
+                reviewId: 10000,
                 review: 'Review1',
                 username: 'u1',
                 date: expect.any(Date),
-                reviewLikeCount: '2'
+                reviewLikeCount: '1'
               }
             ]);
       });
@@ -199,11 +199,11 @@ describe("Book class", () => {
               reviews: [
                 {
                   id: '1',
-                  reviewId: 1,
+                  reviewId: 10000,
                   review: 'Review1',
                   username: 'u1',
                   date: expect.any(Date),
-                  reviewLikeCount: '2'
+                  reviewLikeCount: '1'
                 },
               ]
               }, 
@@ -218,11 +218,11 @@ describe("Book class", () => {
               bookLikeCount: '1',
               reviews: [{
                 id: '2',
-                reviewId: 2,
+                reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
                 date: expect.any(Date),
-                reviewLikeCount: '1'
+                reviewLikeCount: '2'
               }]
               }
           ]);
@@ -253,11 +253,11 @@ describe("Book class", () => {
               bookLikeCount: '1',
               reviews: [{
                 id: '2',
-                reviewId: 2,
+                reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
                 date: expect.any(Date),
-                reviewLikeCount: '1'
+                reviewLikeCount: '2'
               }]
               }
           ]);
@@ -276,11 +276,11 @@ describe("Book class", () => {
               bookLikeCount: '1',
               reviews: [{
                 id: '2',
-                reviewId: 2,
+                reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
                 date: expect.any(Date),
-                reviewLikeCount: '1'
+                reviewLikeCount: '2'
               }]
               }
           ]);
@@ -373,7 +373,7 @@ describe("Book class", () => {
           });
       });
 
-      test("should fail if cannot find username book username", async function () {
+      test("should fail if cannot find username", async function () {
           try {
             await Book.likeBook({
               id: '2',

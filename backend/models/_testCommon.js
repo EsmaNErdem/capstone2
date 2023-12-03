@@ -44,16 +44,16 @@ async function commonBeforeAll() {
   await db.query(
     `INSERT INTO reviews 
      (id, username, book_id, review)
-     VALUES (1, 'u1', '1', 'Review1'),
-            (2, 'u1', '2', 'Review2')`
+     VALUES (10000, 'u1', '1', 'Review1'),
+            (20000, 'u1', '2', 'Review2')`
   );
 
   await db.query(
     `INSERT INTO review_likes
      (review_id, username)
-     VALUES (1, 'u1'),
-            (1, 'u2'),
-            (2, 'u1')`
+     VALUES (10000, 'u1'),
+            (20000, 'u2'),
+            (20000, 'u1')`
   );
   
 

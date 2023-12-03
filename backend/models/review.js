@@ -22,12 +22,12 @@ class Review {
         if (book.length == 0) {
             book = await Book.insertBook(bookData)
         } 
-
+        
         const reviewRes =  await db.query(
             `INSERT INTO reviews (review, book_id, username)
-                VALUES ($1, $2, $3)
-                RETURNING id, review, book_id, username`, [review, book[0].id, username]
-        );
+            VALUES ($1, $2, $3)
+            RETURNING id, review, book_id, username`, [review, book[0].id, username]
+            );
 
         return reviewRes.rows[0]
     }
@@ -48,21 +48,19 @@ class Review {
      */
     static async findAll(searchFilters = {}) {
         let query = `SELECT
-                        r.id,
+                        r.id AS "reviewId",
                         r.review,
                         r.username,
-                        r.created_at,
+                        r.created_at AS date,
                         b.id AS book_id,
                         b.title,
                         b.author,
                         b.category,
-                        COUNT(l.review_id) AS like_count
+                        COUNT(l.review_id) AS "likeCount"
                     FROM
                         reviews AS r
-                        LEFT JOIN books AS b ON r.book_id = b.id
-                        LEFT JOIN review_likes AS l ON l.review_id = r.id
-                    GROUP BY
-                        r.id, b.id`;
+                            LEFT JOIN books AS b ON r.book_id = b.id
+                            LEFT JOIN review_likes AS l ON l.review_id = r.id`;
         let whereExpressions = [];
         let queryValues = [];
 
@@ -95,11 +93,11 @@ class Review {
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
-            order = " ORDER BY like_count DESC"
+            order = ` ORDER BY "likeCount" DESC`
         } 
 
         query += whereExpressions.length > 0 ? ` WHERE ${whereExpressions.join(" AND ")}` : "";
-        query += order;
+        query += " GROUP BY r.id, b.id" + order;
 
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
@@ -114,23 +112,20 @@ class Review {
      * - Number of review likes
      * - Username in alphabethical order
      * 
-     * Returns [{reviewId, review, username, date, bookId, title, author, category }]
+     * Returns [{reviewId, review, username, date, bookId, title, author, category }, ...]
      */
     static async getReviewsByBook(bookId, searchFilters={}) { 
         let query = `SELECT
-                        r.id,
+                        r.id AS "reviewId",
                         r.review,
                         r.username,
-                        r.created_at,
+                        r.created_at AS date,
                         b.id AS book_id,
-                        COUNT(l.review_id) AS like_count
+                        COUNT(l.review_id) AS "likeCount"
                     FROM
                         reviews AS r
-                        LEFT JOIN books AS b ON r.book_id = b.id
-                        LEFT JOIN review_likes AS l ON l.review_id = r.id
-                    WHERE b.id = $1
-                    GROUP BY
-                        r.id, b.id`;
+                            LEFT JOIN books AS b ON r.book_id = b.id
+                            LEFT JOIN review_likes AS l ON l.review_id = r.id`;
 
         let whereExpressions = [];
         let queryValues = [bookId];
@@ -149,26 +144,56 @@ class Review {
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
-            order = " ORDER BY like_count DESC"
+            order = " ORDER BY likeCount DESC"
         } 
 
-        query += whereExpressions.length > 0 ? ` WHERE ${whereExpressions.join(" AND ")}` : "";
-        query += order;
+        query += whereExpressions.length > 0 ? ` WHERE b.id = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE b.id = $1";
+        query += " GROUP BY r.id, b.id" + order;
 
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
     }
 
-
-
     /**Get user reviews
      * 
+     * Gets all reviews that belong to user with given id
+     * Sort by:
+     * - Date of review post (default)
+     * - Number of review likes
+     * - Username in alphabethical order
+     * 
+     * Returns [{reviewId, review, date, bookId, title, author, category }, ...]
      */
+    static async getUserReviews(username, searchFilters={}) {
+        let query = `SELECT
+                        r.id AS "reviewId",
+                        r.review,
+                        r.username,
+                        r.created_at AS date,
+                        b.id AS book_id,
+                        b.title,
+                        b.author,
+                        b.category,
+                        COUNT(l.review_id) AS "likeCount"
+                    FROM
+                        reviews AS r
+                            LEFT JOIN books AS b ON r.book_id = b.id
+                            LEFT JOIN review_likes AS l ON l.review_id = r.id
+                    WHERE r.username = $1
+                    GROUP BY r.id, b.id`;
+        
+        const { sortBy } = searchFilters;
 
+        // For each possible sorting term, add to order by, default is date
+        let order = " ORDER BY r.created_at DESC"
+        if (sortBy == "popular") {
+            order = " ORDER BY likeCount DESC"
+        } 
+        query += order;
 
-
-
-    
+        const reviewsRes = await db.query(query, [username]);
+        return reviewsRes.rows;
+    }  
         
     /** Checks if review exist 
      *  Gets Review by Review ID
@@ -178,6 +203,22 @@ class Review {
             `SELECT id
             FROM reviews
             WHERE id = $1`, [id]
+        );
+
+        return review.rows
+    }
+
+    /** Checks if review exist 
+     *  Gets Review by Review ID
+     */
+    static async getReviewLikeCount(id) { 
+        const review = await db.query(
+            `SELECT COUNT(l.review_id) AS "likeCount"
+            FROM
+                reviews AS r
+                    LEFT JOIN review_likes AS l ON l.review_id = r.id
+            WHERE id = $1
+            GROUP BY r.id`, [id]
         );
 
         return review.rows
@@ -218,8 +259,8 @@ class Review {
                 VALUES ($1, $2)
                 RETURNING review_id`, [reviewId, username]
         );
-
-        return reviewLike.rows[0].id
+        
+        return reviewLike.rows[0].review_id
     }
 
     /** Unlikes Review
