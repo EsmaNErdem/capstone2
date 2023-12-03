@@ -29,8 +29,8 @@ async function commonBeforeAll() {
   await db.query(
     `INSERT INTO books 
     (id, title, author, publisher, description, category, cover)
-    VALUES ('1', 'Book1', 'Author1', 'Publisher1', 'Description1', 'Category1', 'Cover1'),
-           ('2', 'Book2', 'Author2', 'Publisher2', 'Description2', 'Category2', 'Cover2')`
+    VALUES ('1', 'Book 1', 'Author 1', 'Publisher 1', 'Description 1', 'Category 1', 'Cover 1'),
+           ('2', 'Book 2', 'Author 2', 'Publisher 2', 'Description 2', 'Category 2', 'Cover 2')`
   );
 
   await db.query(
@@ -45,7 +45,7 @@ async function commonBeforeAll() {
     `INSERT INTO reviews 
      (id, username, book_id, review)
      VALUES (1, 'u1', '1', 'Review1'),
-            (2, 'u2', '1', 'Review2')`
+            (2, 'u1', '2', 'Review2')`
   );
 
   await db.query(

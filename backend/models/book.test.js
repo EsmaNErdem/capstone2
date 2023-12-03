@@ -26,8 +26,20 @@ describe("Book class", () => {
         description: 'Description 1',
         categories: ['Category 1'],
         imageLinks: {
-          thumbnail: 'thumbnail_link_1',
-          medium: 'medium_link_1',
+          thumbnail: 'Cover 1',
+        },
+      },
+    },
+    {
+      id: '2',
+      volumeInfo: {
+        title: 'Book 2',
+        authors: ['Author 2'],
+        publisher: 'Publisher 2',
+        description: 'Description 2',
+        categories: ['Category 2'],
+        imageLinks: {
+          thumbnail: 'Cover 2',
         },
       },
     },
@@ -42,7 +54,7 @@ describe("Book class", () => {
         publisher: 'Publisher 2',
         description: 'Description 2',
         imageLinks: {
-          thumbnail: 'thumbnail_link_2',
+          thumbnail: 'Cover 2',
         },
       },
     },
@@ -57,7 +69,7 @@ describe("Book class", () => {
       description: 'Description 3',
       categories: ['Category 3'],
       imageLinks: {
-        medium: 'medium_link_3',
+        medium: 'Cover 3',
       },
     },
   };
@@ -100,7 +112,7 @@ describe("Book class", () => {
         expect(book).toEqual([ { id: '1' } ]);
     });
 
-    test("should return empty array if no bok", async function () {
+    test("should return empty array if no book", async function () {
       const book = await Book.getBookById("nope");
       expect(book).toEqual([]);
   });
@@ -108,9 +120,9 @@ describe("Book class", () => {
   
   /************************************** getAllLikeCounts */
   describe("getAllLikeCounts method", function () {
-    test("should return External API data of list of books", async function () {
+    test("should return number of likes list of books", async function () {
       const booksLikesCount = await Book.getAllLikeCounts();
-      expect(booksLikesCount).toEqual([ { id: '2', count: '1' }, { id: '1', count: '2' } ]);
+      expect(booksLikesCount).toEqual({ '2': '1', '1': '2' });
     });
   });
   
@@ -118,35 +130,63 @@ describe("Book class", () => {
   describe("booksReviews method", function () {
     test("should return External API review data of list of books", async function () {
         const booksReviews = await Book.booksReviews();
-        console.log("****************")
-        console.log(booksReviews)
-        console.log("****************")
-        expect(booksReviews).toEqual([
+        // console.log("*********");
+        // console.log(booksReviews);
+        // console.log("*********")
+        expect(booksReviews).toEqual({
+          '1': [
             {
               id: '1',
               reviewId: 1,
               review: 'Review1',
               username: 'u1',
               date: expect.any(Date),
-              count: '1'
-            },
+              reviewLikeCount: '2'
+            }
+          ],
+          '2': [
             {
-              id: '1',
+              id: '2',
               reviewId: 2,
               review: 'Review2',
-              username: 'u2',
+              username: 'u1',
               date: expect.any(Date),
-              count: '1'
+              reviewLikeCount: '1'
             }
-        ]);
+          ]
+        });
     });
   });
+
+    /************************************** getLikeCountForBook */
+    describe("getLikeCountForBook method", function () {
+      test("should return number of likes of a book", async function () {
+        const bookLikesCount = await Book.getLikeCountForBook('1');
+        expect(bookLikesCount).toEqual('2');
+      });
+    });
+    
+    /************************************** getReviewsForBook */
+    describe("getReviewsForBook method", function () {
+      test("should return reviews data of list of a book", async function () {
+          const booksReviews = await Book.getReviewsForBook('1');
+          expect(booksReviews).toEqual([
+              {
+                reviewId: 1,
+                review: 'Review1',
+                username: 'u1',
+                date: expect.any(Date),
+                reviewLikeCount: '2'
+              }
+            ]);
+      });
+    });
   
   /************************************** getListOfBooks */
   describe("getListOfBooks method", function () {
       test("should return External API data of list of books", async function () {
-          const books = await Book.getListOfBooks();
-          expect(books).toEqual([
+        const books = await Book.getListOfBooks();
+        expect(books).toEqual([
               {
               id: '1',
               title: 'Book 1',
@@ -154,7 +194,36 @@ describe("Book class", () => {
               publisher: 'Publisher 1',
               description: 'Description 1',
               category: 'Category 1',
-              cover: 'thumbnail_link_1',
+              cover: 'Cover 1',
+              bookLikeCount: '2',
+              reviews: [
+                {
+                  id: '1',
+                  reviewId: 1,
+                  review: 'Review1',
+                  username: 'u1',
+                  date: expect.any(Date),
+                  reviewLikeCount: '2'
+                },
+              ]
+              }, 
+              {
+              id: '2',
+              title: 'Book 2',
+              author: 'Author 2',
+              publisher: 'Publisher 2',
+              description: 'Description 2',
+              category: 'Category 2',
+              cover: 'Cover 2',
+              bookLikeCount: '1',
+              reviews: [{
+                id: '2',
+                reviewId: 2,
+                review: 'Review2',
+                username: 'u1',
+                date: expect.any(Date),
+                reviewLikeCount: '1'
+              }]
               }
           ]);
       });
@@ -180,7 +249,16 @@ describe("Book class", () => {
               author: 'Author 2',
               publisher: 'Publisher 2',
               description: 'Description 2',
-              cover: 'thumbnail_link_2',
+              cover: 'Cover 2',
+              bookLikeCount: '1',
+              reviews: [{
+                id: '2',
+                reviewId: 2,
+                review: 'Review2',
+                username: 'u1',
+                date: expect.any(Date),
+                reviewLikeCount: '1'
+              }]
               }
           ]);
       });
@@ -194,7 +272,16 @@ describe("Book class", () => {
               author: 'Author 2',
               publisher: 'Publisher 2',
               description: 'Description 2',
-              cover: 'thumbnail_link_2',
+              cover: 'Cover 2',
+              bookLikeCount: '1',
+              reviews: [{
+                id: '2',
+                reviewId: 2,
+                review: 'Review2',
+                username: 'u1',
+                date: expect.any(Date),
+                reviewLikeCount: '1'
+              }]
               }
           ]);
       });
@@ -211,15 +298,20 @@ describe("Book class", () => {
   /************************************** getBook */
   describe('getBook method', () => {
       test("should return External API data of book detail", async function () {
-          const books = await Book.getBook();
-          expect(books).toEqual({
+          const book = await Book.getBook();
+        console.log("*********");
+        console.log(book);
+        console.log("*********")
+          expect(book).toEqual({
               id: '3',
               title: 'Book 3',
               author: 'Author 3',
               publisher: 'Publisher 3',
               description: 'Description 3',
               categories: ['Category 3'],
-              cover: 'medium_link_3',
+              cover: 'Cover 3',
+              bookLikeCount: "0",
+              reviews: []
           });
       });
 

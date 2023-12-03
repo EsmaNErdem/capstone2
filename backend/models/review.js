@@ -158,6 +158,17 @@ class Review {
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
     }
+
+
+
+    /**Get user reviews
+     * 
+     */
+
+
+
+
+    
         
     /** Checks if review exist 
      *  Gets Review by Review ID

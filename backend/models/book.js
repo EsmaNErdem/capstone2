@@ -9,18 +9,21 @@ const { queryParamsForPartialFilter } = require("../helpers/queryParams")
 /** Related functions and API calls for books. */
 class Book {
 
-    /** Saves book data to database */
-        static async insertBook({ id, title, author, publisher, description, category, cover }) { 
-            const bookId = await db.query(
-                `INSERT INTO books 
-                    (id, title, author, publisher, description, category, cover)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7)
-                    RETURNING id`,
-                [id, title, author, publisher, description, category, cover]
-            );     
-    
-            return bookId.rows
-        }
+    /** Saves book data to database 
+     * 
+     * Returns book id
+    */
+    static async insertBook({ id, title, author, publisher, description, category, cover }) { 
+        const bookId = await db.query(
+            `INSERT INTO books 
+                (id, title, author, publisher, description, category, cover)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING id`,
+            [id, title, author, publisher, description, category, cover]
+        );     
+
+        return bookId.rows
+    }
     
     /**  Gets Book by Book ID */
     static async getBookById(id) { 
@@ -33,61 +36,132 @@ class Book {
         return book.rows
     }
     
-    /** Gets all like counts for all books from the database */
+    /** Gets all like counts for all books from the database
+     * 
+     * Returns array of number of book like attached with book id
+     * 
+     * Returns [ { id: '2', count: '1' }, ...}
+     */
     static async getAllLikeCounts() {
         const likeCountsQuery = await db.query(
             `SELECT book_id AS id, 
-                    COUNT(*) 
+                    COUNT(*) AS "bookLikeCount"
             FROM book_likes 
             GROUP BY book_id`
         );
 
-        return likeCountsQuery.rows;
+        const likeCounts = {};
+        likeCountsQuery.rows.forEach((row) => {
+          likeCounts[row.id] = row.bookLikeCount;
+        });
+    
+        return likeCounts;
     }
 
-    /** Gets all review counts for all books from the database */
+    /** Gets all review counts for all books from the database 
+     * 
+     * Returns array of reviews of each book attached with book id
+     * 
+     * Returns [ { id, reviewId, review, username, date, reviewLikeCount }, ...]
+    */
     static async booksReviews() {
-        const reviewCountsQuery = await db.query(
-            `SELECT book_id AS id, 
-                    id AS "reviewId",
-                    review,
-                    username,
-                    created_at AS date,
-                    COUNT(*) 
-            FROM reviews
+        const reviewsQuery = await db.query(
+            `SELECT r.book_id AS id, 
+                    r.id AS "reviewId",
+                    r.review,
+                    r.username,
+                    r.created_at AS date,
+                    COUNT(l.review_id) AS "reviewLikeCount"
+            FROM reviews AS r
+                LEFT JOIN review_likes AS l ON l.review_id = r.id
             GROUP BY book_id, id`
         );
 
-        return reviewCountsQuery.rows;
+        const reviews= {};
+        reviewsQuery.rows.forEach(row => {
+            if (!reviews[row.id]) {
+                reviews[row.id] = [];
+            }
+            reviews[row.id].push(row);
+        });
+
+        return reviews;
     }
 
+    /** Gets like counts for a specific bookfrom the database 
+     * 
+     * Returns number
+    */
+    static async getLikeCountForBook(bookId) {
+        const likeCountQuery = await db.query(
+            `SELECT COUNT(*) AS "likeCount"
+            FROM book_likes 
+            WHERE book_id = $1`,
+            [bookId]
+        );
+
+        return likeCountQuery.rows[0]?.likeCount || 0;
+    }
+
+    /** Gets all reviewsfor a specific bookfrom the database 
+     * 
+     * Returns array of reviews of the book attached 
+     * 
+     * Returns [ { reviewId, review, username, date, reviewLikeCount }, ...]
+    */
+    static async getReviewsForBook(bookId) {
+        const reviewsQuery = await db.query(
+                `SELECT
+                    id AS "reviewId",
+                    review,
+                    reviews.username,
+                    created_at AS date,
+                    COUNT(review_likes.review_id) AS "reviewLikeCount"
+                FROM reviews
+                    LEFT JOIN review_likes ON review_likes.review_id = reviewS.id
+                WHERE book_id = $1
+                GROUP BY id;`,
+                [bookId]
+        );
+
+        return reviewsQuery.rows;
+    }
+    
     /** Gets list of books from BookApi
      * 
-     * Returns [ { id, title, author, publisher, description, category, cover }, ...] 
+     * Get books reviews and number of like to compare it to database
+     * Checks through database to add like and reviews related data
+     * 
+     * Returns [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] 
      */
     static async getListOfBooks() {
         try {  
             const books = await BookApi.getListOfBooks()
             if (!books) throw new ApiNotFoundError("External API Not Found Book List Data")
-            const booksFromApi = books.map(book => (
-                {
-                    id: book.id, 
-                    title: book.volumeInfo.title,
-                    author: book.volumeInfo.authors[0],
-                    publisher: book.volumeInfo.publisher,
-                    description: book.volumeInfo.description,
-                    category: book.volumeInfo.categories[0],
-                    cover: book.volumeInfo.imageLinks.thumbnail
-                })
-            )
+
             // Fetch all like counts and review counts from the database
             const likeCounts = await this.getAllLikeCounts();
             const reviews = await this.booksReviews();
 
+            const booksFromApi = books.map(book => {
+                const bookData =  {
+                            id: book.id, 
+                            title: book.volumeInfo.title,
+                            author: book.volumeInfo.authors[0],
+                            publisher: book.volumeInfo.publisher,
+                            description: book.volumeInfo.description,
+                            category: book.volumeInfo.categories[0],
+                            cover: book.volumeInfo.imageLinks.thumbnail
+                        };
 
+                return {
+                    ...bookData,
+                    bookLikeCount: likeCounts[bookData.id],
+                    reviews: reviews[bookData.id]
+                };
+            });
 
-
-            return booksFromApi
+            return booksFromApi;
         } catch (err) {
             console.error("Error in getListOfBooks:", err);
             throw new ApiNotFoundError("External API Not Found Book List Data at getListOfBooks")
@@ -103,8 +177,9 @@ class Book {
      * - publisher
      * - subject
      * Update data from frontend to Google Book API's syntax with queryParamsForPartialFilter helper function
+     * Checks through database to add like and reviews related data
      * 
-     * Returns  [ { id, title, author, publisher, description, category, cover }, ...] as avaliable
+     * Returns  [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] as avaliable
      */
     static async searchListOfBooks(search, query={}) {
         try {  
@@ -119,16 +194,27 @@ class Book {
             
             const books = await BookApi.searchListOfBooks(search.q, termsUrl)
             if (!books) return [];
-            return books.map(book => (
-                    {
-                        id: book.id, 
-                        title: book.volumeInfo.title,
-                        author: book.volumeInfo.authors[0],
-                        publisher: book.volumeInfo.publisher,
-                        description: book.volumeInfo.description,
-                        cover: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : undefined
-                    })
-                )
+
+            // Fetch all like counts and review counts from the database
+            const likeCounts = await this.getAllLikeCounts();
+            const reviews = await this.booksReviews();
+
+            const booksFromApi =  books.map(book =>{
+                        const bookData =  {
+                            id: book.id, 
+                            title: book.volumeInfo.title,
+                            author: book.volumeInfo.authors[0],
+                            publisher: book.volumeInfo.publisher,
+                            description: book.volumeInfo.description,
+                            cover: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : undefined
+                        };
+                return {
+                    ...bookData,
+                    bookLikeCount: likeCounts[bookData.id],
+                    reviews: reviews[bookData.id]
+                };
+            });
+            return booksFromApi
         } catch (err) {
             console.error("Error in searchListOfBooks:", err);
             throw new ApiNotFoundError("External API Not Found Book List Search Data at searchListOfBooks")
@@ -141,9 +227,9 @@ class Book {
      */
     static async getBook(id) {
         try {  
-            const book = await BookApi.getBook(id)
-            
-            return {
+            const book = await BookApi.getBook(id);
+    
+            const bookData = {
                 id: book.id, 
                 title: book.volumeInfo.title,
                 author: book.volumeInfo.authors[0],
@@ -151,7 +237,17 @@ class Book {
                 description: book.volumeInfo.description,
                 categories: book.volumeInfo.categories,
                 cover: book.volumeInfo.imageLinks.medium
-            }
+            };
+    
+            // Fetch like counts and reviews for the specific book from the database
+            const likeCount = await this.getLikeCountForBook(id);
+            const reviews = await this.getReviewsForBook(id);
+    
+            return {
+                ...bookData,
+                bookLikeCount: likeCount,
+                reviews
+            };
         } catch (err) {
             console.error("Error in getBook:", err);
             throw new ApiNotFoundError("External API Not Found Book Data at getBook")    
