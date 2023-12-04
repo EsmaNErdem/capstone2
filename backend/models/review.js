@@ -144,7 +144,7 @@ class Review {
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
-            order = " ORDER BY likeCount DESC"
+            order = ` ORDER BY "likeCount" DESC`
         } 
 
         query += whereExpressions.length > 0 ? ` WHERE b.id = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE b.id = $1";
@@ -196,6 +196,7 @@ class Review {
     }  
         
     /** Checks if review exist 
+     * 
      *  Gets Review by Review ID
      */
     static async getReviewId(id) { 
@@ -209,6 +210,7 @@ class Review {
     }
 
     /** Checks if review exist 
+     * 
      *  Gets Review by Review ID
      */
     static async getReviewLikeCount(id) { 
@@ -225,6 +227,7 @@ class Review {
     }
 
     /** Remove Review
+     * 
      * Deletes review
      * 
      */

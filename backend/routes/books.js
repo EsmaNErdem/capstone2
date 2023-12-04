@@ -28,7 +28,15 @@ const Book = require("../models/book")
  * - author
  * - publisher
  * - category
- * 
+ * 	{
+			"id": "ayJpGQeyxgkC",
+			"title": "To Kill a Mockingbird 40th",
+			"author": "Harper Lee",
+			"publisher": "HarperCollins Christian Publishing",
+			"description": "The explosion of racial hate and violence in a small Alabama town is viewed by a little girl whose father defends a Black man accused of rape",
+			"category": "FICTION",
+			"cover": "http://books.google.com/books/content?id=ayJpGQeyxgkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+		}
  * Authorization required: none
  */
 

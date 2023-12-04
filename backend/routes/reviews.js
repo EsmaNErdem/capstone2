@@ -77,13 +77,14 @@ router.delete("/:id/users/:username", ensureCorrectUser, async function (req, re
  */
 router.get("/", ensureLoggedIn, async function (req, res, next) {
     try {
-      const validator = jsonschema.validate(req.body, reviewFilterSchema);
+      const validator = jsonschema.validate(req.query, reviewFilterSchema);
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);
         throw new BadRequestError(errs);
       }
-
-      const reviews = await Review.findAll(req.body);
+      
+      const reviews = await Review.findAll(req.query);
+      console.log("*******", req.query, !validator.valid, reviews)
       return res.json({ reviews });
     } catch (err) {
       return next(err);
@@ -105,13 +106,13 @@ router.get("/", ensureLoggedIn, async function (req, res, next) {
  */
 router.get("/books/:id", ensureLoggedIn, async function (req, res, next) {
     try {
-      const validator = jsonschema.validate(req.body, reviewBookFilterSchema);
+      const validator = jsonschema.validate(req.query, reviewBookFilterSchema);
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);
         throw new BadRequestError(errs);
       }
 
-      const reviews = await Review.getReviewsByBook(req.params.id, req.body);
+      const reviews = await Review.getReviewsByBook(req.params.id, req.query);
       return res.json({ reviews });
     } catch (err) {
       return next(err);
@@ -126,10 +127,10 @@ router.get("/books/:id", ensureLoggedIn, async function (req, res, next) {
  * 
  * Authorization required: same-user-as-:username
  */
-router.post("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
+router.post("/like/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
     try {
       const reviewId = await Review.like(req.params.id, req.params.username);
-      return res.status(201).json({ likedRevied: reviewId });
+      return res.status(201).json({ likedReview: reviewId });
     } catch (err) {
       return next(err);
     }
@@ -143,10 +144,10 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
  *
  * Authorization required: same-user-as-:username
  */
-router.delete("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
+router.delete("/like/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
     try {
       const reviewId = await Review.unlike(req.params.id, req.params.username);
-      return res.json({ unlikedRevied: reviewId });
+      return res.json({ unlikedReview: reviewId });
     } catch (err) {
       return next(err);
     }

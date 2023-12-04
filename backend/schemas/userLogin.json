@@ -1,26 +1,19 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "http://example.com/example.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/userAuth.json",
     "type": "object",
-    "title": "User Login Schema",
-    "required": [
-        "username",
-        "password"
-    ],
     "properties": {
-        "username": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 30
-        },
-        "password": {
-            "type": "string",
-            "minLength": 5,
-            "maxLength": 20
-        }
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
     },
-    "examples": [{
-        "username": "EsmaErdem",
-        "password": "password123"
-    }]
-}
+    "additionalProperties": false,
+    "required": [
+      "username",
+      "password"
+    ]
+  }
+  

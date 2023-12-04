@@ -290,7 +290,7 @@ describe("Review class", () => {
         });
 
         test("should return empty array if no book", async function () {
-            const review = await Review.getReviewId(0);
+            const review = await Review.getReviewId(1000000000);
             expect(review).toEqual([]);
         });
   });
