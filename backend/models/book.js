@@ -1,6 +1,5 @@
 
 const BookApi = require("./bookApi")
-const User = require("./user")
 const db = require("../db");
 const { ApiNotFoundError, NotFoundError } = require("../expressError");
 
@@ -12,6 +11,7 @@ class Book {
     /** Saves book data to database 
      * 
      * Returns book id
+     * 
     */
     static async insertBook({ id, title, author, publisher, description, category, cover }) { 
         const bookId = await db.query(
@@ -25,6 +25,49 @@ class Book {
         return bookId.rows
     }
     
+    /**  Gets Book by Book ID */
+    static async getBookById(id) { 
+        const book = await db.query(
+            `SELECT id
+            FROM books
+            WHERE id = $1`, [id]
+        );
+
+        return book.rows
+    }
+
+    /** Find all book data from database 
+     * 
+     * Returns array of book data
+     * 
+     * Returns [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] 
+    */
+    static async findAllBooksFromDatabase() { 
+        let books = await db.query(
+            `SELECT
+                id,
+                title,
+                author,
+                publisher,
+                description,
+                category,
+                cover
+            FROM books;`,
+        );   
+        // Fetch all like counts and review counts from the database
+        const likeCounts = await this.getAllLikeCounts();
+        const reviews = await this.getAllReviews();
+
+        books = books.rows.map(book => ({
+                    ...book,
+                    bookLikeCount: likeCounts[book.id],
+                    reviews: reviews[book.id]
+                })
+            );
+
+        return books
+    }
+        
     /**  Gets Book by Book ID */
     static async getBookById(id) { 
         const book = await db.query(
@@ -134,9 +177,9 @@ class Book {
      * 
      * Returns [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] 
      */
-    static async getListOfBooks() {
+    static async getListOfBooks(startIndex) {
         try {  
-            const books = await BookApi.getListOfBooks()
+            const books = await BookApi.getListOfBooks(startIndex)
             if (!books) throw new ApiNotFoundError("External API Not Found Book List Data")
 
             // Fetch all like counts and review counts from the database
@@ -147,10 +190,10 @@ class Book {
                 const bookData =  {
                             id: book.id, 
                             title: book.volumeInfo.title,
-                            author: book.volumeInfo.authors[0],
+                            author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown",
                             publisher: book.volumeInfo.publisher,
                             description: book.volumeInfo.description,
-                            category: book.volumeInfo.categories[0],
+                            category: book.volumeInfo.categories ? book.volumeInfo.categories[0] : null,
                             cover: book.volumeInfo.imageLinks.thumbnail
                         };
 
@@ -181,7 +224,7 @@ class Book {
      * 
      * Returns  [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] as avaliable
      */
-    static async searchListOfBooks(search, query={}) {
+    static async searchListOfBooks(search, query={}, startIndex) {
         try {  
             const termsUrl = queryParamsForPartialFilter(
                 query,
@@ -192,7 +235,7 @@ class Book {
                 });
             
             
-            const books = await BookApi.searchListOfBooks(search.q, termsUrl)
+            const books = await BookApi.searchListOfBooks(search, termsUrl, startIndex)
             if (!books) return [];
 
             // Fetch all like counts and review counts from the database
@@ -246,6 +289,8 @@ class Book {
             if(bookId.length !== 0) {
                 likeCount = await this.getLikeCountForBook(id);
                 reviews = await this.getReviewsForBook(id);
+            } else {
+                await this.insertBook({ id, ...bookData })
             }
 
             return {
@@ -265,8 +310,13 @@ class Book {
      * 
      */
     static async likeBook({ id, ...bookData}, username) {
-        const userCheck = await User.getUserByUsername(username)      
-        if (!userCheck) throw new NotFoundError(`No username: ${username}`);
+        const userCheck = await db.query(
+            `SELECT username
+             FROM users
+             WHERE username = $1`,
+          [username],
+        );
+        if (!userCheck.rows[0]) throw new NotFoundError(`No username: ${username}`);
             
         let book = await this.getBookById(id)
         if(book.length == 0) {
@@ -285,8 +335,13 @@ class Book {
      * Remove like from user's book
      */
     static async unlikeBook(bookId, username) {
-        const userCheck = await User.getUserByUsername(username)           
-        if (!userCheck) throw new NotFoundError(`No username: ${username}`);
+        const userCheck = await db.query(
+            `SELECT username
+             FROM users
+             WHERE username = $1`,
+          [username],
+        );
+        if (!userCheck.rows[0]) throw new NotFoundError(`No username: ${username}`);
             
         const book = await this.getBookById(bookId)
         if (book.length == 0) throw new NotFoundError(`No book: ${bookId}`);

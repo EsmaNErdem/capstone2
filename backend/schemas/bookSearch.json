@@ -4,9 +4,9 @@
     "type": "object",
     "default": {},
     "title": "Book Filter Schema",
-    "required": ["q"],
+    "required": ["search"],
     "properties": {
-        "q": {
+        "search": {
             "type": "string",
             "examples": [
                 "Harry Potter", 

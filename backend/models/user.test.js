@@ -92,17 +92,327 @@ describe("authenticate", function () {
     });
 });
 
-  
+  /************************************** getUserReviews */
+  describe("getUserReviews method", function () {
+    test("should return list of reviews data of a user", async function () {
+        const userReviews = await User.getUserReviews('u1');        
+        expect(userReviews).toEqual([
+            {
+                reviewId: 10000,
+                review: 'Review1',
+                username: 'u1',
+                date: expect.any(Date),
+                book_id: '1',
+                title: 'Book 1',
+                author: 'Author 1',
+                category: 'Category 1',
+                likeCount: '1'
+            },
+            {
+                reviewId: 20000,
+                review: 'Review2',
+                username: 'u1',
+                date: expect.any(Date),
+                book_id: '2',
+                title: 'Book 2',
+                author: 'Author 2',
+                category: 'Category 2',
+                likeCount: '2'
+            }
+        ]);
+    });
+
+    test("should return list of reviews data of a user with partial filters", async function () {
+      const userReviews = await User.getUserReviews('u1', { sortBy: "popular" });        
+      expect(userReviews).toEqual(
+      [
+        {
+          reviewId: 20000,
+          review: 'Review2',
+          username: 'u1',
+          date: expect.any(Date),
+          book_id: '2',
+          title: 'Book 2',
+          author: 'Author 2',
+          category: 'Category 2',
+          likeCount: '2'
+        },
+        {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+        },
+      ]);
+    });
+
+    test("should return list of reviews data of a user with filters", async function () {
+      const userReviews = await User.getUserReviews('u1', { title: "1", sortBy: "popular" });        
+      expect(userReviews).toEqual(
+      [
+        {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+        },
+      ]);
+    });
+
+    test("should return list of reviews data of a user", async function () {
+        const userReviews = await User.getUserReviews('u2');     
+        expect(userReviews).toEqual([]);
+    });
+
+    test("should fail if no user found with given username", async function () {
+        try {
+            await User.getUserReviews('nope'); 
+        } catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+});
+
+  /************************************** getUserLikedBooks */
+  describe("getUserLikedBooks method", function () {
+    test("should return list of books data liked by user", async function () {
+        const userLikedBooks = await User.getUserLikedBooks('u1');        
+        expect(userLikedBooks).toEqual([
+          {
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            publisher: 'Publisher 1',
+            description: 'Description 1',
+            category: 'Category 1',
+            cover: 'Cover 1',
+            likeCount: '1'
+          },
+          {
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            publisher: 'Publisher 2',
+            description: 'Description 2',
+            category: 'Category 2',
+            cover: 'Cover 2',
+            likeCount: '1'
+          }
+        ]);
+    });
+
+    test("should return list of books data liked by user with filters", async function () {
+      const userLikedBooks = await User.getUserLikedBooks('u1', { title: "1", sortBy: "popular" });        
+      expect(userLikedBooks).toEqual(      [
+        {
+          book_id: '1',
+          title: 'Book 1',
+          author: 'Author 1',
+          publisher: 'Publisher 1',
+          description: 'Description 1',
+          category: 'Category 1',
+          cover: 'Cover 1',
+          likeCount: '1'
+        }
+      ]);
+    });
+
+    test("should return list of books data liked by user with partial filters", async function () {
+      const userLikedBooks = await User.getUserLikedBooks('u1', {  sortBy: "title" });
+      expect(userLikedBooks).toEqual( [
+        {
+          book_id: '1',
+          title: 'Book 1',
+          author: 'Author 1',
+          publisher: 'Publisher 1',
+          description: 'Description 1',
+          category: 'Category 1',
+          cover: 'Cover 1',
+          likeCount: '1'
+        },
+        {
+          book_id: '2',
+          title: 'Book 2',
+          author: 'Author 2',
+          publisher: 'Publisher 2',
+          description: 'Description 2',
+          category: 'Category 2',
+          cover: 'Cover 2',
+          likeCount: '1'
+        }
+      ]);
+    });
+
+    test("should return list of books data liked by user", async function () {
+        const userLikedBooks = await User.getUserLikedBooks('u3');     
+        expect(userLikedBooks).toEqual([]);
+    });
+
+    test("should fail if no user found with given username", async function () {
+        try {
+            await User.getUserLikedBooks('nope'); 
+        } catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+});
+
+  /************************************** getUserLikedReviews */
+  describe("getUserLikedReviews method", function () {
+    test("should return list of reviews data liked user", async function () {
+        const userLikedReviews = await User.getUserLikedReviews('u2');  
+                
+      console.log("WWWWWWWWWWWWWWw")
+      console.log(userLikedReviews)
+      console.log("WWWWWWWWWWWWWWw")      
+        expect(userLikedReviews).toEqual([
+            {
+                reviewId: 20000,
+                review: 'Review2',
+                username: 'u1',
+                date: expect.any(Date),
+                book_id: '2',
+                title: 'Book 2',
+                author: 'Author 2',
+                category: 'Category 2'
+            }
+        ]);
+    });
+
+    test("should return list of reviews data liked by user with filters", async function () {
+      const userLikedReviews = await User.getUserLikedReviews('u1', { title: "1" });        
+      expect(userLikedReviews).toEqual([
+          {
+              reviewId: 10000,
+              review: 'Review1',
+              username: 'u1',
+              date: expect.any(Date),
+              book_id: '1',
+              title: 'Book 1',
+              author: 'Author 1',
+              category: 'Category 1'
+          },
+        ]);
+    });
+
+    test("should return list of reviews data liked by user", async function () {
+        const userLikedReviews = await User.getUserLikedReviews('u3');     
+        expect(userLikedReviews).toEqual([]);
+    });
+
+    test("should fail if no user found with given username", async function () {
+        try {
+            await User.getUserLikedReviews('nope'); 
+        } catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+        }
+    });
+});
+
+
+    /************************************** getUserLikeCount */
+    describe('getUserLikeCount method', () => {
+      test("should return number of likes user recieved on their reviews", async function () {
+          const reviewLikeCount = await User.getUserLikeCount('u1');
+          expect(reviewLikeCount).toEqual([ { likeCount: '3' } ]);
+      });
+
+      test("should return [] review if user received no likes", async function () {
+          const reviewLikeCount = await User.getUserLikeCount('u3');
+          expect(reviewLikeCount).toEqual([]);
+      });
+});
+
+
 /************************************** get */
 describe("get", function () {
     test("works", async function () {
       let user = await User.get("u1");
       expect(user).toEqual({
-        username: "u1",
-        firstName: "U1F",
-        lastName: "U1L",
-        email: "u1@email.com",
-        img: "img1"
+        username: 'u1',
+        firstName: 'U1F',
+        lastName: 'U1L',
+        img: 'img1',
+        email: 'u1@email.com',
+        reviews: [
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+          },
+          {
+            reviewId: 20000,
+            review: 'Review2',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            category: 'Category 2',
+            likeCount: '2'
+          }
+        ],
+        likedBooks: [
+          {
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            publisher: 'Publisher 1',
+            description: 'Description 1',
+            category: 'Category 1',
+            cover: 'Cover 1',
+            likeCount: '1'
+          },
+          {
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            publisher: 'Publisher 2',
+            description: 'Description 2',
+            category: 'Category 2',
+            cover: 'Cover 2',
+            likeCount: '1'
+          }
+        ],
+        likedReviews: [
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1'
+          },
+          {
+            reviewId: 20000,
+            review: 'Review2',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            category: 'Category 2'
+          }
+        ],
+        recievedLikeCount: [ { likeCount: '3' } ]
       });
     });
   

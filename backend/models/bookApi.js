@@ -24,7 +24,9 @@ class BookApi {
 
         const url = `${BASE_URL}/${endpoint}`;
         const params = {...data, key:API_KEY}
-
+        console.log("EEEEEEEEEEEEEeeee")
+        console.log(url, params)
+        console.log("EEEEEEEEEEEEEeeee")
         try {
             return await axios.get(url, { params });
         } catch (err) {
@@ -38,8 +40,8 @@ class BookApi {
      * 
      * Returns array of book details in objects
      */
-    static async getListOfBooks() {
-        const res = await this.request(`users/${uid}/bookshelves/0/volumes`) 
+    static async getListOfBooks(startIndex) {
+        const res = await this.request(`users/${uid}/bookshelves/0/volumes`, { startIndex, maxResults: 20 }) 
         return res.data.items
     }
 
@@ -47,8 +49,8 @@ class BookApi {
      *
      * Returns array of book details in objects
      */
-    static async searchListOfBooks(search, terms) {
-        const res = await this.request(`volumes?q=${encodeURIComponent(search)}${terms}`, { projection:"lite" })
+    static async searchListOfBooks(search, terms, startIndex) {
+        const res = await this.request(`volumes?q=${encodeURIComponent(search)}${terms}`, { projection:"lite", startIndex, maxResults: 10 })
         return res.data.items
     }
 

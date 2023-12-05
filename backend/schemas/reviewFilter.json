@@ -22,6 +22,10 @@
         "sortBy": {
             "type": "string",
             "minLength": 1
+        },
+                "sortBy": {
+            "type": "string",
+            "minLength": 1
         }
     },
     "examples": [{

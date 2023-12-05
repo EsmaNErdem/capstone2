@@ -8,6 +8,7 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../expressError");
+const Book = require("./book.js");
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
@@ -105,14 +106,212 @@ class User {
     throw new UnauthorizedError("Invalid username/password");
    }
 
+  /**Get user reviews
+   * 
+   * Gets all reviews that belong to user with given id
+   * Filters (all optional):
+   * - Book Title, 
+   * - Book Author,
+   * - Book Category
+   * Sort by:
+   * - Date of review post (default)
+   * - Number of review likes
+   * 
+   * Returns [{reviewId, review, date, bookId, title, author, category }, ...]
+   */
+  static async getUserReviews(username, searchFilters={}) {
+    let query = `SELECT
+                    r.id AS "reviewId",
+                    r.review,
+                    r.username,
+                    r.created_at AS date,
+                    b.id AS book_id,
+                    b.title,
+                    b.author,
+                    b.category,
+                    COUNT(l.review_id) AS "likeCount"
+                FROM
+                    reviews AS r
+                        LEFT JOIN books AS b ON r.book_id = b.id
+                        LEFT JOIN review_likes AS l ON l.review_id = r.id`;
+
+    let whereExpressions = [];
+    let queryValues = [username];
+    
+    const { title, author, category, sortBy } = searchFilters;
+
+    // For each possible search term, add to whereExpressions and queryValues so
+    // we can generate the right SQL
+    if (title) {
+      queryValues.push(`%${title}%`);
+      whereExpressions.push(`b.title ILIKE $${queryValues.length}`);
+    }
+
+    if (author !== undefined) {
+      queryValues.push(`%${author}%`);
+      whereExpressions.push(`b.author ILIKE $${queryValues.length}`);
+    }
+
+    if (category) {
+      queryValues.push(`%${category}%`);
+      whereExpressions.push(`b.category ILIKE $${queryValues.length}`);
+    }
+  
+    // For each possible sorting term, add to order by, default is date
+    let order = " ORDER BY r.created_at DESC"
+    if (sortBy == "popular") {
+        order = ` ORDER BY "likeCount" DESC`
+    } 
+    query += whereExpressions.length > 0 ? ` WHERE r.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE r.username = $1";
+    query += " GROUP BY r.id, b.id" + order;
+    const reviewsRes = await db.query(query, queryValues);
+
+    return reviewsRes.rows;
+  }  
+
+  /**Get user like books
+     * 
+     * Gets all books that were liked by the user
+     * Filters (all optional):
+     * - Book Title, 
+     * - Book Author,
+     * - Book Category
+     * Sort by:
+     * - Popular books (default)
+     * - Title in alphabethical order
+     * 
+     * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
+     */
+  static async getUserLikedBooks(username, searchFilters={}) {
+    let query = `SELECT
+            b.id AS book_id,
+            b.title,
+            b.author,
+            b.publisher,
+            b.description,
+            b.category,
+            b.cover,
+            COUNT(bl.book_id) AS "likeCount"
+        FROM
+            books AS b 
+                LEFT JOIN book_likes AS bl ON bl.book_id = b.id`;
+    
+    let whereExpressions = [];
+    let queryValues = [username];
+    
+    const { title, author, category, sortBy } = searchFilters;
+
+    // For each possible search term, add to whereExpressions and queryValues so
+    // we can generate the right SQL
+    if (title) {
+      queryValues.push(`%${title}%`);
+      whereExpressions.push(`b.title ILIKE $${queryValues.length}`);
+    }
+
+    if (author !== undefined) {
+      queryValues.push(`%${author}%`);
+      whereExpressions.push(`b.author ILIKE $${queryValues.length}`);
+    }
+
+    if (category) {
+      queryValues.push(`%${category}%`);
+      whereExpressions.push(`b.category ILIKE $${queryValues.length}`);
+    }
+  
+    // For each possible sorting term, add to order by, default is date
+    let order = ` ORDER BY "likeCount" DESC`
+    if (sortBy == "title") {
+        order = ` ORDER BY b.title ASC`
+    } 
+    query += whereExpressions.length > 0 ? ` WHERE bl.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE bl.username = $1";
+    query += " GROUP BY b.id" + order;
+    const booksRes = await db.query(query, queryValues);
+
+    return booksRes.rows;
+  } 
+
+    /**Get user like books
+     * 
+     * Gets all books that were liked by the user
+     * Filters (all optional):
+     * - Book Title, 
+     * - Book Author,
+     * - Book Category
+     * 
+     * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
+     */
+    static async getUserLikedReviews(username, searchFilters={}) {
+      let query = `SELECT
+              r.id AS "reviewId",
+              r.review,
+              r.username,
+              r.created_at AS date,
+              b.id AS book_id,
+              b.title,
+              b.author,
+              b.category
+          FROM
+              reviews AS r
+                  LEFT JOIN books AS b ON r.book_id = b.id
+                  LEFT JOIN review_likes AS l ON l.review_id = r.id`;
+      
+      let whereExpressions = [];
+      let queryValues = [username];
+      
+      const { title, author, category, sortBy } = searchFilters;
+  
+      // For each possible search term, add to whereExpressions and queryValues so
+      // we can generate the right SQL
+      if (title) {
+        queryValues.push(`%${title}%`);
+        whereExpressions.push(`b.title ILIKE $${queryValues.length}`);
+      }
+  
+      if (author !== undefined) {
+        queryValues.push(`%${author}%`);
+        whereExpressions.push(`b.author ILIKE $${queryValues.length}`);
+      }
+  
+      if (category) {
+        queryValues.push(`%${category}%`);
+        whereExpressions.push(`b.category ILIKE $${queryValues.length}`);
+      }
+    
+       // For each possible sorting term, add to order by, default is date
+       let order = " ORDER BY r.created_at DESC"
+
+      query += whereExpressions.length > 0 ? ` WHERE l.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE l.username = $1";
+      query += " GROUP BY r.id, b.id" + order;
+  
+      const likedReviewRes = await db.query(query, queryValues);
+      return likedReviewRes.rows;
+    }
+
+  /**Get user like counts on their reviews
+   * 
+   * Returns total number of like the user received
+   * 
+   */
+  static async getUserLikeCount(username) {
+    const likeCount = await db.query(
+      `SELECT COUNT(r.id) AS "likeCount"
+        FROM
+            reviews AS r 
+                LEFT JOIN review_likes AS l ON l.review_id = r.id
+      WHERE r.username = $1
+      GROUP BY r.username`, [username] 
+      );
+
+    return likeCount.rows;
+  } 
    
   /** Given a username, return data about user.
    *
-   * Returns { username, firstName, lastName, email, img }
+   * Returns { username, firstName, lastName, email, img, reviews, bookLikes, reviewLikes, receivedLikesCount }
    * 
    * Throws NotFoundError if user not found.
    **/
-  static async get(username) {
+  static async get(username, searchFilters={}) {
     const userRes = await db.query(
         `SELECT username,
                 first_name AS "firstName",
@@ -122,12 +321,15 @@ class User {
         FROM users
         WHERE username = $1`,
         [username],
-    );
-
+      );
 
     const user = userRes.rows[0];
-
     if (!user) throw new NotFoundError(`No user: ${username}`);
+
+    user.reviews = await this.getUserReviews(username, searchFilters);
+    user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
+    user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
+    user.recievedLikeCount = await this.getUserLikeCount(username);
 
     return user;
     }

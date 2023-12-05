@@ -65,10 +65,10 @@ describe("Book Routes API Calls", () => {
     afterAll(commonAfterAll);
 
     
-  /************************************** GET /books */
-  describe("GET /books", function () {
+  /************************************** GET /books/all//:page */
+  describe("GET /books/all/:page", function () {
     test("should get lists of books from mocked external API data", async function () {
-      const resp = await request(app).get("/books");
+      const resp = await request(app).get("/books/all/0");
       expect(resp.body).toEqual({
         books:
         [
@@ -97,7 +97,7 @@ describe("Book Routes API Calls", () => {
     test("should handle error from external API calls", async function () {
         Book.getListOfBooks.mockResolvedValue(new ApiNotFoundError("Testing"));
         try {
-            const resp = await request(app).get("/books");
+            const resp = await request(app).get("/books/all//0");
         } catch (e) {
             expect(e instanceof ApiNotFoundError).toBeTruthy();
             expect(resp.statusCode).toEqual(404);
@@ -105,12 +105,12 @@ describe("Book Routes API Calls", () => {
     });
   });
 
-  /************************************** GET /books/search */
-  describe("GET /books/search", function () {
+  /************************************** GET /books/search/:page */
+  describe("GET /books/search/:page", function () {
     test("should get lists of books from mocked external API data if search matches", async function () {
       const resp = await request(app)
-        .get("/books/search")
-        .send({q:"Book"})
+        .get("/books/search/1")
+          .query({search:"Book"})
       expect(resp.body).toEqual({
         books:
         [
@@ -137,7 +137,7 @@ describe("Book Routes API Calls", () => {
     });
 
     test("should throw error if no search provided", async function () {
-        const resp = await request(app).get("/books/search");
+        const resp = await request(app).get("/books/search/0");
         expect(resp.statusCode).toEqual(400);
     });
   });

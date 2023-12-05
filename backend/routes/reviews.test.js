@@ -205,7 +205,7 @@ describe("Review Routes", function () {
     describe("GET /reviews", function () {
         test("should return all reviews", async function () {
             const resp = await request(app)
-            .get(`/reviews`)
+            .get(`/reviews/1`)
                 .set("authorization", `User Token ${u1Token}`);
             expect(resp.body).toEqual({
                   reviews: [
@@ -248,7 +248,7 @@ describe("Review Routes", function () {
         
         test("should filter reviews and sorts", async function () {
             const resp = await request(app)
-                .get(`/reviews`)
+                .get(`/reviews/1`)
                     .query({
                         title: "1",
                         author: "1",
@@ -310,7 +310,7 @@ describe("Review Routes", function () {
         
         test("should fail without auth", async function () {
             const resp = await request(app)
-                .get(`/reviews`)
+                .get(`/reviews/1`)
             expect(resp.statusCode).toEqual(401);
         });
     });

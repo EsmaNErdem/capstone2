@@ -46,7 +46,7 @@ class Review {
      * 
      * Returns [{ reviewId, review, username, date, bookId, title, author, category, numberOfReviewLikes }, ...]
      */
-    static async findAll(searchFilters = {}) {
+    static async findAll(searchFilters = {}, page = 1, pageSize = 10) {
         let query = `SELECT
                         r.id AS "reviewId",
                         r.review,
@@ -98,6 +98,9 @@ class Review {
 
         query += whereExpressions.length > 0 ? ` WHERE ${whereExpressions.join(" AND ")}` : "";
         query += " GROUP BY r.id, b.id" + order;
+        query += ` LIMIT $${queryValues.length + 1} OFFSET $${queryValues.length + 2}`;
+
+        queryValues.push(pageSize, (page - 1) * pageSize);
 
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
@@ -153,47 +156,6 @@ class Review {
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
     }
-
-    /**Get user reviews
-     * 
-     * Gets all reviews that belong to user with given id
-     * Sort by:
-     * - Date of review post (default)
-     * - Number of review likes
-     * - Username in alphabethical order
-     * 
-     * Returns [{reviewId, review, date, bookId, title, author, category }, ...]
-     */
-    static async getUserReviews(username, searchFilters={}) {
-        let query = `SELECT
-                        r.id AS "reviewId",
-                        r.review,
-                        r.username,
-                        r.created_at AS date,
-                        b.id AS book_id,
-                        b.title,
-                        b.author,
-                        b.category,
-                        COUNT(l.review_id) AS "likeCount"
-                    FROM
-                        reviews AS r
-                            LEFT JOIN books AS b ON r.book_id = b.id
-                            LEFT JOIN review_likes AS l ON l.review_id = r.id
-                    WHERE r.username = $1
-                    GROUP BY r.id, b.id`;
-        
-        const { sortBy } = searchFilters;
-
-        // For each possible sorting term, add to order by, default is date
-        let order = " ORDER BY r.created_at DESC"
-        if (sortBy == "popular") {
-            order = " ORDER BY likeCount DESC"
-        } 
-        query += order;
-
-        const reviewsRes = await db.query(query, [username]);
-        return reviewsRes.rows;
-    }  
         
     /** Checks if review exist 
      * 
@@ -219,7 +181,7 @@ class Review {
             FROM
                 reviews AS r
                     LEFT JOIN review_likes AS l ON l.review_id = r.id
-            WHERE id = $1
+            WHERE r.id = $1
             GROUP BY r.id`, [id]
         );
 

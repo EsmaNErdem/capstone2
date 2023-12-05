@@ -186,6 +186,7 @@ describe("Book class", () => {
   describe("getListOfBooks method", function () {
       test("should return External API data of list of books", async function () {
         const books = await Book.getListOfBooks();
+        console.log(books)
         expect(books).toEqual([
               {
               id: '1',
@@ -298,10 +299,10 @@ describe("Book class", () => {
   /************************************** getBook */
   describe('getBook method', () => {
       test("should return External API data of book detail", async function () {
-          const book = await Book.getBook();
-        console.log("*********");
-        console.log(book);
-        console.log("*********")
+          let book = await Book.getBookById("3");
+          expect(book).toEqual([]);
+
+          book = await Book.getBook();
           expect(book).toEqual({
               id: '3',
               title: 'Book 3',
@@ -313,6 +314,9 @@ describe("Book class", () => {
               bookLikeCount: "0",
               reviews: []
           });
+
+          book = await Book.getBookById("3");
+          expect(book).toEqual([ { id: '3' } ]);
       });
 
       test("should throw ApiNotFoundError if BookApi.getListOfBooks returns falsy value", async () => {

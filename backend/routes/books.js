@@ -20,7 +20,7 @@ const Book = require("../models/book")
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-/** GET /books => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
+/** GET /books => { books: [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] }
  *
  * Return JSON list of API retrieved books data
  * Can provide search filter in query:
@@ -40,17 +40,62 @@ const Book = require("../models/book")
  * Authorization required: none
  */
 
-router.get("/", async function (req, res, next) {
+router.get("/all/:startIndex", async function (req, res, next) {
     const q = req.query;
 
     try {  
-      const books = await Book.getListOfBooks();
+      const books = await Book.getListOfBooks(req.params.startIndex);
+      
       return res.json({ books });
     } catch (err) {
       console.error("Error in GET /books:", err);
       return next(err);
     }
 });
+
+// router.get("/", async function (req, res, next) {
+//   const { page = 1, pageSize = 10 } = req.query;
+
+//   try {
+//     const books = await Book.getListOfBooks({ page, pageSize });
+//     return res.json({ books });
+//   } catch (err) {
+//     console.error("Error in GET /books:", err);
+//     return next(err);
+//   }
+// });
+// Example route with pagination
+// router.get("/", async function (req, res, next) {
+//   const { page = 1, pageSize = 10 } = req.query;
+
+//   try {
+//     const books = await Book.getListOfBooks({ page, pageSize });
+//     return res.json({ books });
+//   } catch (err) {
+//     console.error("Error in GET /books:", err);
+//     return next(err);
+//   }
+// });
+// const fetchMoreData = async () => {
+//   setLoading(true);
+//   try {
+//     const nextPage = currentPage + 1;
+//     const newData = await fetchData(nextPage);
+//     setData((prevData) => [...prevData, ...newData]);
+//     setCurrentPage(nextPage);
+//   } catch (error) {
+//     console.error("Error fetching more data:", error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+// const fetchData = async (page) => {
+//   const response = await fetch(`/api/books?page=${page}`);
+//   const data = await response.json();
+//   return data.books;
+// }
+
+
 
 /** GET /books/search => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
  *
@@ -62,18 +107,17 @@ router.get("/", async function (req, res, next) {
  * Authorization required: none
  */
 
-router.get("/search", async function (req, res, next) {
-    const search = req.body;
-    const terms = req.query;
-
+router.get("/search/:startIndex", async function (req, res, next) {
+    const {terms, search} = req.query;
+  console.log("RRRRRRRr", req.query)
     try {
-      const validator = jsonschema.validate({...search, ...terms}, bookSearchSchema);
+      const validator = jsonschema.validate({search, ...terms}, bookSearchSchema);
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);
         throw new BadRequestError(errs);
       }
   
-      const books = await Book.searchListOfBooks(search, terms);
+      const books = await Book.searchListOfBooks(search, terms, req.params.startIndex);
       return res.json({ books });
     } catch (err) {
       console.error("Error in GET /books/search:", err);

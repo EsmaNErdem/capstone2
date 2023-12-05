@@ -75,7 +75,7 @@ router.delete("/:id/users/:username", ensureCorrectUser, async function (req, re
  * Returns reviews
  * Authorization required: logged-in user
  */
-router.get("/", ensureLoggedIn, async function (req, res, next) {
+router.get("/:page", ensureLoggedIn, async function (req, res, next) {
     try {
       const validator = jsonschema.validate(req.query, reviewFilterSchema);
       if (!validator.valid) {
@@ -83,8 +83,8 @@ router.get("/", ensureLoggedIn, async function (req, res, next) {
         throw new BadRequestError(errs);
       }
       
-      const reviews = await Review.findAll(req.query);
-      console.log("*******", req.query, !validator.valid, reviews)
+      const reviews = await Review.findAll(req.query, req.params.page);
+      // console.log("*******", req.query, !validator.valid, reviews)
       return res.json({ reviews });
     } catch (err) {
       return next(err);

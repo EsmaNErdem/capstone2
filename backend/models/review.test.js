@@ -106,6 +106,40 @@ describe("Review class", () => {
         ]);
     });
 
+    test("should return all review data with pagination", async function () {
+      const reviews = await Review.findAll({}, 1, 1);
+      expect(reviews).toEqual([
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+          }
+      ]);
+  });
+
+  test("should return all review data with pagination", async function () {
+    const reviews = await Review.findAll({}, 2, 1);
+    expect(reviews).toEqual([
+      {
+        reviewId: 20000,
+        review: 'Review2',
+        username: 'u1',
+        date: expect.any(Date),
+        book_id: '2',
+        title: 'Book 2',
+        author: 'Author 2',
+        category: 'Category 2',
+        likeCount: '2'
+      }
+    ]);
+});
+
     test("should return all review data with filters", async function () {
         const reviews = await Review.findAll({ title: "1" });
         expect(reviews).toEqual( [
@@ -232,55 +266,6 @@ describe("Review class", () => {
             expect(reviews).toEqual([]);
         });
     });
-    
-    /************************************** getUserReviews */
-    describe("getUserReviews method", function () {
-        test("should return reviews data of list of a book", async function () {
-            const userReviews = await Review.getUserReviews('u1');         
-        // console.log("*********");
-        // console.log(userReviews);
-        // console.log("*********");
-            expect(userReviews).toEqual(
-            [
-                {
-                    reviewId: 10000,
-                    review: 'Review1',
-                    username: 'u1',
-                    date: expect.any(Date),
-                    book_id: '1',
-                    title: 'Book 1',
-                    author: 'Author 1',
-                    category: 'Category 1',
-                    likeCount: '1'
-                },
-                {
-                    reviewId: 20000,
-                    review: 'Review2',
-                    username: 'u1',
-                    date: expect.any(Date),
-                    book_id: '2',
-                    title: 'Book 2',
-                    author: 'Author 2',
-                    category: 'Category 2',
-                    likeCount: '2'
-                }
-            ]);
-        });
-
-        test("should return reviews data of list of a book", async function () {
-            const userReviews = await Review.getUserReviews('u2');     
-            expect(userReviews).toEqual([]);
-        });
-
-        test("should fail if no user found with given username", async function () {
-            try {
-                await Review.getUserReviews('nope'); 
-            } catch (err) {
-                expect(err instanceof NotFoundError).toBeTruthy();
-            }
-        });
-    });
-  
     
   /************************************** getReviewId */
   describe('getReviewId method', () => {
