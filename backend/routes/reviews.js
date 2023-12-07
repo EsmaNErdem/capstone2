@@ -84,7 +84,6 @@ router.get("/:page", ensureLoggedIn, async function (req, res, next) {
       }
       
       const reviews = await Review.findAll(req.query, req.params.page);
-      // console.log("*******", req.query, !validator.valid, reviews)
       return res.json({ reviews });
     } catch (err) {
       return next(err);
@@ -120,7 +119,7 @@ router.get("/books/:id", ensureLoggedIn, async function (req, res, next) {
 });
 
 /**
- * POST /reviews/:id/users/:username: => { likedRevied: reviewId }
+ * POST /reviews/like/:id/users/:username: => { likedRevied: reviewId }
  *
  * Add likes to review
  * Returns reviewId
@@ -137,7 +136,7 @@ router.post("/like/:id/users/:username", ensureCorrectUser, async function (req,
 });
 
 /**
- * DELETE /reviews/:id/users/:username: => { unlikedRevied: reviewId }
+ * DELETE /reviews/like/:id/users/:username: => { unlikedRevied: reviewId }
  *
  * Unlikes review
  * Returns reviewId

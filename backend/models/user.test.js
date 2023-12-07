@@ -95,30 +95,30 @@ describe("authenticate", function () {
   /************************************** getUserReviews */
   describe("getUserReviews method", function () {
     test("should return list of reviews data of a user", async function () {
-        const userReviews = await User.getUserReviews('u1');        
+        const userReviews = await User.getUserReviews('u1', { sortBy: 'popular'});    
         expect(userReviews).toEqual([
-            {
-                reviewId: 10000,
-                review: 'Review1',
-                username: 'u1',
-                date: expect.any(Date),
-                book_id: '1',
-                title: 'Book 1',
-                author: 'Author 1',
-                category: 'Category 1',
-                likeCount: '1'
-            },
-            {
-                reviewId: 20000,
-                review: 'Review2',
-                username: 'u1',
-                date: expect.any(Date),
-                book_id: '2',
-                title: 'Book 2',
-                author: 'Author 2',
-                category: 'Category 2',
-                likeCount: '2'
-            }
+          {
+            reviewId: 20000,
+            review: 'Review2',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            category: 'Category 2',
+            likeCount: '2'
+          },
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+          }
         ]);
     });
 
@@ -271,10 +271,6 @@ describe("authenticate", function () {
   describe("getUserLikedReviews method", function () {
     test("should return list of reviews data liked user", async function () {
         const userLikedReviews = await User.getUserLikedReviews('u2');  
-                
-      console.log("WWWWWWWWWWWWWWw")
-      console.log(userLikedReviews)
-      console.log("WWWWWWWWWWWWWWw")      
         expect(userLikedReviews).toEqual([
             {
                 reviewId: 20000,

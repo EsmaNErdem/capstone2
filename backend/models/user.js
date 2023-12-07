@@ -8,7 +8,6 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../expressError");
-const Book = require("./book.js");
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
@@ -158,10 +157,8 @@ class User {
     }
   
     // For each possible sorting term, add to order by, default is date
-    let order = " ORDER BY r.created_at DESC"
-    if (sortBy == "popular") {
-        order = ` ORDER BY "likeCount" DESC`
-    } 
+    let order = sortBy === "popular" ? ` ORDER BY "likeCount" DESC` : " ORDER BY r.created_at DESC"
+
     query += whereExpressions.length > 0 ? ` WHERE r.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE r.username = $1";
     query += " GROUP BY r.id, b.id" + order;
     const reviewsRes = await db.query(query, queryValues);
@@ -219,10 +216,8 @@ class User {
     }
   
     // For each possible sorting term, add to order by, default is date
-    let order = ` ORDER BY "likeCount" DESC`
-    if (sortBy == "title") {
-        order = ` ORDER BY b.title ASC`
-    } 
+    let order = sortBy === "title" ? ` ORDER BY b.title ASC` : ` ORDER BY "likeCount" DESC`
+
     query += whereExpressions.length > 0 ? ` WHERE bl.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE bl.username = $1";
     query += " GROUP BY b.id" + order;
     const booksRes = await db.query(query, queryValues);

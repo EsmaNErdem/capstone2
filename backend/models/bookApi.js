@@ -24,9 +24,7 @@ class BookApi {
 
         const url = `${BASE_URL}/${endpoint}`;
         const params = {...data, key:API_KEY}
-        console.log("EEEEEEEEEEEEEeeee")
-        console.log(url, params)
-        console.log("EEEEEEEEEEEEEeeee")
+        
         try {
             return await axios.get(url, { params });
         } catch (err) {

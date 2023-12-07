@@ -14,20 +14,9 @@ const bookNewSchema = require("../schemas/bookNew.json")
 const Book = require("../models/book")
 
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// // Child router for example: /users/3/books/4 user id access
-// const childRouter = express.Router({ mergeParams: true });
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-/** GET /books => { books: [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] }
+/** GET /books/all/:startIndex => { books: [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] }
  *
  * Return JSON list of API retrieved books data
- * Can provide search filter in query:
- * - title
- * - author
- * - publisher
- * - category
  * 	{
 			"id": "ayJpGQeyxgkC",
 			"title": "To Kill a Mockingbird 40th",
@@ -37,12 +26,11 @@ const Book = require("../models/book")
 			"category": "FICTION",
 			"cover": "http://books.google.com/books/content?id=ayJpGQeyxgkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
 		}
+
  * Authorization required: none
  */
 
 router.get("/all/:startIndex", async function (req, res, next) {
-    const q = req.query;
-
     try {  
       const books = await Book.getListOfBooks(req.params.startIndex);
       
@@ -53,29 +41,6 @@ router.get("/all/:startIndex", async function (req, res, next) {
     }
 });
 
-// router.get("/", async function (req, res, next) {
-//   const { page = 1, pageSize = 10 } = req.query;
-
-//   try {
-//     const books = await Book.getListOfBooks({ page, pageSize });
-//     return res.json({ books });
-//   } catch (err) {
-//     console.error("Error in GET /books:", err);
-//     return next(err);
-//   }
-// });
-// Example route with pagination
-// router.get("/", async function (req, res, next) {
-//   const { page = 1, pageSize = 10 } = req.query;
-
-//   try {
-//     const books = await Book.getListOfBooks({ page, pageSize });
-//     return res.json({ books });
-//   } catch (err) {
-//     console.error("Error in GET /books:", err);
-//     return next(err);
-//   }
-// });
 // const fetchMoreData = async () => {
 //   setLoading(true);
 //   try {
@@ -97,19 +62,17 @@ router.get("/all/:startIndex", async function (req, res, next) {
 
 
 
-/** GET /books/search => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
+/** GET /books/search/:startIndex => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
  *
  * Return JSON list of API retrieved books data filter by search params
  * Can provide advense search filter in query with these terms:
- * - Body: { search: string (required) }
- * - Query Parameters: title, author, publisher, subject
+ * - Query Parameters: { search: string (required), terms: { title, author, publisher, subject } (optional) }
  * 
  * Authorization required: none
  */
-
 router.get("/search/:startIndex", async function (req, res, next) {
     const {terms, search} = req.query;
-  console.log("RRRRRRRr", req.query)
+
     try {
       const validator = jsonschema.validate({search, ...terms}, bookSearchSchema);
       if (!validator.valid) {
@@ -132,7 +95,6 @@ router.get("/search/:startIndex", async function (req, res, next) {
  * 
  * Authorization required: none
  */
-
 router.get("/:id", async function (req, res, next) {
     try {
       const book = await Book.getBook(req.params.id);
@@ -151,7 +113,6 @@ router.get("/:id", async function (req, res, next) {
  * 
  * Authorization required: same-user-as-:username
  */
-
 router.post("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, bookNewSchema);
@@ -175,7 +136,6 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
  * 
  * Authorization required: same-user-as-:username
  */
-
 router.delete("/:id/users/:username", ensureCorrectUser,  async function (req, res, next) {
   try {
     const bookId = await Book.unlikeBook(req.params.id, req.params.username);

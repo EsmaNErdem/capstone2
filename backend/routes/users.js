@@ -72,7 +72,7 @@ router.post("/login", async function (req, res, next) {
 
 /** GET /users/[username] => { user }
  *
- * Returns { username, first_name, last_name, email, img }
+ * Returns { username, firstName, lastName, email, img, reviews, bookLikes, reviewLikes, receivedLikesCount, followings, followers }
  * 
  * Authorization required: logged-in user
  **/

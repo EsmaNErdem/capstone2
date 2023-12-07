@@ -116,61 +116,62 @@ describe("POST /users/login", function () {
   });
 });
 
-// /************************************** GET /users/:username */
+/************************************** GET /users/:username */
 
-// describe("GET /users/:username", function () {
-//   test("works for admin", async function () {
-//     const resp = await request(app)
-//         .get(`/users/u1`)
-//         .set("authorization", `Bearer ${adminToken}`);
-//     expect(resp.body).toEqual({
-//       user: {
-//         username: "u1",
-//         firstName: "U1F",
-//         lastName: "U1L",
-//         email: "user1@user.com",
-//         isAdmin: false,
-//         applications: [testJobIds[0]],
-//       },
-//     });
-//   });
+describe("GET /users/:username", function () {
+  test("shows detail of a user", async function () {
+    const resp = await request(app)
+        .get(`/users/u1`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.body).toEqual({
+      user: {
+        username: 'u1',
+        firstName: 'U1F',
+        lastName: 'U1L',
+        img: 'img1',
+        email: "user1@user.com",
+        reviews: [],
+        likedBooks: [
+          {
+            book_id: '1',
+            title: 'Book1',
+            author: 'Author1',
+            publisher: 'Publisher1',
+            description: 'Description1',
+            category: 'Category 1',
+            cover: 'Cover1',
+            likeCount: '1'
+          },
+          {
+            book_id: '2',
+            title: 'Book2',
+            author: 'Author2',
+            publisher: 'Publisher2',
+            description: 'Description2',
+            category: 'Category 2',
+            cover: 'Cover2',
+            likeCount: '1'
+          }
+        ],
+        likedReviews: [],
+        recievedLikeCount: []
+      }
+    });
+  });
 
-//   test("works for same user", async function () {
-//     const resp = await request(app)
-//         .get(`/users/u1`)
-//         .set("authorization", `Bearer ${u1Token}`);
-//     expect(resp.body).toEqual({
-//       user: {
-//         username: "u1",
-//         firstName: "U1F",
-//         lastName: "U1L",
-//         email: "user1@user.com",
-//         isAdmin: false,
-//         applications: [testJobIds[0]],
-//       },
-//     });
-//   });
+  test("unauth for anon", async function () {
+    const resp = await request(app)
+        .get(`/users/u1`);
+    expect(resp.statusCode).toEqual(401);
+  });
 
-//   test("unauth for other users", async function () {
-//     const resp = await request(app)
-//         .get(`/users/u1`)
-//         .set("authorization", `Bearer ${u2Token}`);
-//     expect(resp.statusCode).toEqual(401);
-//   });
-
-//   test("unauth for anon", async function () {
-//     const resp = await request(app)
-//         .get(`/users/u1`);
-//     expect(resp.statusCode).toEqual(401);
-//   });
-
-//   test("not found if user not found", async function () {
-//     const resp = await request(app)
-//         .get(`/users/nope`)
-//         .set("authorization", `Bearer ${adminToken}`);
-//     expect(resp.statusCode).toEqual(404);
-//   });
-// });
+  test("not found if user not found", async function () {
+    const resp = await request(app)
+        .get(`/users/nope`)
+        .set("authorization", `User Token ${u1Token}`);
+    expect(resp.statusCode).toEqual(404);
+  });
+});
 
 /************************************** PATCH /users/:username */
 
