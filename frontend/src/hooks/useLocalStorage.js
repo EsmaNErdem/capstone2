@@ -15,7 +15,7 @@ const useLocalStorage = (localStorageKey, initialValue = null) => {
         try {
             initialUserValue = JSON.parse(localStorage.getItem(localStorageKey))
         } catch (e) {
-            console.error("useLocalStorage custom hook: problem loading localStorage data", err);
+            console.error("useLocalStorage custom hook: problem loading localStorage data", e);
         }
     }
 

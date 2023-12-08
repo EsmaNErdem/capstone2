@@ -1,6 +1,6 @@
 // Routes.js
 import React, { useContext } from "react";
-import { Route, Redirect} from "react-router-dom";
+import {Routes, Route, Navigate } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 
 /**
@@ -11,18 +11,14 @@ import UserContext from "../auth/UserContext";
  * if no user logged in, redirect them to the login form. 
  * 
  */
-
-const ProtectedRoute = ({ exact, path, children }) => {
+const ProtectedRoute = ({ element, path }) => {
   const { currentUser } = useContext(UserContext);
 
-  if(!currentUser) {
-    return <Redirect to="/login" />
+  if (!currentUser) {
+    return
   }
-  return (
-    <Route exact={exact} path={path}>
-        {children}
-    </Route>
-  );
+
+  return <Route element={element} path={path} />;
 };
 
 export default ProtectedRoute;

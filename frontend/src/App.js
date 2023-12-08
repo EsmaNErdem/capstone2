@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import useLocalStorage from "./hooks/useLocalStorage";
-import Routes from "./routes/Routes";
-import NavBar from "./routes/NavBar";
+import BookRoutes from "./routes-nav/BookRoutes";
+import NavBar from "./routes-nav/NavBar";
 import UserContext from "./auth/UserContext";
 import BookClubApi from './api';
 import Loading from "./utilities/Loading";
@@ -166,10 +166,10 @@ const App = () => {
   /** 
   * Send user like book, check if it is already liked, update likedBooks state 
   * */
-   const likeBook = async (bookId, bookData) => {
+   const likeBook = async (bookId, bookData={}) => {
     if(hasLikedBook(bookId)) {
       try{
-        const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username, bookData)
+        const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username)
         setLikedBooks((prevLikedBooks) => {
           const newLikedBooks = new Set(prevLikedBooks);
           newLikedBooks.delete(unlikedBookId);
@@ -215,7 +215,7 @@ const App = () => {
       <BrowserRouter>
         <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, hasFollowing, likeReview, likeBook, followUser }}>
           <NavBar logOut={logOut} />
-          <Routes login={login} signup={signup}/>
+          <BookRoutes login={login} signup={signup} />
         </UserContext.Provider>
       </BrowserRouter>
     </div>

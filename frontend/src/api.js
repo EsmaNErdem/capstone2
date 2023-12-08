@@ -46,7 +46,7 @@ class BookClubApi {
      * Get all books
      * Books data is paginated, as index as params increase more data loads
      */
-    static async getAllBooks(index) {
+    static async getBookList(index) {
         const res = await this.request(`books/all/${index}`)
         return res.books;
     }
@@ -140,7 +140,7 @@ class BookClubApi {
     /**
      * Deleted user book review
      */
-    static async deleteBookReview(username) {
+    static async deleteBookReview(id, username) {
         const res = await this.request(`reviews/${id}/users/${username}`, {}, "delete")
         return res.deleted;
     }
