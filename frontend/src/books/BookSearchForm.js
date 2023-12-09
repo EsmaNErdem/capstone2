@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import "./BookSearchForm.css"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 /**
  *  Displays reusable search box component for searching book
  * 
@@ -21,21 +24,26 @@ const BookSearchForm = ({searchFor}) => {
     //  Handles form submission and triggers the search function which API calls for data.
     const handleSubmit = e => {
         e.preventDefault();
-        if (formData.search) formData.search = formData.search.trim()
+        if (formData.search) formData.search = formData.search
         if (formData.title) formData.title = formData.title.trim()
         if (formData.author) formData.author = formData.author.trim()
         if (formData.publisher) formData.publisher = formData.publisher.trim()
         if (formData.subject) formData.subject = formData.subject.trim()
         
         const searchData = {
-            search: formData.search || formData.title || formData.author || formData.publisher || formData.subject,
+            search:
+              formData.search ||
+              formData.title ||
+              formData.author ||
+              formData.publisher ||
+              formData.subject,
             terms: {
-                title: formData.title,
-                author: formData.author,
-                publisher: formData.publisher,
-                subject: formData.subject,
-            }
-          }
+              title: formData.title,
+              author: formData.author,
+              publisher: formData.publisher,
+              subject: formData.subject,
+            },
+        };
           
         searchFor(searchData || undefined)
     }
@@ -55,7 +63,6 @@ const BookSearchForm = ({searchFor}) => {
                 clearTimeout(timeoutId);
             }
         
-            // Set a new timeout
             const newTimeoutId = setTimeout(() => {
                 handleSubmit(e);
             }, 1200); 
@@ -70,16 +77,21 @@ const BookSearchForm = ({searchFor}) => {
 
 
     return (
-        <div className="SearchBox">
-            <form onSubmit={handleSubmit}>
-                <input 
-                    name="search"
-                    type="search"
-                    placeholder="Search Books"
-                    value={formData.search || ""}
-                    onChange={handleChange}
-                />
-                {advancedSearch ? 
+        <div className={`SearchBox ${advancedSearch ? "AdvancedSearch" : ""}`}>
+            <form className="SearchForm" onSubmit={handleSubmit}>
+                <div className="SearchInputContainer">
+                    <input
+                        name="search"
+                        type="search"
+                        placeholder="Search Books"
+                        value={formData.search || ""}
+                        onChange={handleChange}
+                    />
+                    {!advancedSearch && (
+                        <FontAwesomeIcon icon={faSearch} className="SubmitButton-inside" />
+                    )}
+                </div>
+                {advancedSearch ? (
                     <>
                         <input
                             name="title"
@@ -109,17 +121,34 @@ const BookSearchForm = ({searchFor}) => {
                             value={formData.subject || ""}
                             onChange={handleChange}
                         />
-                        <button type="button" onClick={toggleAdvancedSearch}>
-                            Toggle Advanced Search
+                        <button
+                            type="button"
+                            className="ToggleButton"
+                            onClick={toggleAdvancedSearch}
+                            title="Toggle Advanced Search"
+                            >
+                            <FontAwesomeIcon icon={faFilter} />
                         </button>
-                        <button type="submit" className="btn btn-lg btn-primary">
-                            Submit
+                        <button 
+                            type="submit" 
+                            className="SubmitButton" 
+                            title="Submit Search"
+                            >
+                            <FontAwesomeIcon icon={faSearch} /> 
                         </button>
-                    </> :
-                    <button type="button" onClick={toggleAdvancedSearch}>
-                        Toggle Advanced Search
-                    </button>
-                }
+                    </>
+                    ) : (
+                    <>
+                        <button
+                            type="button"
+                            className="ToggleButton-large"
+                            onClick={toggleAdvancedSearch}
+                            title="Toggle Advanced Search"
+                            >
+                            <FontAwesomeIcon icon={faFilter} />
+                        </button>
+                    </>
+                )}
             </form>
         </div>
     )

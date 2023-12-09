@@ -168,23 +168,26 @@ const App = () => {
   * */
    const likeBook = async (bookId, bookData={}) => {
     if(hasLikedBook(bookId)) {
-      try{
+      // try{
         const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username)
         setLikedBooks((prevLikedBooks) => {
           const newLikedBooks = new Set(prevLikedBooks);
           newLikedBooks.delete(unlikedBookId);
           return newLikedBooks;
         });
-      } catch (e) {
-        console.error("Send user unlike book error:", e)
-      }
+        return unlikedBookId
+      // } catch (e) {
+      //   console.error("Send user unlike book error:", e)
+      // }
     } else {
-      try{
+      // try{
         const likedBookId = await BookClubApi.likeBook(bookId, currentUser.username, bookData)
         setLikedBooks(b => new Set([...b, likedBookId]))
-      } catch (e) {
-        console.error("Send user like book error:", e)
-      }}
+        return likedBookId
+      // } catch (e) {
+        // console.error("Send user like book error:", e)
+      // }
+    }
   }
 
   /** 
@@ -213,7 +216,7 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, hasFollowing, likeReview, likeBook, followUser }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, likeBook, followUser }}>
           <NavBar logOut={logOut} />
           <BookRoutes login={login} signup={signup} />
         </UserContext.Provider>

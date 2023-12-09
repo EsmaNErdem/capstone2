@@ -22,9 +22,9 @@ const BookList = () => {
 
   const [loading, setLoading] = useState(true)
   const [books, setBooks] = useState([]);
-  const [indexList, setIndexList] = useState(10);
+  const [indexList, setIndexList] = useState(15);
   const [searchData, setSearchData] = useState({})
-  const [indexSearch, setIndexSearch] = useState(10)
+  const [indexSearch, setIndexSearch] = useState(15)
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
@@ -36,11 +36,13 @@ const BookList = () => {
 
     // Make an API call to get first batch of books data from backend when there is no searchDatan submitted
     const getFirstList =  async () => {
+      setError(null);
       try {
         const booksApi = await BookClubApi.getBookList(0);
         setBooks(booksApi);
       } catch (e) {
-          console.error("BookList useEffect API call data loading error:", e)
+        console.error("BookList useEffect API call data loading error:", e);
+        setError("An error occurred while fetching search results.");
       }
       
       setLoading(false)
@@ -48,7 +50,7 @@ const BookList = () => {
 
     // Makes the initial API call based on the provided search data
     const getFirstSearch =  async () => {
-      
+      setError(null);
       if (!searchData.search) {
         getFirstList();
       }
@@ -58,7 +60,7 @@ const BookList = () => {
         setBooks(searchBook);
       } catch (e) {
           console.error("Search BookList useEffect API call data loading error:", e)
-          setLoading(false); 
+          setError("An error occurred while fetching search results.");
       }
       
       setLoading(false)
@@ -74,21 +76,26 @@ const BookList = () => {
 
   // Gets more books list data as user infinite scrolls
   const getBookList = async () => {
+    setError(null);
     try {
         const booksApi = await BookClubApi.getBookList(indexList);
         booksApi.length > 0 ? setHasMore(true) : setHasMore(false);
         setBooks(b => [...b, ...booksApi]);
     } catch (e) {
-        console.error("BookList API call data loading error:", e)
+        console.error("BookList API call data loading error:", e);
+        setError("An error occurred while fetching search results.");
     }
+
     setLoading(false)
-    setIndexList(index => index + 10)
+    setIndexList(index => index + 15)
   }
 
   // Gets more searched books data as user infinite scrolls
   const searchBookList = async () => {
+    setError(null);
     if (!searchData.search) {
       setError("Search data is required.");
+      return;
     }
 
     try {
@@ -96,10 +103,12 @@ const BookList = () => {
         searchBook.length > 0 ? setHasMore(true) : setHasMore(false);
         setBooks(b => [...b, ...searchBook]);
     } catch (e) {
-        console.error("BookSearch API call data loading error:", e)
+        console.error("BookSearch API call data loading error:", e);
+        setError("An error occurred while fetching search results.");
     }
+
     setLoading(false)
-    setIndexSearch(index => index + 10)
+    setIndexSearch(index => index + 15)
   }
 
 
@@ -121,18 +130,18 @@ const BookList = () => {
         {books.length
             ? (
                 <div className="BookList-list">
-                  {books.map((book, i) => (
+                  {books.map(({ id, title, author, description, publisher, category, cover, bookLikeCount, reviews }) => (
                       <BookCard 
-                        key = {i}
-                        id = {book.id}
-                        title = {book.title}
-                        author = {book.author}
-                        description = {book.description}
-                        publisher = {book.publisher}
-                        category = {book.category}
-                        cover = {book.cover}
-                        bookLikeCount = {book.bookLikeCount}
-                        reviews = {book.reviews}
+                          key={id}
+                          id={id}
+                          title={title}
+                          author={author}
+                          description={description}
+                          publisher={publisher}
+                          category={category}
+                          cover={cover}
+                          bookLikeCount={bookLikeCount}
+                          reviews={reviews}
                       />
                   ))}
                 </div>
