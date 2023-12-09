@@ -28,15 +28,15 @@ const BookRoutes = ({ login, signup }) => {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/books" element={<BookList />} />
-      <Route path="/login" element={<Home />} />
+      {/* <Route path="/login" element={<Home />} />
       <Route path="/signup" element={<Home />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<Navigate to="/" />} /> */}
 
       </Routes>
-      <ProtectedRoute element={<Home />} path="/reviews"/>
+      {/* <ProtectedRoute element={<Home />} path="/reviews"/>
       <ProtectedRoute element={<BookList />} path="/books"/>
       <ProtectedRoute element={<Home />} path="/profile"/>
-      <Navigate  to="/" />
+      <Navigate  to="/" /> */}
     </>
   );
 };

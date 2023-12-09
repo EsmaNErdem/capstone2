@@ -48,7 +48,7 @@ const App = () => {
           // set token on BookBlubApi for API call auth.
           BookClubApi.token = user.token
           // get data on the current user
-          const currentUser = await BookClubApi.getUser(user.username)
+          const currentUser = await BookClubApi.getUser("EEE")
           setCurrentUser(currentUser)
           setReviews(currentUser.reviews);
           setLikedReviews(new Set(currentUser.likedReviews))

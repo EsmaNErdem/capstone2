@@ -181,5 +181,7 @@ class BookClubApi {
     }
 
 }
+// For user EEE
+BookClubApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVFRSIsImlhdCI6MTcwMjA3MTMwNH0.9f4MLtiZZ5FIO50nuQkXULRw6gBZRsPid_v6FfUKeG0"
 
 export default BookClubApi

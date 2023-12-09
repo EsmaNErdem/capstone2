@@ -39,7 +39,7 @@ class BookApi {
      * Returns array of book details in objects
      */
     static async getListOfBooks(startIndex) {
-        const res = await this.request(`users/${uid}/bookshelves/0/volumes`, { startIndex, maxResults: 20 }) 
+        const res = await this.request(`users/${uid}/bookshelves/0/volumes`, { startIndex, maxResults: 10 }) 
         return res.data.items
     }
 

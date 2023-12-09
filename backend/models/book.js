@@ -199,8 +199,8 @@ class Book {
 
                 return {
                     ...bookData,
-                    bookLikeCount: likeCounts[bookData.id],
-                    reviews: reviews[bookData.id]
+                    bookLikeCount: likeCounts[bookData.id] || 0,
+                    reviews: reviews[bookData.id] || []
                 };
             });
 
@@ -246,7 +246,7 @@ class Book {
                         const bookData =  {
                             id: book.id, 
                             title: book.volumeInfo.title,
-                            author: book.volumeInfo.authors[0],
+                            author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : undefined,
                             publisher: book.volumeInfo.publisher,
                             description: book.volumeInfo.description,
                             cover: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : undefined
