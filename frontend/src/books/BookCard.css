@@ -78,7 +78,7 @@
       }
   }
   
-  .LikeButton.Liked {
+  .LikeButton .Liked {
     background-color: #f00000;
     color: #fff;
   }

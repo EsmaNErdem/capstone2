@@ -53,7 +53,8 @@ describe("Review Routes", function () {
                         id: expect.any(Number), 
                         username: 'u2',
                         book_id: '1', 
-                        review: 'Review'
+                        review: 'Review',
+                        date: expect.any(String),
                     }
             });
         });
@@ -81,7 +82,8 @@ describe("Review Routes", function () {
                         id: expect.any(Number), 
                         username: 'u2',
                         book_id: 'New Book', 
-                        review: 'Review'
+                        review: 'Review',
+                        date: expect.any(String),
                     }
             });
             book = await Book.getBookById('New Book')
@@ -327,17 +329,19 @@ describe("Review Routes", function () {
                       reviewId: expect.any(Number),
                       review: 'Review2',
                       username: 'u2',
+                      userImg: "img2",
                       date: expect.any(String),
                       book_id: '1',
-                      likeCount: '1'
+                      reviewLikeCount: '1'
                     },
                     {
                       reviewId: expect.any(Number),
                       review: 'Review1',
                       username: 'u1',
+                      userImg: "img1",
                       date: expect.any(String),
                       book_id: '1',
-                      likeCount: '2'
+                      reviewLikeCount: '2'
                     }
                   ]
             });
@@ -358,7 +362,8 @@ describe("Review Routes", function () {
                       username: 'u1',
                       date: expect.any(String),
                       book_id: '1',
-                      likeCount: '2'
+                      userImg: "img1",
+                      reviewLikeCount: '2'
                     },
                     {
                       reviewId: expect.any(Number),
@@ -366,7 +371,8 @@ describe("Review Routes", function () {
                       username: 'u2',
                       date: expect.any(String),
                       book_id: '1',
-                      likeCount: '1'
+                      userImg: "img2",
+                      reviewLikeCount: '1'
                     },
                   ]
             });
@@ -387,7 +393,8 @@ describe("Review Routes", function () {
                       username: 'u1',
                       date: expect.any(String),
                       book_id: '1',
-                      likeCount: '2'
+                      userImg: "img1",
+                      reviewLikeCount: '2'
                     }
                   ]
             });

@@ -32,7 +32,8 @@ describe("Review class", () => {
             id: expect.any(Number), 
             username: 'u1',
             book_id: '1', 
-            review: 'Review'
+            review: 'Review',
+            date: expect.any(Date),
         });
     });
 
@@ -52,7 +53,8 @@ describe("Review class", () => {
             id: expect.any(Number), 
             username: 'u1',
             book_id: 'bookId', 
-            review: 'Review'
+            review: 'Review',
+            date: expect.any(Date),
         });
         const newBook = await Book.getBookById("bookId");
         expect(newBook).toEqual([{ id: "bookId" }]);
@@ -78,36 +80,36 @@ describe("Review class", () => {
 
   /************************************** findAll */
   describe("findAll method", function () {
-    test("should return all review data with no filter", async function () {
-        const reviews = await Review.findAll();
-        expect(reviews).toEqual([
-            {
-              reviewId: 10000,
-              review: 'Review1',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '1',
-              title: 'Book 1',
-              author: 'Author 1',
-              category: 'Category 1',
-              likeCount: '1'
-            },
-            {
-              reviewId: 20000,
-              review: 'Review2',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '2',
-              title: 'Book 2',
-              author: 'Author 2',
-              category: 'Category 2',
-              likeCount: '2'
-            }
+    test("should return all review data with filters popular", async function () {
+      const reviews = await Review.findAll({ sortBy: "popular" });
+      expect(reviews).toEqual([
+          {
+            reviewId: 20000,
+            review: 'Review2',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '2',
+            title: 'Book 2',
+            author: 'Author 2',
+            category: 'Category 2',
+            likeCount: '2'
+          },
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            likeCount: '1'
+          },
         ]);
     });
 
     test("should return all review data with pagination", async function () {
-      const reviews = await Review.findAll({}, 1, 1);
+      const reviews = await Review.findAll({ sortBy: "popular" }, 2, 1);
       expect(reviews).toEqual([
           {
             reviewId: 10000,
@@ -124,7 +126,7 @@ describe("Review class", () => {
   });
 
   test("should return all review data with pagination", async function () {
-    const reviews = await Review.findAll({}, 2, 1);
+    const reviews = await Review.findAll({sortBy: "popular"}, 1, 1);
     expect(reviews).toEqual([
       {
         reviewId: 20000,
@@ -174,61 +176,6 @@ describe("Review class", () => {
         ]);
     });
 
-    test("should return all review data with filters popular", async function () {
-        const reviews = await Review.findAll({ sortBy: "popular" });
-        expect(reviews).toEqual([
-            {
-              reviewId: 20000,
-              review: 'Review2',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '2',
-              title: 'Book 2',
-              author: 'Author 2',
-              category: 'Category 2',
-              likeCount: '2'
-            },
-            {
-              reviewId: 10000,
-              review: 'Review1',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '1',
-              title: 'Book 1',
-              author: 'Author 1',
-              category: 'Category 1',
-              likeCount: '1'
-            },
-        ]);
-    });
-
-    test("should return all review data with filters", async function () {
-        const reviews = await Review.findAll({ sortBy: "user" });
-        expect(reviews).toEqual([
-            {
-              reviewId: 10000,
-              review: 'Review1',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '1',
-              title: 'Book 1',
-              author: 'Author 1',
-              category: 'Category 1',
-              likeCount: '1'
-            },
-            {
-              reviewId: 20000,
-              review: 'Review2',
-              username: 'u1',
-              date: expect.any(Date),
-              book_id: '2',
-              title: 'Book 2',
-              author: 'Author 2',
-              category: 'Category 2',
-              likeCount: '2'
-            },
-        ]);
-    });
   });
 
     /************************************** getReviewsByBook */
@@ -240,9 +187,10 @@ describe("Review class", () => {
                 reviewId: 10000,
                 review: 'Review1',
                 username: 'u1',
+                userImg: "img1",
                 date: expect.any(Date),
                 book_id: '1',
-                likeCount: '1'
+                reviewLikeCount: '1'
                 }
             ]);
         });
@@ -254,9 +202,10 @@ describe("Review class", () => {
                 reviewId: 10000,
                 review: 'Review1',
                 username: 'u1',
+                userImg: "img1",
                 date: expect.any(Date),
                 book_id: '1',
-                likeCount: '1'
+                reviewLikeCount: '1'
                 }
             ]);
         });

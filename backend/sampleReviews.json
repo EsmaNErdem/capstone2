@@ -1,0 +1,222 @@
+{
+"books": [
+    {
+        "id": "U2ioPwAACAAJ",
+        "title": "The Kite Runner",
+        "author": "Khaled Hosseini",
+        "description": "Traces the unlikely friendship of a wealthy Afghan youth and a servant's son in a tale that spans the final days of Afghanistan's monarchy through the atrocities of the present day.",
+        "category": "Afghanistan",
+        "cover": "http://books.google.com/books/content?id=U2ioPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "MbW3_eSDGl4C",
+        "title": "Interview with the Vampire",
+        "author": "Anne Rice",
+        "publisher": "Ballantine Books",
+        "description": "The spellbinding classic that started it all, from the #1 New York Times bestselling author—the inspiration for the hit television series “A magnificent, compulsively readable thriller . . . Rice begins where Bram Stoker and the Hollywood ...",
+        "category": "Fiction",
+        "cover": "http://books.google.com/books/content?id=MbW3_eSDGl4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "0E1rAQAACAAJ",
+        "title": "Holes",
+        "author": "Louis Sachar",
+        "publisher": "Bloomsbury Publishing",
+        "description": "Stanley Yelnat's family has a history of bad luck, so he is not too surprised when a miscarriage of justice sends him to a detention centre. As punishment the boys must dig a hole each day. The warden claims it's character building but Stanley ...",
+        "category": "Airplane crash survival",
+        "cover": "http://books.google.com/books/content?id=0E1rAQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "iVCNDQAAQBAJ",
+        "title": "Eragon",
+        "author": "Christopher Paolini",
+        "publisher": "Knopf Books for Young Readers",
+        "description": "In Alagaèesia, a fifteen-year-old boy of unknown lineage called Eragon finds a mysterious stone that weaves his life into an intricate tapestry of destiny, magic, and power, peopled with dragons, elves, and monsters.",
+        "category": "Juvenile Fiction",
+        "cover": "http://books.google.com/books/content?id=iVCNDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "hbZ0Yfz-NG8C",
+        "title": "The Da Vinci Code",
+        "author": "Dan Brown",
+        "publisher": "Anchor",
+        "description": "#1 WORLDWIDE BESTSELLER • While in Paris, Harvard symbologist Robert Langdon is awakened by a phone call in the dead of the night. The elderly curator of the Louvre has been murdered inside the museum, his body covered in baffling symbols ...",
+        "category": "Fiction",
+        "cover": "http://books.google.com/books/content?id=hbZ0Yfz-NG8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "ibi2CwAAQBAJ",
+        "title": "A Man Called Ove",
+        "author": "Fredrik Backman",
+        "publisher": "Noura Books",
+        "description": "Sebelum terlibat lebih jauh dengannya, biar kuberi tahu. Lelaki bernama Ove ini mungkin bukan tipemu. Ove bukan tipe lelaki yang menuliskan puisi cinta atau menyanyikan lagu saat kencan pertama. Dia juga bukan tetangga yang akan menyambutmu di ...",
+        "category": "Juvenile Fiction",
+        "cover": "http://books.google.com/books/content?id=ibi2CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "O3PZCwAAQBAJ",
+        "title": "The Secret Life of Bees",
+        "author": "Sue Monk Kidd",
+        "publisher": "Penguin Books",
+        "description": "After her mother's death, Lily Owens and her African-American maid seek refuge from the racism of their South Carolina hometown with eccentric beekeeping sisters in this coming of age story representing the letter “K” in a new series of twenty ...",
+        "category": "Fiction",
+        "cover": "http://books.google.com/books/content?id=O3PZCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "cYCkmu5sq8EC",
+        "title": "Frog and Toad Are Friends",
+        "author": "Arnold Lobel",
+        "publisher": "Harper Collins",
+        "description": "One summer day Toad was unhappy. He had lost the white, fourholed, big, round, thick button from his jacket. Who helped him look for it? His best friend, Frog. Another day, Frog was unhappy. He was sick in bed and looking green. Who gave him some ...",
+        "category": "Juvenile Fiction",
+        "cover": "http://books.google.com/books/content?id=cYCkmu5sq8EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "QxrGEAAAQBAJ",
+        "title": "A Room with a View",
+        "author": "E. M. Forster",
+        "publisher": "Mustread Digital Books",
+        "description": "\"A Room with a View\" is a 1908 novel by English writer E. M. Forster, about a young woman in the restrained culture of Edwardian era England. The novel is both a romance and a humorous critique of English society at the beginning of the 20th century.",
+        "category": "Fiction",
+        "cover": "http://books.google.com/books/content?id=QxrGEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "80QVNQAACAAJ",
+        "title": "Angela's Ashes",
+        "author": "Frank McCourt",
+        "publisher": "SCHOLASTIC",
+        "description": "Extensive reading improves fluency and there is a real need in the ELT classroom for motivating, contemporary graded material that will instantly appeal to students. Angela's Ashes is based on the bestselling novel by Frank McCourt.",
+        "category": "Children",
+        "cover": "http://books.google.com/books/content?id=80QVNQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "p-2s2PWArTQC",
+        "title": "The Boy in the Striped Pajamas",
+        "author": "John Boyne",
+        "publisher": "David Fickling Books",
+        "description": "Two young boys encounter the best and worst of humanity during the Holocaust in this powerful read that USA Today called \"as memorable an introduction to the subject as The Diary of Anne Frank.” Berlin, 1942: When Bruno returns home from school ...",
+        "category": "Young Adult Fiction",
+        "cover": "http://books.google.com/books/content?id=p-2s2PWArTQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "VdxNlZidgikC",
+        "title": "I Know Why the Caged Bird Sings",
+        "author": "Maya Angelou",
+        "publisher": "Random House",
+        "description": "Here is a book as joyous and painful, as mysterious and memorable, as childhood itself. I Know Why the Caged Bird Sings captures the longing of lonely children, the brute insult of bigotry, and the wonder of words that can make the world right ...",
+        "category": "Biography & Autobiography",
+        "cover": "http://books.google.com/books/content?id=VdxNlZidgikC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "oRSxDAAAQBAJ",
+        "title": "A Hope More Powerful than the Sea",
+        "author": "Melissa Fleming",
+        "publisher": "Hachette UK",
+        "description": "Soon to be a major film, produced by Steven Spielberg and J. J. Abrams. This is the story of Doaa, an ordinary girl from a village in Syria, who in 2015 became one of five hundred people crammed on to a fishing boat setting sail for Europe. The ...",
+        "category": "Biography & Autobiography",
+        "cover": "http://books.google.com/books/content?id=oRSxDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "wMzazQEACAAJ",
+        "title": "Obachan",
+        "author": "Tani Hanes",
+        "publisher": "Independently Published",
+        "description": "Mitsuko Hanamura was born wanting very little out of life: a place to call her own, maybe a small garden where she could grow flowers, just a little house with a shelf for some books, where she could live alone, with no need to share a bed, or a ...",
+        "category": null,
+        "cover": "http://books.google.com/books/content?id=wMzazQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "3rDAzQEACAAJ",
+        "title": "The Woman They Could Not Silence",
+        "author": "Kate Moore",
+        "publisher": "Sourcebooks",
+        "description": "From the New York Times, USA Today, and Wall Street Journalbestselling author of The Radium Girlscomes another dark and dramatic but ultimately uplifting tale of a forgotten woman whose inspirational journey sparked lasting change for women's ...",
+        "category": "Biography & Autobiography",
+        "cover": "http://books.google.com/books/content?id=3rDAzQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "QieOVrOhlW8C",
+        "title": "The Journey of Crazy Horse",
+        "author": "Joseph M. Marshall III",
+        "publisher": "Penguin",
+        "description": "Drawing on vivid oral histories, Joseph M. Marshall’s intimate biography introduces a never-before-seen portrait of Crazy Horse and his Lakota community Most of the world remembers Crazy Horse as a peerless warrior who brought the U.S. Army to ...",
+        "category": "History",
+        "cover": "http://books.google.com/books/content?id=QieOVrOhlW8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "oZCzEAAAQBAJ",
+        "title": "Leslie F*cking Jones",
+        "author": "Leslie Jones",
+        "publisher": "Grand Central Publishing",
+        "description": "A NEW YORK TIMES BESTSELLER Hey you guys, it’s Leslie. I’m excited to share my story with you. Now, I’m gonna be honest: Some of the details might be vague because a b*tch is fifty-five and she’s smoked a ton of weed. But while bits might be a ...",
+        "category": "Humor",
+        "cover": "http://books.google.com/books/content?id=oZCzEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "7FusEAAAQBAJ",
+        "title": "Making It So",
+        "author": "Patrick Stewart",
+        "publisher": "Simon and Schuster",
+        "description": "The long-awaited memoir from iconic, beloved actor and living legend Sir Patrick Stewart! From his acclaimed stage triumphs to his legendary onscreen work in the Star Trek and X-Men franchises, Sir Patrick Stewart has captivated audiences around ...",
+        "category": "Biography & Autobiography",
+        "cover": "http://books.google.com/books/content?id=7FusEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "3G7MwwEACAAJ",
+        "title": "The Origin of Species",
+        "author": "Charles Darwin",
+        "publisher": "Blurb",
+        "description": "On the Origin of Species (or more completely, On the Origin of Species by Means of Natural Selection, or the Preservation of Favoured Races in the Struggle for Life), published on 24 November 1859, is a work of scientific literature by Charles ...",
+        "category": "Reference",
+        "cover": "http://books.google.com/books/content?id=3G7MwwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    },
+    {
+        "id": "ptDrDAAAQBAJ",
+        "title": "A Piece of the World",
+        "author": "Christina Baker Kline",
+        "publisher": "HarperCollins UK",
+        "description": "‘Graceful, moving and powerful . . . a wonderful story that seems to have been waiting, all this time, for Kline to come along and tell it’ MICHAEL CHABON",
+        "category": "Fiction",
+        "cover": "http://books.google.com/books/content?id=ptDrDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "bookLikeCount": 0,
+        "reviews": []
+    }
+]}

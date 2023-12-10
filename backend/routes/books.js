@@ -111,9 +111,9 @@ router.get("/:id", async function (req, res, next) {
  * Saves book data to database and adds book id to user's book_likes
  * Book data will be sent from frontend
  * 
- * Authorization required: same-user-as-:username
+ * Authorization required: logged-in user
  */
-router.post("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
+router.post("/:id/users/:username", ensureLoggedIn, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, bookNewSchema);
     if (!validator.valid) {
@@ -134,9 +134,9 @@ router.post("/:id/users/:username", ensureCorrectUser, async function (req, res,
  * 
  * Removes book from user's liked list
  * 
- * Authorization required: same-user-as-:username
+ * Authorization required: logged-in user
  */
-router.delete("/:id/users/:username", ensureCorrectUser,  async function (req, res, next) {
+router.delete("/:id/users/:username", ensureLoggedIn,  async function (req, res, next) {
   try {
     const bookId = await Book.unlikeBook(req.params.id, req.params.username);
 

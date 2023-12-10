@@ -3,7 +3,7 @@ CREATE TABLE users (
   password TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  img TEXT,
+  img TEXT NOT NULL DEFAULT '../static/user-profile.jpg',
   email TEXT NOT NULL
     CHECK (position('@' IN email) > 1)
   -- email TEXT NOT NULL

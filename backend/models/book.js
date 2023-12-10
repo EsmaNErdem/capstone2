@@ -113,11 +113,13 @@ class Book {
                     r.id AS "reviewId",
                     r.review,
                     r.username,
+                    u.img AS "userImg",
                     r.created_at AS date,
                     COUNT(l.review_id) AS "reviewLikeCount"
             FROM reviews AS r
                 LEFT JOIN review_likes AS l ON l.review_id = r.id
-            GROUP BY book_id, id`
+                LEFT JOIN users as U ON u.username = r.username
+            GROUP BY book_id, id, u.img`
         );
 
         const reviews= {};

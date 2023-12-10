@@ -137,6 +137,7 @@ describe("Book class", () => {
               reviewId: 10000,
               review: 'Review1',
               username: 'u1',
+              userImg: "img1",
               date: expect.any(Date),
               reviewLikeCount: '1'
             }
@@ -147,6 +148,7 @@ describe("Book class", () => {
               reviewId: 20000,
               review: 'Review2',
               username: 'u1',
+              userImg: "img1",
               date: expect.any(Date),
               reviewLikeCount: '2'
             }
@@ -199,6 +201,7 @@ describe("Book class", () => {
                   reviewId: 10000,
                   review: 'Review1',
                   username: 'u1',
+                  userImg: "img1",
                   date: expect.any(Date),
                   reviewLikeCount: '1'
                 },
@@ -218,6 +221,7 @@ describe("Book class", () => {
                 reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
+                userImg: "img1",
                 date: expect.any(Date),
                 reviewLikeCount: '2'
               }]
@@ -253,6 +257,7 @@ describe("Book class", () => {
                 reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
+                userImg: "img1",
                 date: expect.any(Date),
                 reviewLikeCount: '2'
               }]
@@ -276,6 +281,7 @@ describe("Book class", () => {
                 reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
+                userImg: "img1",
                 date: expect.any(Date),
                 reviewLikeCount: '2'
               }]

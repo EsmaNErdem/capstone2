@@ -26,7 +26,7 @@ class Review {
         const reviewRes =  await db.query(
             `INSERT INTO reviews (review, book_id, username)
             VALUES ($1, $2, $3)
-            RETURNING id, review, book_id, username`, [review, book[0].id, username]
+            RETURNING id, review, book_id, username, created_at AS date`, [review, book[0].id, username]
             );
 
         return reviewRes.rows[0]
@@ -122,13 +122,15 @@ class Review {
                         r.id AS "reviewId",
                         r.review,
                         r.username,
+                        u.img AS "userImg",
                         r.created_at AS date,
                         b.id AS book_id,
-                        COUNT(l.review_id) AS "likeCount"
+                        COUNT(l.review_id) AS "reviewLikeCount"
                     FROM
                         reviews AS r
                             LEFT JOIN books AS b ON r.book_id = b.id
-                            LEFT JOIN review_likes AS l ON l.review_id = r.id`;
+                            LEFT JOIN review_likes AS l ON l.review_id = r.id
+                            LEFT JOIN users as U ON u.username = r.username`;
 
         let whereExpressions = [];
         let queryValues = [bookId];
@@ -147,11 +149,11 @@ class Review {
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
-            order = ` ORDER BY "likeCount" DESC`
+            order = ` ORDER BY "reviewLikeCount" DESC`
         } 
 
         query += whereExpressions.length > 0 ? ` WHERE b.id = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE b.id = $1";
-        query += " GROUP BY r.id, b.id" + order;
+        query += " GROUP BY r.id, b.id, u.img" + order;
 
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;

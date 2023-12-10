@@ -106,7 +106,7 @@ describe("authenticate", function () {
             title: 'Book 2',
             author: 'Author 2',
             category: 'Category 2',
-            likeCount: '2'
+            reviewLikeCount: '2'
           },
           {
             reviewId: 10000,
@@ -117,7 +117,7 @@ describe("authenticate", function () {
             title: 'Book 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
           }
         ]);
     });
@@ -135,7 +135,7 @@ describe("authenticate", function () {
           title: 'Book 2',
           author: 'Author 2',
           category: 'Category 2',
-          likeCount: '2'
+          reviewLikeCount: '2'
         },
         {
             reviewId: 10000,
@@ -146,7 +146,7 @@ describe("authenticate", function () {
             title: 'Book 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
         },
       ]);
     });
@@ -164,7 +164,7 @@ describe("authenticate", function () {
             title: 'Book 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
         },
       ]);
     });
@@ -350,7 +350,7 @@ describe("get", function () {
             title: 'Book 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
           },
           {
             reviewId: 20000,
@@ -361,7 +361,7 @@ describe("get", function () {
             title: 'Book 2',
             author: 'Author 2',
             category: 'Category 2',
-            likeCount: '2'
+            reviewLikeCount: '2'
           }
         ],
         likedBooks: [

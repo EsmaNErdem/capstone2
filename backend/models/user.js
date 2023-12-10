@@ -128,7 +128,7 @@ class User {
                     b.title,
                     b.author,
                     b.category,
-                    COUNT(l.review_id) AS "likeCount"
+                    COUNT(l.review_id) AS "reviewLikeCount"
                 FROM
                     reviews AS r
                         LEFT JOIN books AS b ON r.book_id = b.id
@@ -157,7 +157,7 @@ class User {
     }
   
     // For each possible sorting term, add to order by, default is date
-    let order = sortBy === "popular" ? ` ORDER BY "likeCount" DESC` : " ORDER BY r.created_at DESC"
+    let order = sortBy === "popular" ? ` ORDER BY "reviewLikeCount" DESC` : " ORDER BY r.created_at DESC"
 
     query += whereExpressions.length > 0 ? ` WHERE r.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE r.username = $1";
     query += " GROUP BY r.id, b.id" + order;

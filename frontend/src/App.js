@@ -43,16 +43,18 @@ const App = () => {
     console.debug("App useEffect loadUserInfo", "user=", user);
 
     const getCurrentUser = async () => {
-      if (user) {
+      const userSample = {username: 'testuser1', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVFRSIsImlhdCI6MTcwMjA3MTMwNH0.9f4MLtiZZ5FIO50nuQkXULRw6gBZRsPid_v6FfUKeG0"}
+      if (userSample) {
         try{
           // set token on BookBlubApi for API call auth.
-          BookClubApi.token = user.token
+          BookClubApi.token = userSample.token
           // get data on the current user
-          const currentUser = await BookClubApi.getUser("EEE")
+          const currentUser = await BookClubApi.getUser(userSample.username)
           setCurrentUser(currentUser)
           setReviews(currentUser.reviews);
-          setLikedReviews(new Set(currentUser.likedReviews))
-          setLikedBooks(new Set(currentUser.likedBooks))
+
+          setLikedReviews(new Set(currentUser.likedReviews.map(r => r.reviewId)))
+          setLikedBooks(new Set(currentUser.likedBooks.map(b => b.book_id)))
           // setFollowing(new Set(currentUser.following))
         } catch (e) {
           console.error("App loadUserInfo: problem loading", e)
@@ -164,6 +166,28 @@ const App = () => {
   }
 
   /** 
+  * Add current user review and updates review state
+  * Returns review
+  * */
+  const addUserReview = async (reviewData) => {
+    try{
+      let userReview = await BookClubApi.sendBookReview(currentUser.username, reviewData)
+      userReview ={
+        reviewId: userReview.id,
+        review: userReview.review,
+        username: userReview.username,
+        userImg: currentUser.img,
+        date: userReview.date,
+        reviewLikeCount: "0",
+     }
+      setReviews(r => new Set([...r, userReview]))
+      return userReview
+    } catch (e) {
+      console.error("Send user review error:", e)
+    }
+  }
+
+  /** 
   * Send user like book, check if it is already liked, update likedBooks state 
   * */
    const likeBook = async (bookId, bookData={}) => {
@@ -216,7 +240,7 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, likeBook, followUser }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, addUserReview, likeBook, followUser }}>
           <NavBar logOut={logOut} />
           <BookRoutes login={login} signup={signup} />
         </UserContext.Provider>

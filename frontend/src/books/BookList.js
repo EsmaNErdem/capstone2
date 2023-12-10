@@ -140,7 +140,7 @@ const BookList = () => {
                           publisher={publisher}
                           category={category}
                           cover={cover}
-                          bookLikeCount={bookLikeCount}
+                          bookLikeCount={+bookLikeCount}
                           reviews={reviews}
                       />
                   ))}

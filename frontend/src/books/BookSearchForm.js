@@ -24,7 +24,6 @@ const BookSearchForm = ({searchFor}) => {
     //  Handles form submission and triggers the search function which API calls for data.
     const handleSubmit = e => {
         e.preventDefault();
-        if (formData.search) formData.search = formData.search
         if (formData.title) formData.title = formData.title.trim()
         if (formData.author) formData.author = formData.author.trim()
         if (formData.publisher) formData.publisher = formData.publisher.trim()
