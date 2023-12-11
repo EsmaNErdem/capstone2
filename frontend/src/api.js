@@ -168,7 +168,7 @@ class BookClubApi {
      * Send user review like, returns liked review id
      */
     static async likeReview(id, username) {
-        const res = await this.request(`review/like/${id}/users/${username}`, {}, "post")
+        const res = await this.request(`reviews/like/${id}/users/${username}`, {}, "post")
         return res.likedReview;
     }
 
@@ -176,12 +176,10 @@ class BookClubApi {
      * Deletes user review like, returns unliked review id
      */
     static async unlikeReview(id, username) {
-        const res = await this.request(`review/like/${id}/users/${username}`, {}, "delete")
+        const res = await this.request(`reviews/like/${id}/users/${username}`, {}, "delete")
         return res.unlikedReview;
     }
 
 }
-// For user EEE
-BookClubApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVFRSIsImlhdCI6MTcwMjA3MTMwNH0.9f4MLtiZZ5FIO50nuQkXULRw6gBZRsPid_v6FfUKeG0"
 
 export default BookClubApi

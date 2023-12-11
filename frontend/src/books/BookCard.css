@@ -10,29 +10,40 @@
     transition: transform 0.3s ease-in-out;
   
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.02);
     }
   }
   
   .CardImage img {
     width: 100%;
-    height: 150px; /* Adjust the height as needed */
+    height: 150px; 
     object-fit: cover;
   }
   
   .CardContent {
     padding: 16px;
   }
-  
+
+  .Title {
+    text-decoration: none;
+  }
+
   h2 {
+    color: #a074f3; 
     font-size: 1.2rem;
     margin-bottom: 8px;
   }
+
+  h2:hover {
+    color: #ff6347; 
+    transition: color 0.3s ease;
+  }
   
   h3 {
-    font-size: 1rem;
-    color: #555;
+    font-size: .85rem;
+    color: gray;
     margin-bottom: 12px;
+    font-style: italic;
   }
   
   p {
@@ -44,43 +55,11 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 10px; 
   }
 
-  .CardFooter {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: 10px; /* Adjust the margin as needed */
-  }
-  
-  .Reviews {
-    display: flex;
-    align-items: center; 
-    cursor: pointer;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    transition: background-color 0.3s ease-in-out;
-    &:hover {
-        background-color: yellowgreen;
-        color: #fff;
-      }
-  }
-  
-  .LikeButton {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    &:hover {
-        color: #f00000;
-      }
-  }
-  
-  .LikeButton .Liked {
-    background-color: #f00000;
-    color: #fff;
+  .CardImage {
+    border-radius: 8px;
   }
   
   @media (min-width: 768px) {
@@ -95,7 +74,7 @@
   
   @media (min-width: 992px) {
     .BookCard {
-      max-width: calc(25% - 20px); /* Four books in a row with margin */
+      max-width: calc(20% - 10px); /* Four books in a row with margin */
     }
   }
   

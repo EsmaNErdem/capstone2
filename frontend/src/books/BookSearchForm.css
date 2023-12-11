@@ -1,7 +1,7 @@
 .SearchBox {
     margin: 20px;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid yellowgreen;
     border-radius: 8px;
     transition: background-color 0.3s ease;
   }

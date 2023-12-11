@@ -1,0 +1,22 @@
+/* BookReviewDrawer.css */
+.drawer-heading {
+    color: #6038ab;
+    text-decoration: none;
+}
+
+.drawer-heading:hover {
+  transform: scale(1.03);
+}
+  
+.author-info {
+  font-style: italic;
+  color: gray;
+  text-decoration: none;
+}
+
+.drawer-image {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+  

@@ -113,7 +113,7 @@ router.get("/:id", async function (req, res, next) {
  * 
  * Authorization required: logged-in user
  */
-router.post("/:id/users/:username", ensureLoggedIn, async function (req, res, next) {
+router.post("/:id/users/:username", ensureCorrectUser, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, bookNewSchema);
     if (!validator.valid) {
@@ -136,7 +136,7 @@ router.post("/:id/users/:username", ensureLoggedIn, async function (req, res, ne
  * 
  * Authorization required: logged-in user
  */
-router.delete("/:id/users/:username", ensureLoggedIn,  async function (req, res, next) {
+router.delete("/:id/users/:username", ensureCorrectUser,  async function (req, res, next) {
   try {
     const bookId = await Book.unlikeBook(req.params.id, req.params.username);
 

@@ -327,21 +327,21 @@ describe("Review Routes", function () {
                 reviews: [
                     {
                       reviewId: expect.any(Number),
-                      review: 'Review2',
-                      username: 'u2',
-                      userImg: "img2",
-                      date: expect.any(String),
-                      book_id: '1',
-                      reviewLikeCount: '1'
-                    },
-                    {
-                      reviewId: expect.any(Number),
                       review: 'Review1',
                       username: 'u1',
                       userImg: "img1",
                       date: expect.any(String),
                       book_id: '1',
                       reviewLikeCount: '2'
+                    },
+                    {
+                      reviewId: expect.any(Number),
+                      review: 'Review2',
+                      username: 'u2',
+                      userImg: "img2",
+                      date: expect.any(String),
+                      book_id: '1',
+                      reviewLikeCount: '1'
                     }
                   ]
             });

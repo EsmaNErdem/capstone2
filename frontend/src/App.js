@@ -43,16 +43,18 @@ const App = () => {
     console.debug("App useEffect loadUserInfo", "user=", user);
 
     const getCurrentUser = async () => {
-      const userSample = {username: 'testuser1', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVFRSIsImlhdCI6MTcwMjA3MTMwNH0.9f4MLtiZZ5FIO50nuQkXULRw6gBZRsPid_v6FfUKeG0"}
+      // const userSample = {username: 'LordOfTheBooks', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxvcmRPZlRoZUJvb2tzIiwiaWF0IjoxNzAyMjQxMTY2fQ.XtDbleW1cW69oqiW0Okbjar9dkg6-Xu4948sHhvCMrk"}
+
+      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMjI0MTk3N30.qY41zLX8dt6jW2sCu5SXPcXXlJgpnaxMr8WomLjigp0"}
       if (userSample) {
         try{
           // set token on BookBlubApi for API call auth.
           BookClubApi.token = userSample.token
           // get data on the current user
           const currentUser = await BookClubApi.getUser(userSample.username)
-          setCurrentUser(currentUser)
-          setReviews(currentUser.reviews);
 
+          setCurrentUser(currentUser)
+          setReviews(new Set(currentUser.reviews.map(r => r.reviewId)));
           setLikedReviews(new Set(currentUser.likedReviews.map(r => r.reviewId)))
           setLikedBooks(new Set(currentUser.likedBooks.map(b => b.book_id)))
           // setFollowing(new Set(currentUser.following))
@@ -147,11 +149,12 @@ const App = () => {
     if(hasLikedReview(reviewId)) {
       try{
         const unlikedReviewId = await BookClubApi.unlikeReview(reviewId, currentUser.username)
-        setLikedReviews((prevLikedReviews) => {
+        setLikedReviews(prevLikedReviews => {
           const newLikedReviews = new Set(prevLikedReviews);
           newLikedReviews.delete(unlikedReviewId);
           return newLikedReviews;
         });
+        return unlikedReviewId;
       } catch (e) {
         console.error("Send user unlike review error:", e)
       }
@@ -159,6 +162,7 @@ const App = () => {
       try{
         const likedReviewId = await BookClubApi.likeReview(reviewId, currentUser.username)
         setLikedReviews(r => new Set([...r, likedReviewId]))
+        return likedReviewId
       } catch (e) {
         console.error("Send user like review error:", e)
       }
@@ -180,21 +184,41 @@ const App = () => {
         date: userReview.date,
         reviewLikeCount: "0",
      }
-      setReviews(r => new Set([...r, userReview]))
+      setReviews(r => new Set([...r, userReview.reviewId]))
       return userReview
     } catch (e) {
       console.error("Send user review error:", e)
     }
   }
 
+
+ /** 
+  * Delete current user review and updates review state
+  * Returns deleted review id
+  * */
+ const deleteUserReview = async (reviewId) => {
+    try{
+      let deletedReviewId = await BookClubApi.deleteBookReview(+reviewId,  currentUser.username)
+      setReviews(userReviewIds => {
+        const newUserReviewIds = new Set(userReviewIds);
+        newUserReviewIds.delete(deletedReviewId);
+        return newUserReviewIds;
+      });
+      return deletedReviewId
+    } catch (e) {
+      console.error("Delete user review error:", e)
+    }
+  }
+
+
   /** 
   * Send user like book, check if it is already liked, update likedBooks state 
   * */
-   const likeBook = async (bookId, bookData={}) => {
+  const likeBook = async (bookId, bookData={}) => {
     if(hasLikedBook(bookId)) {
       // try{
         const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username)
-        setLikedBooks((prevLikedBooks) => {
+        setLikedBooks(prevLikedBooks => {
           const newLikedBooks = new Set(prevLikedBooks);
           newLikedBooks.delete(unlikedBookId);
           return newLikedBooks;
@@ -240,7 +264,7 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, addUserReview, likeBook, followUser }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, addUserReview, deleteUserReview, likeBook, followUser }}>
           <NavBar logOut={logOut} />
           <BookRoutes login={login} signup={signup} />
         </UserContext.Provider>

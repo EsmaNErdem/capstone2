@@ -5,6 +5,7 @@ import BookSearchForm from "./BookSearchForm";
 import BookCard from "./BookCard";
 import Alert from "../utilities/Alert"
 import InfiniteScroll from "react-infinite-scroll-component";
+import "./BookList.css"
 
 /**
  * Displays a list of books and search box.
@@ -15,6 +16,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
  * - API call loads books data when the component mounts wtih getBookList and when the search box is submitted with getSearchedBookResult.
  * - This component is designed for the "/books" route.
  * - Utilizes BookCard and BookSearchForm components and called by Routes
+ * 
  * - Routes ==> BookCard, BookSearchForm
  */
 const BookList = () => {

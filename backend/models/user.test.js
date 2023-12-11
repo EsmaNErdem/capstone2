@@ -334,6 +334,7 @@ describe("authenticate", function () {
 describe("get", function () {
     test("works", async function () {
       let user = await User.get("u1");
+      console.log(user)
       expect(user).toEqual({
         username: 'u1',
         firstName: 'U1F',
@@ -341,17 +342,6 @@ describe("get", function () {
         img: 'img1',
         email: 'u1@email.com',
         reviews: [
-          {
-            reviewId: 10000,
-            review: 'Review1',
-            username: 'u1',
-            date: expect.any(Date),
-            book_id: '1',
-            title: 'Book 1',
-            author: 'Author 1',
-            category: 'Category 1',
-            reviewLikeCount: '1'
-          },
           {
             reviewId: 20000,
             review: 'Review2',
@@ -362,6 +352,17 @@ describe("get", function () {
             author: 'Author 2',
             category: 'Category 2',
             reviewLikeCount: '2'
+          },
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1',
+            reviewLikeCount: '1'
           }
         ],
         likedBooks: [
@@ -388,16 +389,6 @@ describe("get", function () {
         ],
         likedReviews: [
           {
-            reviewId: 10000,
-            review: 'Review1',
-            username: 'u1',
-            date: expect.any(Date),
-            book_id: '1',
-            title: 'Book 1',
-            author: 'Author 1',
-            category: 'Category 1'
-          },
-          {
             reviewId: 20000,
             review: 'Review2',
             username: 'u1',
@@ -406,6 +397,16 @@ describe("get", function () {
             title: 'Book 2',
             author: 'Author 2',
             category: 'Category 2'
+          },
+          {
+            reviewId: 10000,
+            review: 'Review1',
+            username: 'u1',
+            date: expect.any(Date),
+            book_id: '1',
+            title: 'Book 1',
+            author: 'Author 1',
+            category: 'Category 1'
           }
         ],
         recievedLikeCount: [ { likeCount: '3' } ]

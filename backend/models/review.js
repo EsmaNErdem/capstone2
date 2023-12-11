@@ -145,12 +145,14 @@ class Review {
         } 
         
         // For each possible sorting term, add to order by, default is date
-        let order = " ORDER BY r.created_at DESC"
+        let order = " ORDER BY r.created_at ASC"
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
             order = ` ORDER BY "reviewLikeCount" DESC`
-        } 
+        }  else if (sortBy == "date") {
+            order = " ORDER BY r.created_at DESC"
+        }
 
         query += whereExpressions.length > 0 ? ` WHERE b.id = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE b.id = $1";
         query += " GROUP BY r.id, b.id, u.img" + order;

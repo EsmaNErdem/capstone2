@@ -1,0 +1,27 @@
+/* BookList.css */
+
+.BookList-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  @media (min-width: 768px) {
+    .BookList-list {
+      justify-content: space-between;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .BookList-list {
+      justify-content: space-between;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .BookList-list {
+      justify-content: space-between;
+    }
+  }
+  
