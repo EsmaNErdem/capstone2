@@ -1,6 +1,6 @@
 .BookCard {
     width: 100%;
-    max-width: 200px; /* Adjust the maximum width as needed */
+    max-width: 200px;
     margin: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -74,7 +74,7 @@
   
   @media (min-width: 992px) {
     .BookCard {
-      max-width: calc(20% - 10px); /* Four books in a row with margin */
+      max-width: calc(20%); /* Four books in a row with margin */
     }
   }
   

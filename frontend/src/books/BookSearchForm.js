@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./BookSearchForm.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
+
 /**
  *  Displays reusable search box component for searching book
  * 

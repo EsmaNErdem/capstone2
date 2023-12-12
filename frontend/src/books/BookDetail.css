@@ -1,0 +1,53 @@
+.BookDetail {
+    margin: 20px;
+  }
+
+  .BookDetailContainer {
+    border: 0;
+  }
+
+  .BookCoverPaper {
+    height: 100%;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+
+  }
+  
+  .BookCoverImage {
+    width: auto;
+    max-width: 3750px;
+    height: 100%;
+    max-height: 465px;
+    object-fit: fit;
+  }
+  
+  .BookDetailPaper {
+    padding: 20px;
+  }
+  
+  .BookSummary {
+    margin-bottom: 20px;
+  }
+  
+  .CardFooter {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .LikeSection,
+  .ReviewSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ReviewButton {
+    color: #000; 
+  }
+  
+  .HasReviews {
+    color: yellowgreen; 
+  }
+  

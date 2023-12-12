@@ -13,7 +13,7 @@ import "./BookList.css"
  * along with database reviews and likes. It supports both infinite scrolling for loading
  * more books and a search feature to filter books based on user input.
  * 
- * - API call loads books data when the component mounts wtih getBookList and when the search box is submitted with getSearchedBookResult.
+ * - API call loads books data when the component mounts with getBookList and when the search box is submitted with getSearchedBookResult.
  * - This component is designed for the "/books" route.
  * - Utilizes BookCard and BookSearchForm components and called by Routes
  * 
@@ -112,7 +112,6 @@ const BookList = () => {
     setLoading(false)
     setIndexSearch(index => index + 15)
   }
-
 
   const searchBookData = (data) => {
     setSearchData(data)

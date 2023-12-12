@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import BookReview from './BookReview';
+import ReviewCard from '../reviews/ReviewCard';
 import BookReviewAdd from './BookReviewAdd';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -63,7 +63,7 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
                 <List sx={{ marginTop: '10px'}}>
                     <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
                         <Link to={`/books/${bookData.id}`} className="drawer-heading">
-                            <ListItemText primary={bookData.title} primaryTypographyProps={{fontSize: '2rem', fontWeight: "bold"}} />
+                            <ListItemText primary={bookData.title} primaryTypographyProps={{fontSize: '1.5rem', fontWeight: "bold"}} />
                         </Link>
                     </ListItem>
                     <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
@@ -71,19 +71,25 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
                             <ListItemText primary={`By ${bookData.author}`} />
                         </Link>
                     </ListItem>
-                    <ListItem style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
-                        <img
-                            alt={bookData.title}
-                            src={bookData.cover}
-                            className="drawer-image"
-                        />
+                    <ListItem style={{ marginTop: '5px', display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
+                        <Link to={`/books/${bookData.id}`}>
+                            <img
+                                alt={bookData.title}
+                                src={bookData.cover}
+                                className="drawer-image"
+                            />
+                        </Link>
                     </ListItem>
+                </List>
+
+                <List>
+                    <BookReviewAdd addReviews={addReviews} />
                 </List>
                 <Divider />
                 
                 <List>
                     {reviews.map(({ reviewId, review, username, userImg, date, reviewLikeCount }) => 
-                            <BookReview 
+                            <ReviewCard 
                                 key={reviewId}
                                 reviewId={reviewId}
                                 review={review}
@@ -94,10 +100,6 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
                                 deleteReview={deleteReview}
                             />
                         )}
-                </List>
-
-                <List>
-                    <BookReviewAdd addReviews={addReviews} />
                 </List>
             </Box>
         </SwipeableDrawer>

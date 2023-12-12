@@ -214,6 +214,11 @@ describe("Review class", () => {
             const reviews = await Review.getReviewsByBook('1', { username: "u2"});
             expect(reviews).toEqual([]);
         });
+
+        test("should return empty string if nook book id match", async function () {
+          const reviews = await Review.getReviewsByBook('nope');
+          expect(reviews).toEqual([]);
+      });
     });
     
   /************************************** getReviewId */

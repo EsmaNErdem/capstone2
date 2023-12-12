@@ -119,7 +119,8 @@ class Book {
             FROM reviews AS r
                 LEFT JOIN review_likes AS l ON l.review_id = r.id
                 LEFT JOIN users as U ON u.username = r.username
-            GROUP BY book_id, id, u.img`
+            GROUP BY book_id, id, u.img
+            ORDER BY date DESC`
         );
 
         const reviews= {};
@@ -165,7 +166,8 @@ class Book {
                 FROM reviews
                     LEFT JOIN review_likes ON review_likes.review_id = reviewS.id
                 WHERE book_id = $1
-                GROUP BY id;`,
+                GROUP BY id
+                ORDER BY date DESC;`,
                 [bookId]
         );
 
@@ -255,7 +257,7 @@ class Book {
                         };
                 return {
                     ...bookData,
-                    bookLikeCount: likeCounts[bookData.id],
+                    bookLikeCount: likeCounts[bookData.id] || 0,
                     reviews: reviews[bookData.id]
                 };
             });
@@ -281,7 +283,7 @@ class Book {
                 publisher: book.volumeInfo.publisher,
                 description: book.volumeInfo.description,
                 categories: book.volumeInfo.categories,
-                cover: book.volumeInfo.imageLinks.medium
+                cover: book.volumeInfo.imageLinks.thumbnail || undefined
             };
             let likeCount = "0";
             let reviews = [];

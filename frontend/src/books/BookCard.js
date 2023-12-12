@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import UserContext from "../auth/UserContext";
+import useBookLike from "../hooks/useBookLike";
 import Alert from "../utilities/Alert"
 import BookClubApi from "../api";
 import BookReviewDrawer from "../drawer/BookReviewDrawer";
@@ -21,51 +22,13 @@ import './BookCard.css';
 const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[] }) => {
     console.debug("BookCard");
     
-    const { hasLikedBook, likeBook, addUserReview, deleteUserReview, isUserReview } = useContext(UserContext);
+    const { addUserReview, deleteUserReview } = useContext(UserContext);
     
     const [bookReviews, setBookReviews] = useState(reviews);
-    const [liked, setLiked] = useState();
-    const [likes, setLikes] = useState(bookLikeCount);
+    const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, bookLikeCount, { id, title, author, description, publisher, category, cover });
     const [error, setError] = useState(null);
+
     const [isReviewDrawerOpen, setReviewDrawerOpen] = useState(false);
-
-    /**By using the useEffect, the liked status is only recalculated when the id or the hasLikedBook function changes, avoiding unnecessary recalculations on every render.  */
-    useEffect(() => {
-        console.debug("Bookcard useEffect, id=", id)
-
-        setLiked(hasLikedBook(id))
-    }, [id, hasLikedBook])
-
-    // Send user like API. If fails, shows error to user
-    const handleLikeBook = async () =>{
-        try {
-            setError(null);
-            if (liked) {
-              const unlikedBookId = await likeBook(id);
-              if (unlikedBookId === id) {
-                setLikes((likes) => likes - 1);
-                setLiked(false);
-              }
-            } else {
-              const likedBookId = await likeBook(id, {
-                id,
-                title,
-                author,
-                description,
-                publisher,
-                category,
-                cover,
-              });
-              if (likedBookId === id) {
-                setLikes((likes) => likes + 1);
-                setLiked(true);
-              }
-            }
-          } catch (error) {
-            setError("Error liking book.")
-            console.error("Error handling book like:", error);
-          }
-    }
 
     // add current user's book review, function is called in BookReviewDrawer
     const addBookReview = async ({ review }) => {
@@ -109,7 +72,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
     const closeReviewDrawer = () => {
         setReviewDrawerOpen(false);
     }
-    
+
     return (
         <div className="BookCard">
             <Link to={`/books/${id}`} className="Title">
@@ -120,7 +83,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                     <h2 data-testid="book-title">{title}</h2>
                 </Link>
                 <h3 data-testid="book-author">by {author}</h3>
-                <p>{description}</p>
+                <p>{description?.length > 250 ? `${description.slice(0, 250)}...` : description}</p>
                 <div className="CardFooter">
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <span>{bookReviews.length}</span>
@@ -135,6 +98,8 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                             </IconButton>
                         </div>
                 </div>
+                
+                {likeError && <Alert type="danger" messages={[likeError]} />}
                 {error ? <Alert type="danger" messages={[error]} />: null}
             </div>
             <BookReviewDrawer isOpen={isReviewDrawerOpen} onClose={closeReviewDrawer} reviews={bookReviews} addReviews={addBookReview} deleteReview={deleteBookReview} bookData ={{id, title, author, cover}} />

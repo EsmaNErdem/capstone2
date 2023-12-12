@@ -5,6 +5,7 @@ import UserContext from "../auth/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "../homepage/Home";
 import BookList from "../books/BookList";
+import BookDetail from "../books/BookDetail";
 // import LoginForm from "../auth/LoginForm";
 // import SignUpFormForm from "../auth/SignUpForm";
 // import ProfileForm from "../profile/ProfileForm";
@@ -28,6 +29,7 @@ const BookRoutes = ({ login, signup }) => {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/books" element={<BookList />} />
+      <Route path="/books/:id" element={<BookDetail />} />
       {/* <Route path="/login" element={<Home />} />
       <Route path="/signup" element={<Home />} />
       <Route path="*" element={<Navigate to="/" />} /> */}
@@ -35,6 +37,7 @@ const BookRoutes = ({ login, signup }) => {
       </Routes>
       {/* <ProtectedRoute element={<Home />} path="/reviews"/>
       <ProtectedRoute element={<BookList />} path="/books"/>
+      <ProtectedRoute element={<BookDetail />} path="/books/:id"/>
       <ProtectedRoute element={<Home />} path="/profile"/>
       <Navigate  to="/" /> */}
     </>

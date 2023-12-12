@@ -108,7 +108,7 @@ class Review {
 
     /** Lists Reviews for given bookId
      * 
-     * Filters (all optional):
+     * Filters (all optional): {username, sortBy}
      * - Username of review owner
      * Sort by:
      * - Date of review post (default)

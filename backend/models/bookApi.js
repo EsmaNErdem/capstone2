@@ -58,6 +58,7 @@ class BookApi {
      */
     static async getBook(id) {
         const res = await this.request(`volumes/${id}`)
+        console.log(res.data, "PPPPPPPPPPP")
         return res.data
     }
 }

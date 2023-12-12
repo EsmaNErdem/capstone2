@@ -35,7 +35,7 @@ const BookReviewAdd = ({addReviews}) => {
                 <TextField
                     label="Add a Review"
                     multiline
-                    rows={4}
+                    rows={3}
                     variant="outlined"
                     fullWidth
                     value={formData.review}

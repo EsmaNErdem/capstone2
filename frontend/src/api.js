@@ -38,7 +38,7 @@ class BookClubApi {
      * Get details on a book by id
      */
     static async getBook(id) {
-        const res = await this.request(`bboks/${id}`);
+        const res = await this.request(`books/${id}`);
         return res.book;
     }
 
