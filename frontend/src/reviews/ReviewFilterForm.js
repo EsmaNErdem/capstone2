@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Prompt from "../utilities/Prompt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import "./ReviewFilterForm.css"
+
 /**
  *  Displays reusable search review filter component for filtering reviews
  * 
@@ -11,75 +13,66 @@ import "./ReviewFilterForm.css"
  * 
  * - BookCard ==> BookSearchForm
  */
-const ReviewFilterForm = ({applyFilters, fullFilter=false}) => {
-    const [filterData, setFilterData] = useState({
-        title: "",
-        author: "",
-        category: "",
-        username: "",
-        sortBy: "date",
-      });
+const ReviewFilterForm = ({applyFilters, prompts}) => {
+    console.debug("ReviewFilterForm");
+
+    const [filterData, setFilterData] = useState({ sortBy: "date" });  
+    const timerId = useRef();
+  
+    const handleChange = (prompt, value) => {
+      setFilterData((prevData) => ({ ...prevData, [prompt]: value.trim() }));        
+    };
     
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFilterData((prevData) => ({ ...prevData, [name]: value }));
-      };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      applyFilters(filterData);
+    };
     
-      const handleSubmit = (e) => {
-        e.preventDefault();
+    // Clear the timeout when the component unmounts or when the select input changes
+    useEffect(() => {
+      if (timerId.current) {
+        clearTimeout(timerId);
+      }
+  
+      timerId.current = setTimeout(() => {
         applyFilters(filterData);
+      }, 750);
+  
+      return () => {
+        if (timerId.current) {
+          clearTimeout(timerId.current);
+          timerId.current = null
+        }
       };
-    
-      return (
-        <div className="FilterBox">
-          <form className="FilterForm" onSubmit={handleSubmit}>
-            { fullFilter && 
+    }, [filterData]);
+  
+    return (
+      <div className="FilterBox">
+        <form className="FilterForm" onSubmit={handleSubmit}> 
             <>
-                <input
-                name="title"
-                type="text"
-                placeholder="Book Title"
-                value={filterData.title}
-                onChange={handleChange}
+              {prompts.map((prompt, i) => (
+                <Prompt key={i}
+                    prompt={prompt}
+                    value={filterData[prompt]}
+                    handleChange={handleChange}
                 />
-                <input
-                name="author"
-                type="text"
-                placeholder="Book Author"
-                value={filterData.author}
-                onChange={handleChange}
-                />
-                <input
-                name="category"
-                type="text"
-                placeholder="Book Category"
-                value={filterData.category}
-                onChange={handleChange}
-                />
-            </>
-            }
-              <input
-                name="username"
-                type="text"
-                placeholder="Review Owner"
-                value={filterData.username}
-                onChange={handleChange}
-              />
-              <select
-                name="sortBy"
-                value={filterData.sortBy}
-                onChange={handleChange}
-                >
-                <option value="date">Sort by Date</option>
-                <option value="user">Sort by User</option>
-                <option value="popular">Sort by Popularity</option>
-              </select>
-            <button type="submit" className={fullFilter ? "SubmitButton-large" : "SubmitButton"} title="Apply Filters">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-          </form>
-        </div>
-      );
+              ))}
+            </>            
+            <select
+              name="sortBy"
+              value={filterData.sortBy}
+              onChange={(e)=>handleChange("sortBy", e.target.value )}
+              >
+              <option value="date">Sort by Date</option>
+              <option value="user">Sort by User</option>
+              <option value="popular">Sort by Popularity</option>
+            </select>
+          <button type="submit" className={prompts.length > 1 ? "SubmitButton-large" : "SubmitButton"} title="Apply Filters">
+            <FontAwesomeIcon icon={faFilter} />
+          </button>
+        </form>
+      </div>
+    );
 }
 
 export default ReviewFilterForm;

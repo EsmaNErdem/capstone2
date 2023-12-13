@@ -1,14 +1,8 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ReviewCard from '../reviews/ReviewCard';
-import BookReviewAdd from './BookReviewAdd';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
+import ReviewAdd from '../reviews/ReviewAdd';
+import { Box, SwipeableDrawer, List, Divider, ListItem, ListItemText, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './BookReviewDrawer.css';
 
@@ -21,7 +15,7 @@ import './BookReviewDrawer.css';
  * - Lists existing book reviews along with like counts.
  * - Provides an input area for submitting new reviews.
  * 
- * - BookCard ==> BookReviewDrawer ==> BookReview, BookReviewAdd
+ * - BookCard ==> BookReviewDrawer ==> BookReview, ReviewAdd
  */
 const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, bookData }) => {
     console.debug("BookReviewDrawer");
@@ -83,7 +77,7 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
                 </List>
 
                 <List>
-                    <BookReviewAdd addReviews={addReviews} />
+                    <ReviewAdd addReviews={addReviews} />
                 </List>
                 <Divider />
                 

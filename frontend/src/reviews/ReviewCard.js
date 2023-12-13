@@ -1,11 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from "../auth/UserContext";
+import useReviewLike from '../hooks/useReviewLike';
 import Alert from "../utilities/Alert"
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
+import { Divider, ListItem, ListItemText, Avatar, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -15,51 +12,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
  * - Rendered by BookReviewDrawer to display card for existing book reviews
  * - Send user like on a review. If fails, shows error to user
  * 
- * - BookReviewDrawer ==> BookReview
+ * - BookReviewDrawer, BookDetail ==> ReviewCard
  */
-const BookReview = ({ reviewId, review, username, userImg, date, reviewLikeCount, deleteReview }) => {
-    console.debug("BookReview");
+const ReviewCard = ({ reviewId, review, username, userImg, date, reviewLikeCount, deleteReview }) => {
+    console.debug("ReviewCard");
   
-    const { hasLikedReview, likeReview, isUserReview } = useContext(UserContext);
+    const { isUserReview } = useContext(UserContext);
 
-    const [liked, setLiked] = useState();
-    const [likes, setLikes] = useState(reviewLikeCount);
     const [userReview, setUserReview] = useState();
     const [error, setError] = useState(null);
+    const { liked, likes, error: likeError, handleLikeReview } = useReviewLike(reviewId, reviewLikeCount)
 
-    /**By using the useEffect, the liked status is only recalculated when the id or the hasLikedBook function changes, avoiding unnecessary recalculations on every render.  */
+    /**By using the useEffect, the liked status is only recalculated when the id or the   */
     useEffect(() => {
-        console.debug("BookReview useEffect, reviewId=", reviewId)
+        console.debug("ReviewCard useEffect, reviewId=", reviewId)
 
-        setLiked(hasLikedReview(reviewId))
         setUserReview(isUserReview(reviewId))
-    }, [reviewId, hasLikedReview, isUserReview])
+    }, [reviewId, isUserReview])
 
-    // Send user like API. If fails, shows error to user
-    const handleLikeReview = async () =>{
-        try {
-            setError(null);
-            if (liked) {
-              const unlikeReviewId = await likeReview(reviewId);
-
-              if (unlikeReviewId === reviewId) {
-                setLikes((likes) => likes - 1);
-                setLiked(false);
-                
-              }
-            } else {
-              const likeReviewId = await likeReview(reviewId);
-
-              if (likeReviewId === reviewId) {
-                setLikes((likes) => likes + 1);
-                setLiked(true);
-              } 
-            }
-        } catch (error) {
-        setError("Error liking review.")
-        console.error("Error handling review like:", error);
-        }
-    }
 
      // Send user like API. If fails, shows error to user
      const handleDeleteReview = async () =>{
@@ -71,7 +41,6 @@ const BookReview = ({ reviewId, review, username, userImg, date, reviewLikeCount
         console.error("Error handling review delete:", error);
         }
     }
-    // console.log(isUserReview(reviewId), userReview, "KKKKKK", review)
 
     return (
             <React.Fragment>
@@ -81,11 +50,13 @@ const BookReview = ({ reviewId, review, username, userImg, date, reviewLikeCount
                         primary={review} 
                         secondary={`${username} • ${new Date(date).toLocaleDateString()} ${new Date(date).toLocaleTimeString()}`}
                     />
-                    {userReview ? (
+                    {userReview ?
+                     (
                         <IconButton onClick={handleDeleteReview} color="secondary">
                             <DeleteIcon />
                         </IconButton>
-                    ) : (
+                    ) 
+                    : (
                         <>
                             <span>{likes}</span>
                             <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
@@ -94,10 +65,11 @@ const BookReview = ({ reviewId, review, username, userImg, date, reviewLikeCount
                         </>
                     )}
                 </ListItem>
+                {likeError && <Alert type="danger" messages={[likeError]} />}
                 {error ? <Alert type="danger" messages={[error]} />: null}
                 <Divider />
             </React.Fragment>            
         )
 }
 
-export default BookReview;
+export default ReviewCard;

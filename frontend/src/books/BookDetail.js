@@ -1,18 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useBookLike from "../hooks/useBookLike";
+import useReviewAdd from "../hooks/useReviewAdd";
+import useReviewDelete from "../hooks/useReviewDelete";
 import BookClubApi from "../api";
+import ReviewAdd from "../reviews/ReviewAdd"
 import ReviewFilterForm from "../reviews/ReviewFilterForm";
 import ReviewCard from "../reviews/ReviewCard"
 import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert";
-import IconButton from '@mui/material/IconButton';
+import { Box, Grid, Paper, List, IconButton, Modal }from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddCommentIcon from '@mui/icons-material/AddComment';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
 import './BookDetail.css';
 
 /**
@@ -35,17 +34,19 @@ const BookDetail = () => {
     const [loading, setLoading] = useState(true)
     const [book, setBook] = useState(null);
     const [bookReviews, setBookReviews] = useState([]);
-    const [reviewForm, setReviewForm] = useState(false);
+    const [reviewFormOpen, setReviewFormOpen] = useState(false);
     const [error, setError] = useState(null);
 
+    const { error: deleteError, deleteBookReview } = useReviewDelete(id, setBookReviews, setReviewFormOpen, { sortBy: "date" });
+    
     /**
      * Fetches the book data from the Google Books API and related reviews from database, then sets the bookReviews state.
-     */  
-    useEffect(function getBookOnMount() {
-        console.debug("BookDetail useEffect getBookOnMount");
-
-        // Make an API call to get book data and book related reviews
-        const getBookData =  async () => {
+    */  
+   useEffect(function getBookOnMount() {
+       console.debug("BookDetail useEffect getBookOnMount");
+       
+       // Make an API call to get book data and book related reviews
+       const getBookData =  async () => {
             setError(null);
             try {
                 const bookData = await BookClubApi.getBook(id);    
@@ -58,17 +59,18 @@ const BookDetail = () => {
             
             setLoading(false)
         }
-
+        
         // set loading to true while async getCurrentUser runs; once the
         // data is fetched (or even if an error happens!), this will be set back
         // to true to control the spinner.
         setLoading(true)
         getBookData()
     }, [id]);
-
+    
     // With form submission, make an API call and update bookReviews state
     const getFilteredBookReviews = async (data) => {
         try {
+            setBookReviews([])
             const reviews = await BookClubApi.getAllReviewsByBook(id, data)
             setBookReviews(reviews)
         } catch (e) {
@@ -77,15 +79,41 @@ const BookDetail = () => {
         }
     }
 
-    // make sure to wait untill book detail data loads
-    const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, +book?.bookLikeCount);
-
+    // Opens Modal to display review text input 
     const openReviewAddForm = async () => {
-        setReviewForm(true)
+        setReviewFormOpen(true)
+    }
+    
+    // Closes  Modal to display review text input 
+    const closeReviewAddForm = async () => {
+        setReviewFormOpen(false)
     }
 
+    const databaseBookData = {
+        id,
+        title: book?.title,
+        author: book?.author,
+        publisher: book?.publisher || undefined,
+        description: book?.description || undefined,
+        category: book?.category || undefined,
+        cover: book?.cover || undefined,
+    }
+
+    // make sure to wait untill book detail data loads
+    const { liked, likes, error: likeError, handleLikeBook } = useBookLike(
+        id,
+        +book?.bookLikeCount,
+        databaseBookData
+    );
+        
+    const { error: addError, addBookReview } = useReviewAdd(
+        setBookReviews, 
+        databaseBookData, 
+        setReviewFormOpen
+    );
+
     if(loading || !book) return <Loading />;
-console.log(bookReviews, "HHHHHHH")
+    
     return (
         <div className="BookDetail">
             <Box sx={{ border: 0 }}>
@@ -103,36 +131,36 @@ console.log(bookReviews, "HHHHHHH")
                         <Paper className="BookDetailPaper">
                             <h1 data-testid="book-title">{book.title}</h1>
                             <p>by {book.author}</p>
-                            {book.publisher && <p>Publisher {book.publisher}</p>}
-                            {book.categories && (
+                            {book?.publisher && <p>Publisher {book.publisher}</p>}
+                            {book?.categories && (
                             <div>
                                 <strong>Categories: </strong>
                                 {book.categories.map((category, index) => (
                                 <span key={index}>
                                     {category}
-                                    {index !== book.categories.length - 1 ? ", " : ""}
+                                    {index !== book?.categories.length - 1 ? ", " : ""}
                                 </span>
                                 ))}
                             </div>
                             )}
-                            <p className="BookSummary">{removeHtmlTags(book.description)}</p>
+                            <p className="BookSummary">{removeHtmlTags(book?.description)}</p>
                             <div className="CardFooter">
                                 <div className="LikeSection">
+                                    <span>{likes ? likes : 0}</span>
                                     <IconButton
                                         onClick={handleLikeBook}
                                         color={liked ? "error" : "default"}
                                     >
                                     <FavoriteIcon data-testid="like-button" />
                                     </IconButton>
-                                    <span>{likes}</span>
                                 </div>
                                 <div className="ReviewSection">
-                                    <span>{bookReviews.length}</span>
+                                    <span>{bookReviews ? bookReviews.length : 0}</span>
                                     <IconButton
-                                    onClick={openReviewAddForm}
-                                    className="ReviewButton"
-                                    style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}
-                                    >
+                                        onClick={openReviewAddForm}
+                                        className="ReviewButton"
+                                        style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}
+                                        >
                                     <AddCommentIcon data-testid="review-button" />
                                     </IconButton>
                                 </div>
@@ -142,28 +170,33 @@ console.log(bookReviews, "HHHHHHH")
                 </Grid>
             </Box>
             
-            {likeError && <Alert type="danger" messages={[likeError]} />}
+            {(likeError || deleteError || addError)&& <Alert type="danger" messages={[likeError || deleteError || addError]} />}
             {error && <Alert type="danger" messages={[error]} />}
             
-            <ReviewFilterForm applyFilters={getFilteredBookReviews} fullFilter={false} />
-            {/* <List>
-                    {bookReviews.map(({ reviewId, review, username, userImg, date, reviewLikeCount }) => 
-                            <ReviewCard 
-                                key={reviewId}
-                                reviewId={reviewId}
-                                review={review}
-                                username={username}
-                                userImg={userImg}
-                                date={date}
-                                reviewLikeCount={+reviewLikeCount}
-                                deleteReview={deleteReview}
-                            />
-                        )}
-            </List> */}
+            <Modal open={reviewFormOpen} onClose={closeReviewAddForm}>
+                <Box className="Review-input" >
+                    <ReviewAdd addReviews={addBookReview} rowCount={6} close={true}closeModal={closeReviewAddForm}/>
+                </Box>
+            </Modal>
+
+            <ReviewFilterForm applyFilters={getFilteredBookReviews} prompts={["username"]} />
+            <List>
+                {!bookReviews && <Loading />}
+                {bookReviews.map(({ reviewId, review, username, userImg, date, reviewLikeCount }) => 
+                        <ReviewCard 
+                            key={reviewId}
+                            reviewId={reviewId}
+                            review={review}
+                            username={username}
+                            userImg={userImg}
+                            date={date}
+                            reviewLikeCount={+reviewLikeCount}
+                            deleteReview={deleteBookReview}
+                        />
+                    )}
+            </List>
         </div>
     )
-
-  
 }
 
 export default BookDetail;

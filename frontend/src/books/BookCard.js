@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import UserContext from "../auth/UserContext";
 import useBookLike from "../hooks/useBookLike";
+import useReviewAdd from "../hooks/useReviewAdd";
+import useReviewDelete from "../hooks/useReviewDelete";
 import Alert from "../utilities/Alert"
 import BookClubApi from "../api";
-import BookReviewDrawer from "../drawer/BookReviewDrawer";
+import BookReviewDrawer from "./BookReviewDrawer";
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -21,42 +22,15 @@ import './BookCard.css';
  */
 const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[] }) => {
     console.debug("BookCard");
-    
-    const { addUserReview, deleteUserReview } = useContext(UserContext);
-    
+        
     const [bookReviews, setBookReviews] = useState(reviews);
-    const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, bookLikeCount, { id, title, author, description, publisher, category, cover });
-    const [error, setError] = useState(null);
-
     const [isReviewDrawerOpen, setReviewDrawerOpen] = useState(false);
 
-    // add current user's book review, function is called in BookReviewDrawer
-    const addBookReview = async ({ review }) => {
-        try {
-            const newReview = await addUserReview({book: {id, title, author, description, publisher, category, cover}, review});
-            setBookReviews(r => [...r, {...newReview, id}])
-            return newReview
-        } catch (error) {
-            setReviewDrawerOpen(false);
-            setError("Error adding book review.")
-            console.error("Error adding book review:", error);
-          }
-    }
+    const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, bookLikeCount, { id, title, author, description, publisher, category, cover });
+    const { error: addError, addBookReview } = useReviewAdd(setBookReviews, { id, title, author, description, publisher, category, cover }, setReviewDrawerOpen)
+    const { error: deleteError, deleteBookReview } = useReviewDelete(id, setBookReviews, setReviewDrawerOpen);
+    const [error, setError] = useState(null);
 
-    // deletes current user's book review, function is called in BookReview
-    const deleteBookReview = async (reviewId) => {
-        try {
-            const deletedReviewId = await deleteUserReview(reviewId);
-            if(reviewId === +deletedReviewId){
-                const reviews = await BookClubApi.getAllReviewsByBook(id)
-                setBookReviews(reviews)
-            }
-        } catch (error) {
-            setReviewDrawerOpen(false);
-            setError("Error deleting book review.")
-            console.error("Error deleting book review:", error);
-          }
-    }
 
     const openReviewDrawer = async () => {
         try {
@@ -87,7 +61,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                 <div className="CardFooter">
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <span>{bookReviews.length}</span>
-                            <IconButton onClick={openReviewDrawer} style={{ color: reviews.length > 0 ? "yellowgreen" : ""}}>
+                            <IconButton onClick={openReviewDrawer} style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}>
                                 <CommentIcon  data-testid="review-button" />
                             </IconButton>
                         </div>
@@ -98,8 +72,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                             </IconButton>
                         </div>
                 </div>
-                
-                {likeError && <Alert type="danger" messages={[likeError]} />}
+                {(likeError || addError || deleteError) && <Alert type="danger" messages={[likeError || addError || deleteError]} />}
                 {error ? <Alert type="danger" messages={[error]} />: null}
             </div>
             <BookReviewDrawer isOpen={isReviewDrawerOpen} onClose={closeReviewDrawer} reviews={bookReviews} addReviews={addBookReview} deleteReview={deleteBookReview} bookData ={{id, title, author, cover}} />

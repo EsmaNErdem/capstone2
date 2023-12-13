@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
  * 
  * - BookReviewDrawer ==> BookReview
  */
-const BookReviewAdd = ({addReviews}) => {
+const BookReviewAdd = ({addReviews, rowCount=3, close=false, closeModal}) => {
     console.debug("BookReviewAdd");
 
     const [formData, setFormData] = useState({ review: '' });
@@ -20,6 +20,7 @@ const BookReviewAdd = ({addReviews}) => {
         e.preventDefault();
         await addReviews(formData);
         setFormData({ review: '' })
+        if (close) closeModal();
     }
 
     const handleReviewChange = e => {
@@ -35,9 +36,10 @@ const BookReviewAdd = ({addReviews}) => {
                 <TextField
                     label="Add a Review"
                     multiline
-                    rows={3}
+                    rows={rowCount}
                     variant="outlined"
                     fullWidth
+                    sx={{ width: '100%' }}
                     value={formData.review}
                     onChange={handleReviewChange}
                 />
