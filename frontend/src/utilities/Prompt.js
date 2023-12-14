@@ -4,7 +4,7 @@
 const Prompt = ({prompt, value, handleChange}) => {
     const onChange = e => {
         const { value } = e.target
-        handleChange(prompt, value)
+        handleChange(prompt, value, e)
     }
     
     return (

@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "../homepage/Home";
 import BookList from "../books/BookList";
 import BookDetail from "../books/BookDetail";
+import BookSearchList from "../books/BookSearchList";
 // import LoginForm from "../auth/LoginForm";
 // import SignUpFormForm from "../auth/SignUpForm";
 // import ProfileForm from "../profile/ProfileForm";
@@ -29,6 +30,7 @@ const BookRoutes = ({ login, signup }) => {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/books" element={<BookList />} />
+      <Route path="/books/search" element={<BookSearchList />} />
       <Route path="/books/:id" element={<BookDetail />} />
       {/* <Route path="/login" element={<Home />} />
       <Route path="/signup" element={<Home />} />

@@ -28,7 +28,7 @@ const ReviewFilterForm = ({applyFilters, prompts}) => {
       applyFilters(filterData);
     };
     
-    // Clear the timeout when the component unmounts or when the select input changes
+    // Clear the timeout when the component unmounts or when input changes
     useEffect(() => {
       if (timerId.current) {
         clearTimeout(timerId);

@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
  * 
  * - BookReviewDrawer ==> BookReview
  */
-const BookReviewAdd = ({addReviews, rowCount=3, close=false, closeModal}) => {
+const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal}) => {
     console.debug("BookReviewAdd");
 
     const [formData, setFormData] = useState({ review: '' });
@@ -53,4 +53,4 @@ const BookReviewAdd = ({addReviews, rowCount=3, close=false, closeModal}) => {
     )
 }
 
-export default BookReviewAdd;
+export default ReviewAddForm;

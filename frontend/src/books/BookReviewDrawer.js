@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ReviewCard from '../reviews/ReviewCard';
-import ReviewAdd from '../reviews/ReviewAdd';
+import ReviewAddForm from '../reviews/ReviewAddForm';
 import { Box, SwipeableDrawer, List, Divider, ListItem, ListItemText, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './BookReviewDrawer.css';
@@ -77,7 +77,7 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
                 </List>
 
                 <List>
-                    <ReviewAdd addReviews={addReviews} />
+                    <ReviewAddForm addReviews={addReviews} />
                 </List>
                 <Divider />
                 

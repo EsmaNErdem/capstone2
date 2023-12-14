@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import BookClubApi from "../api";
 import Loading from "../utilities/Loading";
 import BookSearchForm from "./BookSearchForm";
@@ -13,7 +14,7 @@ import "./BookList.css"
  * along with database reviews and likes. It supports both infinite scrolling for loading
  * more books and a search feature to filter books based on user input.
  * 
- * - API call loads books data when the component mounts with getBookList and when the search box is submitted with getSearchedBookResult.
+ * - API call loads books data when the component mounts with getBookList and when the search box is submitted redirects to /books/search.
  * - This component is designed for the "/books" route.
  * - Utilizes BookCard and BookSearchForm components and called by Routes
  * 
@@ -22,11 +23,10 @@ import "./BookList.css"
 const BookList = () => {
   console.debug("BookList");
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [books, setBooks] = useState([]);
   const [indexList, setIndexList] = useState(15);
-  const [searchData, setSearchData] = useState({})
-  const [indexSearch, setIndexSearch] = useState(15)
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
@@ -50,30 +50,12 @@ const BookList = () => {
       setLoading(false)
     }
 
-    // Makes the initial API call based on the provided search data
-    const getFirstSearch =  async () => {
-      setError(null);
-      if (!searchData.search) {
-        getFirstList();
-      }
-
-      try {
-        const searchBook = await BookClubApi.getSearchedBookResult(0, searchData);
-        setBooks(searchBook);
-      } catch (e) {
-          console.error("Search BookList useEffect API call data loading error:", e)
-          setError("An error occurred while fetching search results.");
-      }
-      
-      setLoading(false)
-    }
-    
     // set loading to true while async getCurrentUser runs; once the
     // data is fetched (or even if an error happens!), this will be set back
     // to true to control the spinner.
     setLoading(true)
-    searchData.search ? getFirstSearch() : getFirstList();
-  }, [searchData]);
+    getFirstList();
+  }, []);
 
 
   // Gets more books list data as user infinite scrolls
@@ -92,29 +74,14 @@ const BookList = () => {
     setIndexList(index => index + 15)
   }
 
-  // Gets more searched books data as user infinite scrolls
-  const searchBookList = async () => {
-    setError(null);
-    if (!searchData.search) {
-      setError("Search data is required.");
-      return;
-    }
+  const searchBookData = (searchData) => {
+    let queryTerms = ""
+    queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
+    queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
+    queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
+    queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
 
-    try {
-        const searchBook = await BookClubApi.getSearchedBookResult(indexSearch, searchData);
-        searchBook.length > 0 ? setHasMore(true) : setHasMore(false);
-        setBooks(b => [...b, ...searchBook]);
-    } catch (e) {
-        console.error("BookSearch API call data loading error:", e);
-        setError("An error occurred while fetching search results.");
-    }
-
-    setLoading(false)
-    setIndexSearch(index => index + 15)
-  }
-
-  const searchBookData = (data) => {
-    setSearchData(data)
+    navigate(`/books/search?search=${searchData.search}${queryTerms}`);
   }
 
   if (loading) return <Loading />;
@@ -122,7 +89,7 @@ const BookList = () => {
   return (
   <InfiniteScroll
     dataLength={books.length}
-    next={!searchData.search ? getBookList : searchBookList}
+    next={getBookList}
     hasMore={hasMore}
     loader={<Loading />}
   >

@@ -17,19 +17,8 @@ const Book = require("../models/book")
 /** GET /books/all/:startIndex => { books: [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] }
  *
  * Return JSON list of API retrieved books data
- * 	{
-			"id": "ayJpGQeyxgkC",
-			"title": "To Kill a Mockingbird 40th",
-			"author": "Harper Lee",
-			"publisher": "HarperCollins Christian Publishing",
-			"description": "The explosion of racial hate and violence in a small Alabama town is viewed by a little girl whose father defends a Black man accused of rape",
-			"category": "FICTION",
-			"cover": "http://books.google.com/books/content?id=ayJpGQeyxgkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-		}
-
  * Authorization required: none
  */
-
 router.get("/all/:startIndex", async function (req, res, next) {
     try {  
       const books = await Book.getListOfBooks(req.params.startIndex);
@@ -40,27 +29,6 @@ router.get("/all/:startIndex", async function (req, res, next) {
       return next(err);
     }
 });
-
-// const fetchMoreData = async () => {
-//   setLoading(true);
-//   try {
-//     const nextPage = currentPage + 1;
-//     const newData = await fetchData(nextPage);
-//     setData((prevData) => [...prevData, ...newData]);
-//     setCurrentPage(nextPage);
-//   } catch (error) {
-//     console.error("Error fetching more data:", error);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-// const fetchData = async (page) => {
-//   const response = await fetch(`/api/books?page=${page}`);
-//   const data = await response.json();
-//   return data.books;
-// }
-
-
 
 /** GET /books/search/:startIndex => { books: [ { id, title, author, publisher, description, category, cover }, ...] }
  *

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Prompt from "../utilities/Prompt";
 import "./BookSearchForm.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -19,9 +21,10 @@ import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 const BookSearchForm = ({searchFor}) => {
     console.debug("BookSearchForm", "searchFor=", typeof searchFor);
 
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({})
     const [advancedSearch, setAdvancedSearch] = useState(false)
-    const [timeoutId, setTimeoutId] = useState(null);
+    const timeoutId = useRef();
 
     //  Handles form submission and triggers the search function which API calls for data.
     const handleSubmit = e => {
@@ -30,63 +33,80 @@ const BookSearchForm = ({searchFor}) => {
         if (formData.author) formData.author = formData.author.trim()
         if (formData.publisher) formData.publisher = formData.publisher.trim()
         if (formData.subject) formData.subject = formData.subject.trim()
-        
+
         const searchData = {
             search:
-              formData.search ||
-              formData.title ||
-              formData.author ||
-              formData.publisher ||
-              formData.subject,
+                formData.search ||
+                formData.title ||
+                formData.author ||
+                formData.publisher ||
+                formData.subject,
             terms: {
-              title: formData.title,
-              author: formData.author,
-              publisher: formData.publisher,
-              subject: formData.subject,
+                title: formData.title,
+                author: formData.author,
+                publisher: formData.publisher,
+                subject: formData.subject,
             },
         };
-          
+
         searchFor(searchData || undefined)
+         // Pass search data as URL parameters
+        let queryTerms = ""
+        queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
+        queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
+        queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
+        queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
+
+        navigate(`/books/search?search=${searchData.search}${queryTerms}`);
+
     }
     
     // Handles changes in form inputs and updates the component's state accordingly.
     // if it is checkbox input, it becomes "true" string for query parameter in API call
-    // for other inputs, turn empty string into undefined or setFormDate with given value
-    const handleChange = e => {
-        const { name, value} = e.target
+    // for other inputs, turn empty string into undefined 
+    const handleChange = (prompt, value, e) => {
         setFormData(data => ({
             ...data,
-            [name] : value || undefined
+            [prompt] : value || undefined
         }))
-
         if (!advancedSearch) { 
-            if (timeoutId) {
-                clearTimeout(timeoutId);
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
             }
-        
-            const newTimeoutId = setTimeout(() => {
-                handleSubmit(e);
-            }, 1200); 
-            setTimeoutId(newTimeoutId);
-        }
+            
+            timeoutId.current = setTimeout(() => {
+                handleSubmit(e)
+            }, 1200);
+        }  
+
     }
+
+    // Clear the timeout when the component unmounts or when input changes
+    useEffect(() => {
+        if (!advancedSearch) {
+            return () => {
+                if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
+                timeoutId.current = null
+                }
+            };
+        }    
+    }, []);
 
     // Toggle advancedSearch state
     const toggleAdvancedSearch = () => {
         setAdvancedSearch((prev) => !prev);
     };
-
+    console.log()
 
     return (
         <div className={`SearchBox ${advancedSearch ? "AdvancedSearch" : ""}`}>
             <form className="SearchForm" onSubmit={handleSubmit}>
                 <div className="SearchInputContainer">
-                    <input
-                        name="search"
-                        type="search"
-                        placeholder="Search Books"
-                        value={formData.search || ""}
-                        onChange={handleChange}
+                    <Prompt 
+                        prompt={"search"} 
+                        value={formData["search"]} 
+                        handleChange={handleChange}
                     />
                     {!advancedSearch && (
                         <FontAwesomeIcon icon={faSearch} className="SubmitButton-inside" />
@@ -94,34 +114,13 @@ const BookSearchForm = ({searchFor}) => {
                 </div>
                 {advancedSearch ? (
                     <>
-                        <input
-                            name="title"
-                            type="text"
-                            placeholder="Book Title (optional)"
-                            value={formData.title || ""}
-                            onChange={handleChange}
-                        />
-                        <input
-                            name="author"
-                            type="text"
-                            placeholder="Book Author (optional)"
-                            value={formData.author || ""}
-                            onChange={handleChange}
-                        />
-                        <input
-                            name="publisher"
-                            type="text"
-                            placeholder="Publisher (optional)"
-                            value={formData.publisher || ""}
-                            onChange={handleChange}
-                        />
-                        <input
-                            name="subject"
-                            type="text"
-                            placeholder="Book Subject (optional)"
-                            value={formData.subject || ""}
-                            onChange={handleChange}
-                        />
+                        {["title", "author", "publisher", "subject"].map(prompt => (
+                            <Prompt key={prompt}
+                                prompt={prompt}
+                                value={formData[prompt]}
+                                handleChange={handleChange}
+                            />
+                        ))}
                         <button
                             type="button"
                             className="ToggleButton"
