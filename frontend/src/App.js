@@ -244,7 +244,7 @@ const App = () => {
   const followUser = async (userToFollow) => {
     if(hasFollowing(userToFollow)) {
       try{
-        const unfollowedUserId = await BookClubApi.followUser(userToFollow, currentUser.username)
+        const unfollowedUserId = await BookClubApi.unfollowUser(userToFollow, currentUser.username)
         setFollowing(u => u.delete(unfollowedUserId))
       } catch (e) {
         console.error("Send user unfollow user error:", e)

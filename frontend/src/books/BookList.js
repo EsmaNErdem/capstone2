@@ -71,7 +71,7 @@ const BookList = () => {
     }
 
     setLoading(false)
-    setIndexList(index => index + 15)
+    setIndexList(index => index + 20)
   }
 
   const searchBookData = (searchData) => {

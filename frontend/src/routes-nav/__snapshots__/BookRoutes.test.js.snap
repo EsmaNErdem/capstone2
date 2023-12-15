@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Home"
+  >
+    <h1>
+      A Wrinkle in Page: Online Book Club
+    </h1>
+    <p>
+      Join this social platform to find people like you who liove readint to talk about books
+    </p>
+    <h2>
+      Welcome, testuser!
+    </h2>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="Home"
+  >
+    <h1>
+      A Wrinkle in Page: Online Book Club
+    </h1>
+    <p>
+      Join this social platform to find people like you who liove readint to talk about books
+    </p>
+    <p>
+      <a
+        href="/login"
+      >
+        Login
+      </a>
+      <a
+        href="/signup"
+      >
+        Sign Up
+      </a>
+    </p>
+  </div>
+</DocumentFragment>
+`;

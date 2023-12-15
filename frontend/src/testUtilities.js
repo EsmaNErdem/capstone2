@@ -10,7 +10,7 @@ const demoUser = {
 };
 
 const UserProvider =
-    ({ children, currentUser = demoUser, hasLikedReview = () => false, hasLikedBook = () => false, hasFollowing = () => false, setCurrentUser = u => u }) => (
+    ({ children, currentUser = demoUser, hasLikedReview = () => false, hasLikedBook = () => false, isUserReview = () => false, hasFollowing = () => false, setCurrentUser = u => u }) => (
     <UserContext.Provider value={{ currentUser, hasLikedReview, hasLikedBook, hasFollowing, setCurrentUser }}>
       {children}
     </UserContext.Provider>

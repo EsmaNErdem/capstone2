@@ -45,7 +45,7 @@ const BookSearchList = () => {
 
     // Create the searchData object with converted values
     const searchDataFromUrl = {
-        search,
+        search: convertUndefined(search),
         terms: {
             title: convertUndefined(title),
             author: convertUndefined(author),
@@ -72,7 +72,6 @@ const BookSearchList = () => {
             
             try {
                 const searchBook = await BookClubApi.getSearchedBookResult(0, searchDataFromUrl);
-                console.log("YYYYY", searchDataFromUrl, searchBook)
                 setBooks(searchBook);
             } catch (e) {
                 console.error("BookSearchList useEffect API call data loading error:", e)
@@ -108,7 +107,7 @@ const BookSearchList = () => {
         }
 
         setLoading(false)
-        setIndexSearch(index => index + 15)
+        setIndexSearch(index => index + 20)
     }
 
     const searchBookData = (data) => {

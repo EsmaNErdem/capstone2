@@ -293,10 +293,8 @@ class Book {
             if(bookId.length !== 0) {
                 likeCount = await this.getLikeCountForBook(id);
                 reviews = await this.getReviewsForBook(id);
-            } else {
-                await this.insertBook({ id, ...bookData })
-            }
-
+            } 
+            
             return {
                 ...bookData,
                 bookLikeCount: likeCount,
