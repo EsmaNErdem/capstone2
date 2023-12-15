@@ -13,7 +13,7 @@ import "./ReviewFilterForm.css"
  * 
  * - BookCard ==> BookSearchForm
  */
-const ReviewFilterForm = ({applyFilters, prompts}) => {
+const ReviewFilterForm = ({applyFilters, prompts, navigate=false}) => {
     console.debug("ReviewFilterForm");
 
     const [filterData, setFilterData] = useState({ sortBy: "date" });  
@@ -30,20 +30,20 @@ const ReviewFilterForm = ({applyFilters, prompts}) => {
     
     // Clear the timeout when the component unmounts or when input changes
     useEffect(() => {
-      if (timerId.current) {
-        clearTimeout(timerId);
-      }
+      // if (timerId.current) {
+      //   clearTimeout(timerId);
+      // }
   
-      timerId.current = setTimeout(() => {
-        applyFilters(filterData);
-      }, 750);
+      // timerId.current = setTimeout(() => {
+      //   applyFilters(filterData);
+      // }, 1000);
   
-      return () => {
-        if (timerId.current) {
-          clearTimeout(timerId.current);
-          timerId.current = null
-        }
-      };
+      // return () => {
+      //   if (timerId.current) {
+      //     clearTimeout(timerId.current);
+      //     timerId.current = null
+      //   }
+      // };
     }, [filterData]);
   
     return (

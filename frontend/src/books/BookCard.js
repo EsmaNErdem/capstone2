@@ -28,7 +28,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
 
     const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, bookLikeCount, { id, title, author, description, publisher, category, cover });
     const { error: addError, addBookReview } = useReviewAdd(setBookReviews, { id, title, author, description, publisher, category, cover }, setReviewDrawerOpen)
-    const { error: deleteError, deleteBookReview } = useReviewDelete(id, setBookReviews, setReviewDrawerOpen);
+    const { error: deleteError, deleteBookReview } = useReviewDelete(setBookReviews);
     const [error, setError] = useState(null);
 
 

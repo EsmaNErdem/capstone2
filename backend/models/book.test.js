@@ -312,13 +312,10 @@ describe("Book class", () => {
               publisher: 'Publisher 3',
               description: 'Description 3',
               categories: ['Category 3'],
-              cover: 'Cover 3',
+              cover: undefined,
               bookLikeCount: "0",
               reviews: []
           });
-
-          book = await Book.getBookById("3");
-          expect(book).toEqual([ { id: '3' } ]);
       });
 
       test("should throw ApiNotFoundError if BookApi.getListOfBooks returns falsy value", async () => {

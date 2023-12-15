@@ -147,11 +147,11 @@ class BookClubApi {
     
     /**
      * Get all reviews, sending filter as params
-     * Review data is paginated, as index as params increase more data loads
+     * Review data is paginated, as page as params increase more data loads
      * - data: { title, author, category, username, sortBy: [date, user, popular] }
      */
-    static async getAllReviews(index, data) {
-        const res = await this.request(`reviews/${index}`, data)
+    static async getAllReviews(page, data) {
+        const res = await this.request(`reviews/${page}`, data)
         return res.reviews;
     }
 

@@ -26,7 +26,7 @@ const BookList = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [books, setBooks] = useState([]);
-  const [indexList, setIndexList] = useState(15);
+  const [indexList, setIndexList] = useState(20);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,7 +44,7 @@ const BookList = () => {
         setBooks(booksApi);
       } catch (e) {
         console.error("BookList useEffect API call data loading error:", e);
-        setError("An error occurred while fetching search results.");
+        setError("An error occurred while fetching books.");
       }
       
       setLoading(false)
@@ -67,7 +67,7 @@ const BookList = () => {
         setBooks(b => [...b, ...booksApi]);
     } catch (e) {
         console.error("BookList API call data loading error:", e);
-        setError("An error occurred while fetching search results.");
+        setError("An error occurred while fetching books.");
     }
 
     setLoading(false)

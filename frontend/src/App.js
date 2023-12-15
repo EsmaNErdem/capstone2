@@ -1,7 +1,6 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-
 import useLocalStorage from "./hooks/useLocalStorage";
 import BookRoutes from "./routes-nav/BookRoutes";
 import NavBar from "./routes-nav/NavBar";
@@ -197,17 +196,13 @@ const App = () => {
   * Returns deleted review id
   * */
  const deleteUserReview = async (reviewId) => {
-    try{
-      let deletedReviewId = await BookClubApi.deleteBookReview(+reviewId,  currentUser.username)
-      setReviews(userReviewIds => {
-        const newUserReviewIds = new Set(userReviewIds);
-        newUserReviewIds.delete(deletedReviewId);
-        return newUserReviewIds;
-      });
-      return deletedReviewId
-    } catch (e) {
-      console.error("Delete user review error:", e)
-    }
+    let deletedReviewId = await BookClubApi.deleteBookReview(+reviewId,  currentUser.username)
+    setReviews(userReviewIds => {
+      const newUserReviewIds = new Set(userReviewIds);
+      newUserReviewIds.delete(deletedReviewId);
+      return newUserReviewIds;
+    });
+    return deletedReviewId
   }
 
 

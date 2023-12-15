@@ -37,7 +37,7 @@ const BookDetail = () => {
     const [reviewFormOpen, setReviewFormOpen] = useState(false);
     const [error, setError] = useState(null);
 
-    const { error: deleteError, deleteBookReview } = useReviewDelete(id, setBookReviews, setReviewFormOpen, { sortBy: "date" });
+    const { error: deleteError, deleteBookReview } = useReviewDelete(setBookReviews);
     
     /**
      * Fetches the book data from the Google Books API and related reviews from database, then sets the bookReviews state.

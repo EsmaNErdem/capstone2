@@ -1,4 +1,3 @@
-
 const mockBooks = [
     {
       id: 1,

@@ -10,22 +10,24 @@ import BookClubApi from "../api";
  * 
  * Returns error and addBookReview function
  */
-const useReviewDelete = (bookId, setBookReviews, errorHandlingState, sortData={}) => {
+const useReviewDelete = (setBookReviews) => {
     console.debug("useReviewDelete"); 
 
     const { deleteUserReview } = useContext(UserContext);
     const [error, setError] = useState(null);
 
     // deletes current user's book review, function is called in BookReview
-    const deleteBookReview = async (reviewId) => {
+    const deleteBookReview = async (reviewId, bookId) => {
         try {
             const deletedReviewId = await deleteUserReview(reviewId);
             if(reviewId === +deletedReviewId){
-                const reviews = await BookClubApi.getAllReviewsByBook(bookId, sortData)
-                setBookReviews(reviews)
+                // Update the state to remove the deleted review
+                setBookReviews((prevBookReviews) => {
+                    const updatedBookReviews = prevBookReviews.filter(review => review.reviewId !== +deletedReviewId);
+                    return updatedBookReviews;
+                });
             }
         } catch (error) {
-            errorHandlingState(false);
             setError("Error deleting book review.")
             console.error("Error deleting book review:", error);
         }

@@ -51,16 +51,19 @@ class Review {
                         r.id AS "reviewId",
                         r.review,
                         r.username,
+                        u.img AS "userImg",
                         r.created_at AS date,
                         b.id AS book_id,
                         b.title,
                         b.author,
                         b.category,
+                        b.cover,
                         COUNT(l.review_id) AS "likeCount"
                     FROM
                         reviews AS r
                             LEFT JOIN books AS b ON r.book_id = b.id
-                            LEFT JOIN review_likes AS l ON l.review_id = r.id`;
+                            LEFT JOIN review_likes AS l ON l.review_id = r.id
+                            LEFT JOIN users as U ON u.username = r.username`;
         let whereExpressions = [];
         let queryValues = [];
 
@@ -97,7 +100,7 @@ class Review {
         } 
 
         query += whereExpressions.length > 0 ? ` WHERE ${whereExpressions.join(" AND ")}` : "";
-        query += " GROUP BY r.id, b.id" + order;
+        query += " GROUP BY r.id, b.id, u.img" + order;
         query += ` LIMIT $${queryValues.length + 1} OFFSET $${queryValues.length + 2}`;
 
         queryValues.push(pageSize, (page - 1) * pageSize);

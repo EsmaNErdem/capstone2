@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import UserContext from "../auth/UserContext";
 import useReviewLike from '../hooks/useReviewLike';
 import Alert from "../utilities/Alert"
@@ -14,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
  * 
  * - BookReviewDrawer, BookDetail ==> ReviewCard
  */
-const ReviewCard = ({ reviewId, review, username, userImg, date, reviewLikeCount, deleteReview }) => {
+const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount, deleteReview, bookId, title=null, author=null, category=null}) => {
     console.debug("ReviewCard");
   
     const { isUserReview } = useContext(UserContext);
@@ -35,7 +36,7 @@ const ReviewCard = ({ reviewId, review, username, userImg, date, reviewLikeCount
      const handleDeleteReview = async () =>{
         try {
             setError(null);
-            await deleteReview(reviewId);
+            await deleteReview(reviewId, bookId);
         } catch (error) {
         setError("Error deleting review.")
         console.error("Error handling review delete:", error);
@@ -45,7 +46,9 @@ const ReviewCard = ({ reviewId, review, username, userImg, date, reviewLikeCount
     return (
             <React.Fragment>
                 <ListItem  disablePadding>
-                    <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
+                    <Link to={`/profile/${username}`}>
+                        <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
+                    </Link>
                     <ListItemText 
                         primary={review} 
                         secondary={`${username} • ${new Date(date).toLocaleDateString()} ${new Date(date).toLocaleTimeString()}`}
