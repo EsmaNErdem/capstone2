@@ -55,7 +55,7 @@ const BookSearchForm = ({searchFor}) => {
         queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
         queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
         queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
-        queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
+        queryTerms += searchData.terms.subject ? `&subject=${searchData.terms.subject}` : ""
 
         navigate(`/books/search?search=${searchData.search}${queryTerms}`);
 

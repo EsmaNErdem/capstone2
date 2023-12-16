@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Prompt from "../utilities/Prompt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -13,38 +14,53 @@ import "./ReviewFilterForm.css"
  * 
  * - BookCard ==> BookSearchForm
  */
-const ReviewFilterForm = ({applyFilters, prompts, navigate=false}) => {
+const ReviewFilterForm = ({applyFilters, prompts, navigateForward=false}) => {
     console.debug("ReviewFilterForm");
 
+    const navigate = useNavigate();
     const [filterData, setFilterData] = useState({ sortBy: "date" });  
     const timerId = useRef();
   
-    const handleChange = (prompt, value) => {
-      setFilterData((prevData) => ({ ...prevData, [prompt]: value.trim() }));        
+    const handleChange = (prompt, value, e) => {      
+      setFilterData((prevData) => ({ ...prevData, [prompt]: value }));     
+      
+      if (timerId.current) {
+        clearTimeout(timerId.current);
+        timerId.current = null
+      }
+      
+      timerId.current = setTimeout(() => {
+        handleSubmit(e);
+      }, 1250);  
     };
     
     const handleSubmit = (e) => {
       e.preventDefault();
       applyFilters(filterData);
+      if(navigateForward){
+        // Pass search data as URL parameters
+        let queryTerms = ""
+        queryTerms = filterData.title ? `&title=${filterData.title}` : ""
+        queryTerms += filterData.author ? `&author=${filterData.author}` : ""
+        queryTerms += filterData.publisher ? `&publisher=${filterData.publisher}` : ""
+        queryTerms += filterData.category ? `&category=${filterData.category}` : ""
+        queryTerms += filterData.sortBy ? `&sort=${filterData.sortBy}` : ""
+        queryTerms = queryTerms ? `?${queryTerms}` : ""
+        
+        navigate(`/reviews/filter${queryTerms}`)
+      }
     };
     
     // Clear the timeout when the component unmounts or when input changes
     useEffect(() => {
-      // if (timerId.current) {
-      //   clearTimeout(timerId);
-      // }
-  
-      // timerId.current = setTimeout(() => {
-      //   applyFilters(filterData);
-      // }, 1000);
-  
-      // return () => {
-      //   if (timerId.current) {
-      //     clearTimeout(timerId.current);
-      //     timerId.current = null
-      //   }
-      // };
-    }, [filterData]);
+
+      return () => {
+        if (timerId.current) {
+          clearTimeout(timerId.current);
+          timerId.current = null
+        }
+      };
+    }, []);
   
     return (
       <div className="FilterBox">

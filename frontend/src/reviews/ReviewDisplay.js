@@ -42,28 +42,30 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
         <div className="UserInfo">
           <Link to={`/profile/${username}`} className="UsernameLink">
             <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
-            <ListItemText primary={username} />
+            <ListItemText 
+              primary={username} 
+              secondary={`${new Date(date).toLocaleDateString()} ${new Date(
+                date
+              ).toLocaleTimeString()}`}
+            />
           </Link>
-        </div>
-        <div className="ReviewInfo">
-          <ListItemText
-            primary={review}
-            secondary={`${new Date(date).toLocaleDateString()} ${new Date(
-              date
-            ).toLocaleTimeString()}`}
-          />
           {userReview ? (
             <IconButton onClick={handleDeleteReview} color="secondary">
               <DeleteIcon />
             </IconButton>
           ) : (
-            <>
+            <div>
               <span>{likes}</span>
               <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
                 <FavoriteIcon />
               </IconButton>
-            </>
+            </div>
           )}
+        </div>
+        <div className="ReviewInfo">
+          <ListItemText
+            primary={review}
+          />
         </div>
         {title && (
           <div className="BookInfo">

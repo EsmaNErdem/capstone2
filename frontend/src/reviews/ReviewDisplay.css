@@ -1,16 +1,19 @@
 /* ReviewDisplay.css */
 
 .ReviewDisplay {
+  width: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: stretch;
   padding: 16px;
   border-bottom: 1px solid #ddd;
 }
 
 .UserInfo {
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  justify-content: space-between;
+
 }
 
 .UsernameLink {
@@ -31,17 +34,12 @@
 }
 
 .ReviewInfo {
-  flex-grow: 1;
-  margin: 0 16px;
+  margin-top: 8px;
 }
 
 .BookInfo {
   display: flex;
-  flex-direction: row;
-  justify-content:space-evenly;
-  align-items: stretch;
-  margin-top: 16px;
-  text-align: right;
+  margin-top: 8px;
 }
 
 .TitleLink {
@@ -54,12 +52,8 @@
 }
 
 .CardImage {
-  border-radius: 8px;
-}
-
-@media (min-width: 768px) {
-
-  .CardImage img {
-    height: 200px;
-  }
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 16px;
 }

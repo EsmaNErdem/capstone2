@@ -28,12 +28,7 @@ const NavBar = ({ logout }) => {
           </NavLink>
         </li>
         <li className="nav-item mr-4">
-          <NavLink className="nav-link" to="/explore">
-            Explore
-          </NavLink>
-        </li>
-        <li className="nav-item mr-4">
-          <NavLink className="nav-link" to="/profile">
+          <NavLink className="nav-link" to="/profile/:username">
             Profile
           </NavLink>
         </li>

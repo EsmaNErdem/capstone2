@@ -100,7 +100,7 @@ const ReviewList = () => {
     loader={<Loading />}
   >
       <div className="ReviewList col-md-8 offset-md-2">
-        <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigate={true}/>
+        <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigateForward={true}/>
         {reviews.length
             ? (
                 <div className="ReviewList-list">

@@ -50,7 +50,7 @@ const BookSearchList = () => {
             title: convertUndefined(title),
             author: convertUndefined(author),
             publisher: convertUndefined(publisher),
-            subject: convertUndefined(subject),
+            category: convertUndefined(subject),
         },
     };
 
