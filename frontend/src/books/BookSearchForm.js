@@ -97,7 +97,6 @@ const BookSearchForm = ({searchFor}) => {
     const toggleAdvancedSearch = () => {
         setAdvancedSearch((prev) => !prev);
     };
-    console.log()
 
     return (
         <div className={`SearchBox ${advancedSearch ? "AdvancedSearch" : ""}`}>

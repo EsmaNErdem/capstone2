@@ -7,6 +7,7 @@ import BookList from "../books/BookList";
 import BookSearchList from "../books/BookSearchList";
 import BookDetail from "../books/BookDetail";
 import ReviewList from "../reviews/ReviewList";
+import ReviewFilterList from "../reviews/ReviewFilterList";
 // import LoginForm from "../auth/LoginForm";
 // import SignUpFormForm from "../auth/SignUpForm";
 // import ProfileForm from "../profile/ProfileForm";
@@ -33,7 +34,7 @@ const BookRoutes = ({ login, signup }) => {
       <Route path="/books/search" element={<BookSearchList />} />
       <Route path="/books/:id" element={<BookDetail />} />
       <Route path="/reviews" element={<ReviewList />} />
-      <Route path="/reviews/filter" element={<ReviewList />} />
+      <Route path="/reviews/filter" element={<ReviewFilterList />} />
       {/* <Route path="/login" element={<Home />} />
       <Route path="/signup" element={<Home />} />
       <Route path="*" element={<Navigate to="/" />} /> */}

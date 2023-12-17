@@ -49,10 +49,17 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
               ).toLocaleTimeString()}`}
             />
           </Link>
-          {userReview ? (
-            <IconButton onClick={handleDeleteReview} color="secondary">
-              <DeleteIcon />
-            </IconButton>
+          {userReview ? 
+          (
+            <>
+              <div style={{ display: "flex", alignItems: "stretch" }}>
+                  <span>{likes}</span>
+                  <FavoriteIcon />
+                <IconButton onClick={handleDeleteReview} color="secondary">
+                    <DeleteIcon />
+                </IconButton>
+              </div>
+            </>
           ) : (
             <div>
               <span>{likes}</span>

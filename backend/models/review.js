@@ -104,7 +104,7 @@ class Review {
         query += ` LIMIT $${queryValues.length + 1} OFFSET $${queryValues.length + 2}`;
 
         queryValues.push(pageSize, (page - 1) * pageSize);
-
+        console.log("HHHHHhhh", query)
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
     }

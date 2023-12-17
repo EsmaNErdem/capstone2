@@ -55,9 +55,15 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
                     />
                     {userReview ?
                      (
-                        <IconButton onClick={handleDeleteReview} color="secondary">
-                            <DeleteIcon />
-                        </IconButton>
+                        <div style={{ display: "flex", alignItems: "stretch" }}>
+                            <span >
+                                <div>{likes}</div>
+                                <FavoriteIcon />
+                            </span>
+                            <IconButton onClick={handleDeleteReview} color="secondary">
+                                <DeleteIcon />
+                            </IconButton>
+                        </div>
                     ) 
                     : (
                         <>

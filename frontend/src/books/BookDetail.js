@@ -179,7 +179,7 @@ const BookDetail = () => {
                 </Box>
             </Modal>
 
-            <ReviewFilterForm applyFilters={getFilteredBookReviews} prompts={["username"]} />
+            <ReviewFilterForm applyFilters={getFilteredBookReviews} prompts={["username"]} initialValue={{ sortBy: "date" }} />
             <List>
                 {!bookReviews && <Loading />}
                 {bookReviews.map(({ reviewId, review, username, userImg, date, reviewLikeCount }) => 
