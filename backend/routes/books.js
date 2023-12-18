@@ -73,6 +73,21 @@ router.get("/:id", async function (req, res, next) {
     }
 });
 
+/** GET /books/all-db => { books: [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] }
+ *
+ * Returns a list of books from database
+ * Authorization required: none
+ */
+router.get("/all-db/:limit", async function (req, res, next) {
+  try {  
+    const books = await Book.findAllBooksFromDatabase(req.params.limit, req.query); 
+    return res.json({ books });
+  } catch (err) {
+    console.error("Error in GET /books/all-db/:limit:", err);
+    return next(err);
+  }
+});
+
 /** POST /books/:id/users/:username => { likedBook: bookId }
  * /books/IUq6BwAAQBAJ/users/test
  * 

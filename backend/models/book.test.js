@@ -105,6 +105,62 @@ describe("Book class", () => {
     });
   });
 
+  /************************************** findAllBooksFromDatabase */
+  describe("findAllBooksFromDatabase method", function () {
+    test("should return all books from database", async function () {
+        const book = await Book.findAllBooksFromDatabase();
+        expect(book).toEqual([
+          {
+          id: '1',
+          title: 'Book 1',
+          author: 'Author 1',
+          publisher: 'Publisher 1',
+          description: 'Description 1',
+          category: 'Category 1',
+          cover: 'Cover 1'
+         }, 
+         {
+         id: '2',
+         title: 'Book 2',
+         author: 'Author 2',
+         publisher: 'Publisher 2',
+         description: 'Description 2',
+         category: 'Category 2',
+         cover: 'Cover 2'
+         }        
+        ]);
+    });
+    test("should return all books from database with search filter", async function () {
+      const book = await Book.findAllBooksFromDatabase(limit=5, {search: "1"});
+      expect(book).toEqual([
+        {
+        id: '1',
+        title: 'Book 1',
+        author: 'Author 1',
+        publisher: 'Publisher 1',
+        description: 'Description 1',
+        category: 'Category 1',
+        cover: 'Cover 1'
+       }        
+      ]);
+  });
+
+    test("should return empty array if no book", async function () {
+      const book = await Book.findAllBooksFromDatabase(limit=1);
+      expect(book).toEqual([
+        {
+          id: '1',
+          title: 'Book 1',
+          author: 'Author 1',
+          publisher: 'Publisher 1',
+          description: 'Description 1',
+          category: 'Category 1',
+          cover: 'Cover 1'
+         }
+      ]);
+  });
+  });
+    
   /************************************** getBookById */
   describe("getBookById method", function () {
     test("should checkif book exist in database", async function () {

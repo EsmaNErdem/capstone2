@@ -42,6 +42,14 @@ class BookClubApi {
         return res.book;
     }
 
+    /** 
+     * Get all books from database
+     */
+    static async getBooksFromDatabase(limit, data) {
+        const res = await this.request(`books/all-db/${limit}`, data);
+        return res.books;
+    }
+
     /**
      * Get all books
      * Books data is paginated, as index as params increase more data loads

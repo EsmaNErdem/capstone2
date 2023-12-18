@@ -42,30 +42,32 @@ class Book {
      * 
      * Returns [ { id, title, author, publisher, description, category, cover, bookLikeCount, reviews }, ...] 
     */
-    static async findAllBooksFromDatabase() { 
-        let books = await db.query(
-            `SELECT
-                id,
-                title,
-                author,
-                publisher,
-                description,
-                category,
-                cover
-            FROM books;`,
-        );   
-        // Fetch all like counts and review counts from the database
-        const likeCounts = await this.getAllLikeCounts();
-        const reviews = await this.getAllReviews();
-
-        books = books.rows.map(book => ({
-                    ...book,
-                    bookLikeCount: likeCounts[book.id],
-                    reviews: reviews[book.id]
-                })
-            );
-
-        return books
+    static async findAllBooksFromDatabase(limit=null, searchFilters={}) { 
+        let query = `SELECT
+        id,
+        title,
+        author,
+        publisher,
+        description,
+        category,
+        cover
+        FROM books`
+        let queryValues = [];
+        
+        const { search } = searchFilters;
+        if (search) {
+            queryValues.push(`%${search}%`);
+            query += ` WHERE title ILIKE $${queryValues.length}`
+        }
+        query += ` ORDER BY title`
+        
+        if(limit){
+            queryValues.push(limit);
+            query += ` LIMIT $${queryValues.length} OFFSET 0;`;
+        } 
+        console.log(query, queryValues)
+        let books = await db.query(query, queryValues);  
+        return books.rows
     }
         
     /**  Gets Book by Book ID */

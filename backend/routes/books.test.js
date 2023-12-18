@@ -21,7 +21,76 @@ afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
 
-describe("Books Like-Unlike Routes", function () {
+describe("Books Database Routes", function () {
+    /************************************** get /books/all-db/:limit */
+    describe("get /books/all-db/:limit", function () {
+      test("should returns books from database", async function () {
+          const resp = await request(app)
+          .get("/books/all-db/5")
+          expect(resp.body).toEqual({
+                  books: [
+                    {
+                      id: '1',
+                      title: 'Book1',
+                      author: 'Author1',
+                      publisher: 'Publisher1',
+                      description: 'Description1',
+                      category: 'Category 1',
+                      cover: 'Cover1',
+                    },
+                    {
+                      id: '2',
+                      title: 'Book2',
+                      author: 'Author2',
+                      publisher: 'Publisher2',
+                      description: 'Description2',
+                      category: 'Category 2',
+                      cover: 'Cover2',
+                    }
+                  ]
+          });
+      });
+
+      test("should returns books from database with search filter data", async function () {
+          const resp = await request(app)
+          .get("/books/all-db/5")
+          .query({
+            search: "1"
+          })
+          expect(resp.body).toEqual({
+                  books: [
+                    {
+                      id: '1',
+                      title: 'Book1',
+                      author: 'Author1',
+                      publisher: 'Publisher1',
+                      description: 'Description1',
+                      category: 'Category 1',
+                      cover: 'Cover1',
+                    }
+                  ]
+          });
+      });
+
+      test("should returns books from database", async function () {
+        const resp = await request(app)
+        .get("/books/all-db/1")
+        expect(resp.body).toEqual({
+                books: [
+                  {
+                    id: '1',
+                    title: 'Book1',
+                    author: 'Author1',
+                    publisher: 'Publisher1',
+                    description: 'Description1',
+                    category: 'Category 1',
+                    cover: 'Cover1',
+                  }
+                ]
+        });
+      });
+  });
+
     /************************************** POST /books/:id/users/:username */
     describe("POST /books/:id/users/:username", function () {
         test("should add book to user's liked list", async function () {

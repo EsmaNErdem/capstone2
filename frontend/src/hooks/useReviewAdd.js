@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import UserContext from '../auth/UserContext';
 
-/** Custom Hook for managing user review submission
+/** Custom Hook for managing user review submission on books/:id route components
  * This hook provides functionality to manage user review submission and updateting bookReviews state
  * 
  * -Utilizes useContext data to send user review to database
@@ -18,6 +18,7 @@ const useReviewAdd = (setBookReviews, bookData={}, errorHandlingState) => {
     // add current user's book review, function is called in BookReviewDrawer
     const addBookReview = async ({ review }) => {
         try {
+            console.log({book: bookData, review})
             const newReview = await addUserReview({book: bookData, review});
             setBookReviews(r => [{...newReview, id:bookData.id}, ...r])
             return newReview

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import useReviewDelete from "../hooks/useReviewDelete";
-import { useLocation } from "react-router-dom";
+import useReviewAddWithBook from "../hooks/useReviewAddWithBook";
+import { useLocation, useNavigate } from "react-router-dom";
 import BookClubApi from "../api";
 import ReviewFilterForm from "./ReviewFilterForm";
 import ReviewDisplay from "./ReviewDisplay";
+import ReviewAddForm from "./ReviewAddForm";
 import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert"
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Box, Modal, IconButton }from '@mui/material';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import "./ReviewList.css"
 
 /**
@@ -31,7 +35,7 @@ const ReviewFilterList = () => {
   const category = urlSearchParams.get("category");
   const username = urlSearchParams.get("username");
   const sortBy = urlSearchParams.get("sort");
-
+  
   // Utility function to convert "undefined" strings to undefined
   const convertUndefined = value => (value === "undefined" ? undefined : value);
   const filterDataFromURL = {
@@ -41,15 +45,17 @@ const ReviewFilterList = () => {
     username: convertUndefined(username),
     sortBy: convertUndefined(sortBy),
   }
-
+  
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(2);
-  const [filterData, setFilterData] = useState(filterDataFromURL)
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
-
+  const [reviewFormOpen, setReviewFormOpen] = useState(false);
+  
   const { error: deleteError, deleteBookReview } = useReviewDelete(setReviews);
+  const { error: addError, addBookReview } = useReviewAddWithBook(setReviews, setReviewFormOpen)
   
   /**
    * Fetches the initial batch of filtered reviews from database
@@ -84,7 +90,7 @@ const ReviewFilterList = () => {
   const getReviews = async () => {
     setError(null);
     try {
-        const reviewsApi = await BookClubApi.getAllReviews(page, filterData);
+        const reviewsApi = await BookClubApi.getAllReviews(page, filterDataFromURL);
         reviewsApi.length > 0 ? setHasMore(true) : setHasMore(false);
         setReviews(b => [...b, ...reviewsApi]);
     } catch (e) {
@@ -98,15 +104,27 @@ const ReviewFilterList = () => {
 
 //When review form resubmmit, submitted data is used to get firts batch of review data and updates, 
   const filterReviewData = async (filterData) => {
-    setError(null);
-      try {
-        const reviewsApi = await BookClubApi.getAllReviews(1, filterData);
-        setReviews(reviewsApi);
-      } catch (e) {
-        console.error("ReviewList useEffect API call data loading error:", e);
-        setError("An error occurred while fetching reviews.");
-      }
-      setFilterData(filterData)
+    let queryTerms = ""
+    queryTerms = filterData.title ? `&title=${filterData.title?.trim()}` : ""
+    queryTerms += filterData.author ? `&author=${filterData.author?.trim()}` : ""
+    queryTerms += filterData.publisher ? `&publisher=${filterData.publisher?.trim()}` : ""
+    queryTerms += filterData.category ? `&category=${filterData.category?.trim()}` : ""
+    queryTerms += filterData.sortBy ? `&sort=${filterData.sortBy}` : ""
+    queryTerms = queryTerms ? `?${queryTerms}` : ""
+
+    if(filterData.title || filterData.author || filterData.category || filterData.username || filterData.sortBy) {
+      navigate(`/reviews/filter${queryTerms}`)
+    }
+  }
+
+  // Opens Modal to display review text input 
+  const openReviewAddForm = async () => {
+    setReviewFormOpen(true)
+  }
+
+  // Closes  Modal to display review text input 
+  const closeReviewAddForm = async () => {
+      setReviewFormOpen(false)
   }
 
   if (loading) return <Loading />;
@@ -119,11 +137,25 @@ const ReviewFilterList = () => {
     loader={<Loading />}
   >
       <div className="ReviewList col-md-8 offset-md-2">
-        <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} initialValue={filterData}/>
+      <Modal open={reviewFormOpen} onClose={closeReviewAddForm}>
+          <Box className="Review-input" >
+            <ReviewAddForm addReviews={addBookReview} rowCount={6} close={true} closeModal={closeReviewAddForm} addBook={true}/>
+          </Box>
+        </Modal>
+
+        <IconButton
+            onClick={openReviewAddForm}
+            className="ReviewButton"
+            style={{ color:"orangered" }}
+            >
+          <span>Add New Book Review</span><AddCommentIcon data-testid="review-button" />
+        </IconButton>
+        
+        <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} initialValue={filterDataFromURL}/>
         {reviews.length
             ? (
                 <div className="ReviewList-list">
-                  {reviews.map(({ reviewId, review, date,  username, userImg,book_id, title, author, category, likeCount, cover }) => (
+                  {reviews.map(({ reviewId, review, date,  username, userImg, book_id, title, author, category, reviewLikeCount, cover }) => (
                       <ReviewDisplay 
                           key={reviewId}
                           reviewId={+reviewId}
@@ -136,7 +168,7 @@ const ReviewFilterList = () => {
                           author={author}
                           cover={cover}
                           category={category}
-                          reviewLikeCount={+likeCount}
+                          reviewLikeCount={+reviewLikeCount}
                           deleteReview={deleteBookReview}
                       />
                   ))}

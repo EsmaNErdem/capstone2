@@ -4,7 +4,7 @@ import useBookLike from "../hooks/useBookLike";
 import useReviewAdd from "../hooks/useReviewAdd";
 import useReviewDelete from "../hooks/useReviewDelete";
 import BookClubApi from "../api";
-import ReviewAddForm from "../reviews/ReviewAddForm"
+import BookReviewAddForm from "./BookReviewAddForm"
 import ReviewFilterForm from "../reviews/ReviewFilterForm";
 import ReviewCard from "../reviews/ReviewCard"
 import Loading from "../utilities/Loading";
@@ -175,7 +175,7 @@ const BookDetail = () => {
             
             <Modal open={reviewFormOpen} onClose={closeReviewAddForm}>
                 <Box className="Review-input" >
-                    <ReviewAddForm addReviews={addBookReview} rowCount={6} close={true}closeModal={closeReviewAddForm}/>
+                    <BookReviewAddForm addReviews={addBookReview} rowCount={6} close={true} closeModal={closeReviewAddForm}/>
                 </Box>
             </Modal>
 

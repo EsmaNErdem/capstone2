@@ -22,7 +22,6 @@ const ReviewFilterForm = ({applyFilters, prompts, initialValue={}}) => {
     const sendFilterData = () => {
       applyFilters(filterData);
     }
-
     
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -35,7 +34,6 @@ const ReviewFilterForm = ({applyFilters, prompts, initialValue={}}) => {
         clearTimeout(timerId.current);
       }
     };
-    
     
     // Clear the timeout when the component unmounts or when input changes
     useEffect(() => {

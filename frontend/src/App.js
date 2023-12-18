@@ -173,6 +173,7 @@ const App = () => {
   * Returns review
   * */
   const addUserReview = async (reviewData) => {
+    console.log(reviewData, "PPPPP")
     try{
       let userReview = await BookClubApi.sendBookReview(currentUser.username, reviewData)
       userReview ={

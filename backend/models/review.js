@@ -58,7 +58,7 @@ class Review {
                         b.author,
                         b.category,
                         b.cover,
-                        COUNT(l.review_id) AS "likeCount"
+                        COUNT(l.review_id) AS "reviewLikeCount"
                     FROM
                         reviews AS r
                             LEFT JOIN books AS b ON r.book_id = b.id
@@ -96,7 +96,7 @@ class Review {
         if (sortBy == "user") {
             order =  " ORDER BY r.username"
         } else if (sortBy == "popular") {
-            order = ` ORDER BY "likeCount" DESC`
+            order = ` ORDER BY "reviewLikeCount" DESC`
         } 
 
         query += whereExpressions.length > 0 ? ` WHERE ${whereExpressions.join(" AND ")}` : "";
@@ -104,7 +104,6 @@ class Review {
         query += ` LIMIT $${queryValues.length + 1} OFFSET $${queryValues.length + 2}`;
 
         queryValues.push(pageSize, (page - 1) * pageSize);
-        console.log("HHHHHhhh", query)
         const reviewsRes = await db.query(query, queryValues);
         return reviewsRes.rows;
     }
@@ -184,7 +183,7 @@ class Review {
      */
     static async getReviewLikeCount(id) { 
         const review = await db.query(
-            `SELECT COUNT(l.review_id) AS "likeCount"
+            `SELECT COUNT(l.review_id) AS "reviewLikeCount"
             FROM
                 reviews AS r
                     LEFT JOIN review_likes AS l ON l.review_id = r.id

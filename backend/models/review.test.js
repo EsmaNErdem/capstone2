@@ -94,7 +94,7 @@ describe("Review class", () => {
             cover: 'Cover 2',
             author: 'Author 2',
             category: 'Category 2',
-            likeCount: '2'
+            reviewLikeCount: '2'
           },
           {
             reviewId: 10000,
@@ -107,7 +107,7 @@ describe("Review class", () => {
             cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
           },
         ]);
     });
@@ -126,7 +126,7 @@ describe("Review class", () => {
             cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
-            likeCount: '1'
+            reviewLikeCount: '1'
           }
       ]);
   });
@@ -145,7 +145,7 @@ describe("Review class", () => {
         cover: 'Cover 2',
         author: 'Author 2',
         category: 'Category 2',
-        likeCount: '2'
+        reviewLikeCount: '2'
       }
     ]);
 });
@@ -164,7 +164,7 @@ describe("Review class", () => {
               cover: 'Cover 1',
               author: 'Author 1',
               category: 'Category 1',
-              likeCount: '1'
+              reviewLikeCount: '1'
             }
         ]);
     });
@@ -183,7 +183,7 @@ describe("Review class", () => {
               cover: 'Cover 1',
               author: 'Author 1',
               category: 'Category 1',
-              likeCount: '1'
+              reviewLikeCount: '1'
             }
         ]);
     });
@@ -250,7 +250,7 @@ describe("Review class", () => {
     describe('getReviewLikeCount method', () => {
         test("should return number of likes of review given with id", async function () {
             const reviewLikeCount = await Review.getReviewLikeCount(10000);
-            expect(reviewLikeCount).toEqual([ { likeCount: '1' } ]);
+            expect(reviewLikeCount).toEqual([ { reviewLikeCount: '1' } ]);
         });
 
         test("should return [] review given with id if no likes", async function () {
@@ -304,13 +304,13 @@ describe("Review class", () => {
   describe('like review method', () => {
       test("should like review", async function () {
         const reviewLikeCount = await Review.getReviewLikeCount(10000);
-        expect(reviewLikeCount).toEqual([ { likeCount: '1' } ]);
+        expect(reviewLikeCount).toEqual([ { reviewLikeCount: '1' } ]);
 
         const review = await Review.like(10000, "u2");
         expect(review).toEqual(10000);
         
         const newLikeCount = await Review.getReviewLikeCount(10000);
-        expect(newLikeCount).toEqual([ { likeCount: '2' } ]);
+        expect(newLikeCount).toEqual([ { reviewLikeCount: '2' } ]);
       });
 
       test("should fail if cannot find review", async function () {
@@ -334,13 +334,13 @@ describe("Review class", () => {
   describe('unlikeBook method', () => {
     test("should unlike review", async function () {
         const reviewLikeCount = await Review.getReviewLikeCount(10000);
-        expect(reviewLikeCount).toEqual([ { likeCount: '1' } ]);
+        expect(reviewLikeCount).toEqual([ { reviewLikeCount: '1' } ]);
 
         const review = await Review.unlike(10000, "u1");
         expect(review).toEqual(10000);
         
         const newLikeCount = await Review.getReviewLikeCount(10000);
-        expect(newLikeCount).toEqual([ { likeCount: '0' } ]);
+        expect(newLikeCount).toEqual([ { reviewLikeCount: '0' } ]);
     });
 
     test("should fail if cannot find review", async function () {

@@ -222,7 +222,7 @@ describe("Review Routes", function () {
                       cover: 'Cover2',
                       author: 'Author2',
                       category: 'Category 2',
-                      likeCount: '0'
+                      reviewLikeCount: '0'
                     },
                     {
                       reviewId: expect.any(Number),
@@ -235,7 +235,7 @@ describe("Review Routes", function () {
                       cover: 'Cover1',
                       author: 'Author1',
                       category: 'Category 1',
-                      likeCount: '1'
+                      reviewLikeCount: '1'
                     },
                     {
                       reviewId: expect.any(Number),
@@ -248,7 +248,7 @@ describe("Review Routes", function () {
                       cover: 'Cover1',
                       author: 'Author1',
                       category: 'Category 1',
-                      likeCount: '2'
+                      reviewLikeCount: '2'
                     }
                   ]
             });
@@ -277,7 +277,7 @@ describe("Review Routes", function () {
                         cover: 'Cover1',
                         author: 'Author1',
                         category: 'Category 1',
-                        likeCount: '2'
+                        reviewLikeCount: '2'
                     },
                     {
                     reviewId: expect.any(Number),
@@ -290,35 +290,21 @@ describe("Review Routes", function () {
                     cover: 'Cover1',
                     author: 'Author1',
                     category: 'Category 1',
-                    likeCount: '1'
+                    reviewLikeCount: '1'
                     }
                 ]
             });
         });
 
-        // test("can only filter valid criterias", async function () {
-        //     const resp = await request(app)
-        //         .get(`/reviews`)
-        //             .query({
-        //                 author: 1
-        //             })
-        //             .set("authorization", `User Token ${u1Token}`);
-        //     expect(resp.statusCode).toEqual(400);
-        // });
-
-        // test("can only filter valid key", async function () {
-        //     const resp = await request(app)
-        //         .get(`/reviews`)
-        //             .query({
-        //                 nope: 1
-        //             })
-        //             .set("authorization", `User Token ${u1Token}`);
-                    
-        //     console.log("-----------")
-        //     console.log(resp.body)
-        //     console.log("-----------")
-        //     expect(resp.statusCode).toEqual(400);
-        // });
+        test("can only filter valid criterias", async function () {
+            const resp = await request(app)
+                .get(`/reviews/1`)
+                    .query({
+                        nope: 1
+                    })
+                    .set("authorization", `User Token ${u1Token}`);
+            expect(resp.statusCode).toEqual(400);
+        });
         
         test("should fail without auth", async function () {
             const resp = await request(app)
@@ -410,15 +396,15 @@ describe("Review Routes", function () {
             });
         });
 
-        // test("can only filter valid key", async function () {
-        //     const resp = await request(app)
-        //         .get(`/reviews/books/1`)
-        //             .send({
-        //                 nope: 1
-        //             })
-        //             .set("authorization", `User Token ${u1Token}`);
-        //     expect(resp.statusCode).toEqual(400);
-        // });
+        test("can only filter valid key", async function () {
+            const resp = await request(app)
+                .get(`/reviews/books/1`)
+                    .query({
+                        nope: 1
+                    })
+                    .set("authorization", `User Token ${u1Token}`);
+            expect(resp.statusCode).toEqual(400);
+        });
         
         test("should fail without auth", async function () {
             const resp = await request(app)
@@ -431,7 +417,7 @@ describe("Review Routes", function () {
     describe("POST /reviews/like/:id/users/:username", function () {
         test("should add like to review", async function () {
             let reviewLikeCount = await Review.getReviewLikeCount(review2);
-            expect(reviewLikeCount).toEqual([{ likeCount: '1' }])
+            expect(reviewLikeCount).toEqual([{ reviewLikeCount: '1' }])
             const resp = await request(app)
             .post(`/reviews/like/${review2}/users/u2`)
               .set("authorization", `User Token ${u2Token}`);
@@ -439,7 +425,7 @@ describe("Review Routes", function () {
                     likedReview: expect.any(Number),
             });
             reviewLikeCount = await Review.getReviewLikeCount(review2);
-            expect(reviewLikeCount).toEqual([{ likeCount: '2' }])
+            expect(reviewLikeCount).toEqual([{ reviewLikeCount: '2' }])
         });
         
         test("should fail without correct username", async function () {
@@ -474,7 +460,7 @@ describe("Review Routes", function () {
     describe("DELETE /reviews/like/:id/users/:username", function () {
         test("should remove book from user's liked list", async function () {
             let reviewLikeCount = await Review.getReviewLikeCount(review2);
-            expect(reviewLikeCount).toEqual([{ likeCount: '1' }])
+            expect(reviewLikeCount).toEqual([{ reviewLikeCount: '1' }])
             const resp = await request(app)
             .delete(`/reviews/like/${review2}/users/u1`)
               .set("authorization", `User Token ${u1Token}`);
@@ -482,7 +468,7 @@ describe("Review Routes", function () {
                     unlikedReview: review2
             });
             reviewLikeCount = await Review.getReviewLikeCount(review2);
-            expect(reviewLikeCount).toEqual([{ likeCount: '0' }])
+            expect(reviewLikeCount).toEqual([{ reviewLikeCount: '0' }])
         });
         
         test("should fail without correct username", async function () {

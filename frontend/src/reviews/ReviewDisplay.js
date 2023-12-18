@@ -8,24 +8,32 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './ReviewDisplay.css';
 
-const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCount, deleteReview, bookId, title=null, author=null, cover=null, category=null}) => {
+/**
+ * Show review with a like button and adds likes to review 
+ * if current user review show delete button adn delete review
+ * 
+ * - Rendered by ReviewList and ReviewFilterList to display reviews and related books
+ * - Send user like on a review. If fails, shows error to user
+ * 
+ * - ReviewList, ReviewFilterList ==> ReviewCard
+ */
+const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCount=0, deleteReview, bookId, title, author=null, cover=null, category=null }) => {
   console.debug('ReviewDisplay');
 
   const { isUserReview } = useContext(UserContext);
 
   const [userReview, setUserReview] = useState();
   const [error, setError] = useState(null);
-  const { liked, likes, error: likeError, handleLikeReview } = useReviewLike(
-    reviewId,
-    reviewLikeCount
-  );
+  const { liked, likes, error: likeError, handleLikeReview } = useReviewLike(reviewId, reviewLikeCount);
 
+  /**By using the useEffect, the liked status is only recalculated when the id or the   */
   useEffect(() => {
     console.debug('ReviewDisplay useEffect, reviewId=', reviewId);
 
     setUserReview(isUserReview(reviewId));
   }, [reviewId, isUserReview]);
 
+  // Delete current user review
   const handleDeleteReview = async () => {
     try {
       setError(null);
@@ -53,8 +61,10 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
           (
             <>
               <div style={{ display: "flex", alignItems: "stretch" }}>
+                <IconButton color="success">
                   <span>{likes}</span>
                   <FavoriteIcon />
+                </IconButton>
                 <IconButton onClick={handleDeleteReview} color="secondary">
                     <DeleteIcon />
                 </IconButton>
@@ -62,8 +72,8 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
             </>
           ) : (
             <div>
-              <span>{likes}</span>
               <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
+                <span>{likes}</span>
                 <FavoriteIcon />
               </IconButton>
             </div>
@@ -71,6 +81,7 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
         </div>
         <div className="ReviewInfo">
           <ListItemText
+            primaryTypographyProps={{fontSize: '18px', fontWeight: "600"}} 
             primary={review}
           />
         </div>

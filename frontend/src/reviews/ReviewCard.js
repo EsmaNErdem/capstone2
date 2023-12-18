@@ -8,14 +8,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 /**
- * Show review with a like button and adds likes to review
+ * Show review with a like button and adds likes to review 
+ * if current user review show delete button adn delete review
  * 
  * - Rendered by BookReviewDrawer to display card for existing book reviews
  * - Send user like on a review. If fails, shows error to user
  * 
  * - BookReviewDrawer, BookDetail ==> ReviewCard
  */
-const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount, deleteReview, bookId, title=null, author=null, category=null}) => {
+const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount, deleteReview, bookId }) => {
     console.debug("ReviewCard");
   
     const { isUserReview } = useContext(UserContext);
@@ -31,9 +32,8 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
         setUserReview(isUserReview(reviewId))
     }, [reviewId, isUserReview])
 
-
-     // Send user like API. If fails, shows error to user
-     const handleDeleteReview = async () =>{
+    // Delete current user review
+    const handleDeleteReview = async () =>{
         try {
             setError(null);
             await deleteReview(reviewId, bookId);
@@ -56,10 +56,10 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
                     {userReview ?
                      (
                         <div style={{ display: "flex", alignItems: "stretch" }}>
-                            <span >
-                                <div>{likes}</div>
+                            <IconButton color="success">
+                                <span>{likes}</span>
                                 <FavoriteIcon />
-                            </span>
+                            </IconButton>
                             <IconButton onClick={handleDeleteReview} color="secondary">
                                 <DeleteIcon />
                             </IconButton>
@@ -67,8 +67,8 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
                     ) 
                     : (
                         <>
-                            <span>{likes}</span>
                             <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
+                                <span>{likes}</span>
                                 <FavoriteIcon />
                             </IconButton>
                         </>

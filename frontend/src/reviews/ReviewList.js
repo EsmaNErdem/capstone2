@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import useReviewDelete from "../hooks/useReviewDelete";
+import useReviewAddWithBook from "../hooks/useReviewAddWithBook";
 import { useNavigate } from "react-router-dom";
 import BookClubApi from "../api";
 import ReviewFilterForm from "./ReviewFilterForm";
 import ReviewDisplay from "./ReviewDisplay";
+import ReviewAddForm from "./ReviewAddForm";
 import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert"
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Box, Modal, IconButton }from '@mui/material';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import "./ReviewList.css"
 
 /**
@@ -29,9 +33,10 @@ const ReviewList = () => {
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
+  const [reviewFormOpen, setReviewFormOpen] = useState(false);
 
   const { error: deleteError, deleteBookReview } = useReviewDelete(setReviews);
-
+  const { error: addError, addBookReview } = useReviewAddWithBook(setReviews, setReviewFormOpen)
   
   /**
    * Fetches the initial batch of reviews from database.
@@ -78,21 +83,27 @@ const ReviewList = () => {
   }
 
   const filterReviewData = (filterData) => {
-    if (filterData.title) filterData.title = filterData.title.trim()
-    if (filterData.author) filterData.author = filterData.author.trim()
-    if (filterData.publisher) filterData.publisher = filterData.publisher.trim()
-    if (filterData.subject) filterData.subject = filterData.subject.trim()
-
     let queryTerms = ""
-    queryTerms = filterData.title ? `&title=${filterData.title}` : ""
-    queryTerms += filterData.author ? `&author=${filterData.author}` : ""
-    queryTerms += filterData.publisher ? `&publisher=${filterData.publisher}` : ""
-    queryTerms += filterData.category ? `&category=${filterData.category}` : ""
+    queryTerms = filterData.title ? `&title=${filterData.title?.trim()}` : ""
+    queryTerms += filterData.author ? `&author=${filterData.author?.trim()}` : ""
+    queryTerms += filterData.publisher ? `&publisher=${filterData.publisher?.trim()}` : ""
+    queryTerms += filterData.category ? `&category=${filterData.category?.trim()}` : ""
     queryTerms += filterData.sortBy ? `&sort=${filterData.sortBy}` : ""
     queryTerms = queryTerms ? `?${queryTerms}` : ""
+
     if(filterData.title || filterData.author || filterData.category || filterData.username || filterData.sortBy) {
       navigate(`/reviews/filter${queryTerms}`)
     }
+  }
+
+  // Opens Modal to display review text input 
+  const openReviewAddForm = async () => {
+      setReviewFormOpen(true)
+  }
+  
+  // Closes  Modal to display review text input 
+  const closeReviewAddForm = async () => {
+      setReviewFormOpen(false)
   }
 
   if (loading) return <Loading />;
@@ -105,11 +116,26 @@ const ReviewList = () => {
     loader={<Loading />}
   >
       <div className="ReviewList col-md-8 offset-md-2">
+        <Modal open={reviewFormOpen} onClose={closeReviewAddForm}>
+          <Box className="Review-input" >
+            <ReviewAddForm addReviews={addBookReview} rowCount={6} close={true} closeModal={closeReviewAddForm} addBook={true}/>
+          </Box>
+        </Modal>
+
+        <IconButton
+            onClick={openReviewAddForm}
+            className="ReviewButton"
+            style={{ color:"orangered" }}
+            >
+          <span>Add New Book Review</span><AddCommentIcon data-testid="review-button" />
+        </IconButton>
+
         <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigateForward={true}/>
+
         {reviews.length
             ? (
                 <div className="ReviewList-list">
-                  {reviews.map(({ reviewId, review, date,  username, userImg,book_id, title, author, category, likeCount, cover }) => (
+                  {reviews.map(({ reviewId, review, date,  username, userImg, book_id, title, author, category, reviewLikeCount, cover }) => (
                       <ReviewDisplay 
                           key={reviewId}
                           reviewId={+reviewId}
@@ -122,7 +148,7 @@ const ReviewList = () => {
                           author={author}
                           cover={cover}
                           category={category}
-                          reviewLikeCount={+likeCount}
+                          reviewLikeCount={+reviewLikeCount}
                           deleteReview={deleteBookReview}
                       />
                   ))}
@@ -131,7 +157,7 @@ const ReviewList = () => {
                 <>
                   <p className="lead">Sorry, no results were found!</p>
                   {error ? <Alert type="danger" messages={error} />: null}
-                  {(deleteError)&& <Alert type="danger" messages={[deleteError]} />}
+                  {(deleteError || addError )&& <Alert type="danger" messages={[deleteError || addError]} />}
 
                 </>
             )}
