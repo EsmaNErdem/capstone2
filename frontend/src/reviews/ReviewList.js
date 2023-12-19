@@ -132,6 +132,9 @@ const ReviewList = () => {
 
         <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigateForward={true}/>
 
+        {error ? <Alert type="danger" messages={error} />: null}
+        {(deleteError || addError )&& <Alert type="danger" messages={[deleteError || addError]} />}
+        
         {reviews.length
             ? (
                 <div className="ReviewList-list">
@@ -156,9 +159,6 @@ const ReviewList = () => {
             ) : (
                 <>
                   <p className="lead">Sorry, no results were found!</p>
-                  {error ? <Alert type="danger" messages={error} />: null}
-                  {(deleteError || addError )&& <Alert type="danger" messages={[deleteError || addError]} />}
-
                 </>
             )}
       </div>

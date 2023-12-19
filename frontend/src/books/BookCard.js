@@ -25,12 +25,11 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
         
     const [bookReviews, setBookReviews] = useState(reviews);
     const [isReviewDrawerOpen, setReviewDrawerOpen] = useState(false);
+    const [error, setError] = useState(null);
 
     const { liked, likes, error: likeError, handleLikeBook } = useBookLike(id, bookLikeCount, { id, title, author, description, publisher, category, cover });
     const { error: addError, addBookReview } = useReviewAdd(setBookReviews, { id, title, author, description, publisher, category, cover }, setReviewDrawerOpen)
     const { error: deleteError, deleteBookReview } = useReviewDelete(setBookReviews);
-    const [error, setError] = useState(null);
-
 
     const openReviewDrawer = async () => {
         try {
@@ -53,20 +52,20 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                 <img alt={title} src={cover} className="CardImage"/>
             </Link>
             <div className="CardContent">
-                <Link to={`/books/${id}`} className="Title">
+                <Link to={`/books/${id}`} className="Title" data-testid="book-title-link">
                     <h2 data-testid="book-title">{title}</h2>
                 </Link>
                 <h3 data-testid="book-author">by {author}</h3>
                 <p>{description?.length > 250 ? `${description.slice(0, 250)}...` : description}</p>
                 <div className="CardFooter">
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <span>{bookReviews.length}</span>
-                            <IconButton onClick={openReviewDrawer} style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}>
-                                <CommentIcon  data-testid="review-button" />
+                            <span data-testid="review-count">{bookReviews.length}</span>
+                            <IconButton  data-testid="review-button" onClick={openReviewDrawer} style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}>
+                                <CommentIcon  />
                             </IconButton>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <span>{likes}</span>
+                            <span data-testid="like-count">{likes}</span>
                             <IconButton onClick={handleLikeBook} color={liked ? 'error' : 'default'}>
                                 <FavoriteIcon data-testid="like-button"/>
                             </IconButton>

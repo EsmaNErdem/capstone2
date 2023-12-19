@@ -56,8 +56,8 @@ const BookReviewDrawer = ({ isOpen, onClose, reviews, addReviews, deleteReview, 
 
                 <List sx={{ marginTop: '10px'}}>
                     <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
-                        <Link to={`/books/${bookData.id}`} className="drawer-heading">
-                            <ListItemText primary={bookData.title} primaryTypographyProps={{fontSize: '1.5rem', fontWeight: "bold"}} />
+                        <Link to={`/books/${bookData.id}`} className="drawer-heading" data-testid="drawer-book-link">
+                            <ListItemText data-testid="drawer-book-title" primary={bookData.title} primaryTypographyProps={{fontSize: '1.5rem', fontWeight: "bold"}} />
                         </Link>
                     </ListItem>
                     <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: "center" }}>

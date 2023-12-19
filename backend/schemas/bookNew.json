@@ -6,8 +6,7 @@
     "title": "New Book Schema",
     "required": [
         "id",
-        "title", 
-        "author"
+        "title"
     ],
     "properties": {
         "id": {
@@ -17,7 +16,8 @@
             "type": "string"
         },
         "author": {
-            "type": "string"
+            "type": "string",
+            "default": ""
         },
         "publisher": {
             "type": "string",

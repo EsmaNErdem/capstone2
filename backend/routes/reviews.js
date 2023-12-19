@@ -29,7 +29,6 @@ const Review = require("../models/review");
  */
 router.post("/add/users/:username", ensureCorrectUser, async function (req, res, next) {
     try {
-      console.log(req.body, "##############")
       const validator = jsonschema.validate(req.body, reviewNewSchema);
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);
@@ -107,7 +106,6 @@ router.get("/:page", ensureLoggedIn, async function (req, res, next) {
 router.get("/books/:id", ensureLoggedIn, async function (req, res, next) {
     try {
       const validator = jsonschema.validate(req.query, reviewBookFilterSchema);
-      console.log(validator.valid, validator, "FFFFF")
 
       if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);

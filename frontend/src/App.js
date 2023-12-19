@@ -146,25 +146,17 @@ const App = () => {
     if(isUserReview(reviewId)) return
 
     if(hasLikedReview(reviewId)) {
-      try{
-        const unlikedReviewId = await BookClubApi.unlikeReview(reviewId, currentUser.username)
-        setLikedReviews(prevLikedReviews => {
-          const newLikedReviews = new Set(prevLikedReviews);
-          newLikedReviews.delete(unlikedReviewId);
-          return newLikedReviews;
-        });
-        return unlikedReviewId;
-      } catch (e) {
-        console.error("Send user unlike review error:", e)
-      }
+      const unlikedReviewId = await BookClubApi.unlikeReview(reviewId, currentUser.username)
+      setLikedReviews(prevLikedReviews => {
+        const newLikedReviews = new Set(prevLikedReviews);
+        newLikedReviews.delete(unlikedReviewId);
+        return newLikedReviews;
+      });
+      return unlikedReviewId;
     } else {
-      try{
-        const likedReviewId = await BookClubApi.likeReview(reviewId, currentUser.username)
-        setLikedReviews(r => new Set([...r, likedReviewId]))
-        return likedReviewId
-      } catch (e) {
-        console.error("Send user like review error:", e)
-      }
+      const likedReviewId = await BookClubApi.likeReview(reviewId, currentUser.username)
+      setLikedReviews(r => new Set([...r, likedReviewId]))
+      return likedReviewId
     }
   }
 
@@ -173,22 +165,17 @@ const App = () => {
   * Returns review
   * */
   const addUserReview = async (reviewData) => {
-    console.log(reviewData, "PPPPP")
-    try{
-      let userReview = await BookClubApi.sendBookReview(currentUser.username, reviewData)
-      userReview ={
-        reviewId: userReview.id,
-        review: userReview.review,
-        username: userReview.username,
-        userImg: currentUser.img,
-        date: userReview.date,
-        reviewLikeCount: "0",
-     }
-      setReviews(r => new Set([...r, userReview.reviewId]))
-      return userReview
-    } catch (e) {
-      console.error("Send user review error:", e)
+    let userReview = await BookClubApi.sendBookReview(currentUser.username, reviewData)
+    userReview ={
+      reviewId: userReview.id,
+      review: userReview.review,
+      username: userReview.username,
+      userImg: currentUser.img,
+      date: userReview.date,
+      reviewLikeCount: "0",
     }
+    setReviews(r => new Set([...r, userReview.reviewId]))
+    return userReview
   }
 
 
@@ -212,25 +199,17 @@ const App = () => {
   * */
   const likeBook = async (bookId, bookData={}) => {
     if(hasLikedBook(bookId)) {
-      // try{
-        const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username)
-        setLikedBooks(prevLikedBooks => {
-          const newLikedBooks = new Set(prevLikedBooks);
-          newLikedBooks.delete(unlikedBookId);
-          return newLikedBooks;
-        });
-        return unlikedBookId
-      // } catch (e) {
-      //   console.error("Send user unlike book error:", e)
-      // }
+      const unlikedBookId = await BookClubApi.unlikeBook(bookId, currentUser.username)
+      setLikedBooks(prevLikedBooks => {
+        const newLikedBooks = new Set(prevLikedBooks);
+        newLikedBooks.delete(unlikedBookId);
+        return newLikedBooks;
+      });
+      return unlikedBookId
     } else {
-      // try{
-        const likedBookId = await BookClubApi.likeBook(bookId, currentUser.username, bookData)
-        setLikedBooks(b => new Set([...b, likedBookId]))
-        return likedBookId
-      // } catch (e) {
-        // console.error("Send user like book error:", e)
-      // }
+      const likedBookId = await BookClubApi.likeBook(bookId, currentUser.username, bookData)
+      setLikedBooks(b => new Set([...b, likedBookId]))
+      return likedBookId
     }
   }
 

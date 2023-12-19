@@ -13,7 +13,7 @@ CREATE TABLE users (
 CREATE TABLE books (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
-  author TEXT NOT NULL,
+  author TEXT,
   publisher TEXT,
   description TEXT,
   category TEXT,

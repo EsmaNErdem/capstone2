@@ -157,6 +157,7 @@ const BookDetail = () => {
                                 <div className="ReviewSection">
                                     <span>{bookReviews ? bookReviews.length : 0}</span>
                                     <IconButton
+                                        data-testid="add-review-toggle"
                                         onClick={openReviewAddForm}
                                         className="ReviewButton"
                                         style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}

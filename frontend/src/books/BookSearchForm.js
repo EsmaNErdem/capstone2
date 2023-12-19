@@ -129,6 +129,7 @@ const BookSearchForm = ({searchFor}) => {
                             <FontAwesomeIcon icon={faFilter} />
                         </button>
                         <button 
+                            data-testid="submit"
                             type="submit" 
                             className="SubmitButton" 
                             title="Submit Search"
@@ -139,6 +140,7 @@ const BookSearchForm = ({searchFor}) => {
                     ) : (
                     <>
                         <button
+                            data-testid="filter-toggle"
                             type="button"
                             className="ToggleButton-large"
                             onClick={toggleAdvancedSearch}

@@ -17,7 +17,7 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
     const [formData, setFormData] = useState({ review: '', book: '' });
     const [loading, setLoading] = useState(true)
     const [bookSuggestions, setBookSuggestions] = useState([])
-    const [book, setBook] = useState({})
+    const [book, setBook] = useState(null)
     const [error, setError] = useState(null);
     const timerId = useRef();
 
@@ -28,7 +28,7 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
         setError(null);
         try {
             const bookData = await BookClubApi.getBooksFromDatabase(5, {search: formData.book}); 
-    
+            console.log("Rrrrrrr", bookData, !book)
           if (bookData.length === 0 && !book) {
             // If no matching books from the database, fetch from external API
             const externalBooks = await BookClubApi.getSearchedBookResult(5, { search: formData.book });

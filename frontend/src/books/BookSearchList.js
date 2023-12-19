@@ -103,7 +103,7 @@ const BookSearchList = () => {
             setBooks(b => [...b, ...searchBook]);
         } catch (e) {
             console.error("BookSearch API call data loading error:", e);
-            setError("An error occurred while fetching search results.");
+            setError("An error occurred while fetching search books.");
         }
 
         setLoading(false)
@@ -112,6 +112,18 @@ const BookSearchList = () => {
 
     const searchBookData = (data) => {
         setSearchData(data)
+
+        // if (!data) {
+        //     navigate('/books');
+        // }
+        
+        // let queryTerms = ""
+        // queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
+        // queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
+        // queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
+        // queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
+    
+        // navigate(`/books/search?search=${searchData.search}${queryTerms}`);  
     }
 
     if (loading || !searchData) return <Loading />;
@@ -146,7 +158,7 @@ const BookSearchList = () => {
                 ) : (
                     <>
                     <p className="lead">Sorry, no results were found!</p>
-                    {error ? <Alert type="danger" messages={error} />: null}
+                    {error ? <Alert type="danger" messages={[error]} />: null}
                     </>
                 )}
         </div>

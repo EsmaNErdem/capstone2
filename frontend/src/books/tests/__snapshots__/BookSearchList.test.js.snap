@@ -43,6 +43,7 @@ exports[`it renders and matches with snapshot 1`] = `
             </div>
             <button
               class="ToggleButton-large"
+              data-testid="filter-toggle"
               title="Toggle Advanced Search"
               type="button"
             >
@@ -85,6 +86,7 @@ exports[`it renders and matches with snapshot 1`] = `
             >
               <a
                 class="Title"
+                data-testid="book-title-link"
                 href="/books/1"
               >
                 <h2
@@ -107,18 +109,21 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   style="display: flex; align-items: center;"
                 >
-                  <span>
+                  <span
+                    data-testid="review-count"
+                  >
                     0
                   </span>
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="review-button"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="review-button"
+                      data-testid="CommentIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
@@ -134,7 +139,9 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   style="display: flex; align-items: center;"
                 >
-                  <span>
+                  <span
+                    data-testid="like-count"
+                  >
                     5
                   </span>
                   <button
@@ -183,6 +190,7 @@ exports[`it renders and matches with snapshot 1`] = `
             >
               <a
                 class="Title"
+                data-testid="book-title-link"
                 href="/books/2"
               >
                 <h2
@@ -205,18 +213,21 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   style="display: flex; align-items: center;"
                 >
-                  <span>
+                  <span
+                    data-testid="review-count"
+                  >
                     0
                   </span>
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="review-button"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="review-button"
+                      data-testid="CommentIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
@@ -232,7 +243,9 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   style="display: flex; align-items: center;"
                 >
-                  <span>
+                  <span
+                    data-testid="like-count"
+                  >
                     10
                   </span>
                   <button

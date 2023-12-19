@@ -116,7 +116,7 @@ const BookList = () => {
             ) : (
                 <>
                   <p className="lead">Sorry, no results were found!</p>
-                  {error ? <Alert type="danger" messages={error} />: null}
+                  {error ? <Alert type="danger" messages={[error]} />: null}
                 </>
             )}
       </div>
