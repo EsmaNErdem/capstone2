@@ -175,6 +175,7 @@ exports[`it renders and matches with snapshot 1`] = `
         class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
       >
         <a
+          data-testid="review-card-profile-link"
           href="/profile/Test1"
         >
           <div
@@ -203,6 +204,7 @@ exports[`it renders and matches with snapshot 1`] = `
         </div>
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="review-card-review-like"
           tabindex="0"
           type="button"
         >
@@ -232,6 +234,7 @@ exports[`it renders and matches with snapshot 1`] = `
         class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
       >
         <a
+          data-testid="review-card-profile-link"
           href="/profile/Test2"
         >
           <div
@@ -260,6 +263,7 @@ exports[`it renders and matches with snapshot 1`] = `
         </div>
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="review-card-review-like"
           tabindex="0"
           type="button"
         >
@@ -465,6 +469,7 @@ exports[`it renders and matches with snapshot 2`] = `
         class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
       >
         <a
+          data-testid="review-card-profile-link"
           href="/profile/Test1"
         >
           <div
@@ -493,6 +498,7 @@ exports[`it renders and matches with snapshot 2`] = `
         </div>
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="review-card-review-like"
           tabindex="0"
           type="button"
         >
@@ -522,6 +528,7 @@ exports[`it renders and matches with snapshot 2`] = `
         class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
       >
         <a
+          data-testid="review-card-profile-link"
           href="/profile/Test2"
         >
           <div
@@ -550,6 +557,7 @@ exports[`it renders and matches with snapshot 2`] = `
         </div>
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="review-card-review-like"
           tabindex="0"
           type="button"
         >

@@ -46,7 +46,7 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
     return (
             <React.Fragment>
                 <ListItem  disablePadding>
-                    <Link to={`/profile/${username}`}>
+                    <Link to={`/profile/${username}`} data-testid="review-card-profile-link">
                         <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
                     </Link>
                     <ListItemText 
@@ -60,14 +60,14 @@ const ReviewCard = ({ reviewId, review, date, username, userImg, reviewLikeCount
                                 <span>{likes}</span>
                                 <FavoriteIcon />
                             </IconButton>
-                            <IconButton onClick={handleDeleteReview} color="secondary">
+                            <IconButton onClick={handleDeleteReview} color="secondary"  data-testid="review-card-review-delete">
                                 <DeleteIcon />
                             </IconButton>
                         </div>
                     ) 
                     : (
                         <>
-                            <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
+                            <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'} data-testid="review-card-review-like">
                                 <span>{likes}</span>
                                 <FavoriteIcon />
                             </IconButton>

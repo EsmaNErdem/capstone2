@@ -79,7 +79,6 @@ test('it renders and matches with snapshot', async () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-
 test('renders mock data', async () => {
   BookClubApi.getSearchedBookResult.mockImplementationOnce(() => (mockBooks));
 
@@ -113,25 +112,9 @@ test('search redirects to the correct route', async () => {
   fireEvent.change(searchInput, { target: { value: 'Harry' } });
   fireEvent.submit(searchInput);
   expect(navigate).toHaveBeenCalledWith('/books/search?search=Harry');
-});
-
-test('search redirects to the correct route', async () => {
-  BookClubApi.getSearchedBookResult.mockImplementationOnce(() => (mockBooks));
-
-  await act(async () => {
-    ({ getByPlaceholderText } = render(
-      <MemoryRouter>
-        <UserProvider>
-          <BookSearchList />
-        </UserProvider>
-    </MemoryRouter>
-  ));
-  });
-
-  const searchInput = getByPlaceholderText('Book search');
-  fireEvent.change(searchInput, { target: { value: 'Harry' } });
+  fireEvent.change(searchInput, { target: { value: 'Books' } });
   fireEvent.submit(searchInput);
-  expect(navigate).toHaveBeenCalledWith('/books/search?search=Harry');
+  expect(navigate).toHaveBeenCalledWith('/books/search?search=Books');
 });
 
 test('when Api call throws error, handles error', async () => {

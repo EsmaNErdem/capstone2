@@ -16,6 +16,13 @@ const UserProvider =
     </UserContext.Provider>
 );
 
+const CurrUserProvider =
+    ({ children, currentUser = demoUser, hasLikedReview = () => false, hasLikedBook = () => false, isUserReview = () => true, hasFollowing = () => false, setCurrentUser = u => u }) => (
+    <UserContext.Provider value={{ currentUser, hasLikedReview, hasLikedBook, hasFollowing, setCurrentUser, isUserReview }}>
+      {children}
+    </UserContext.Provider>
+);
+
 const NonUserProvider =
     ({ children, currentUser = null, hasLikedReview = () => false, hasLikedBook = () => false, hasFollowing = () => false }) => (
     <UserContext.Provider value={{ currentUser, hasLikedReview, hasLikedBook, hasFollowing,}}>
@@ -23,5 +30,4 @@ const NonUserProvider =
     </UserContext.Provider>
 );
 
-
-export { UserProvider, NonUserProvider };
+export { UserProvider, CurrUserProvider, NonUserProvider };

@@ -141,19 +141,20 @@ exports[`it renders and matches with snapshot 1`] = `
                   style="display: flex; align-items: center;"
                 >
                   <span
-                    data-testid="like-count"
+                    data-testid="book-card-like-count"
                   >
                     5
                   </span>
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="book-card-like-button"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="like-button"
+                      data-testid="FavoriteIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
@@ -245,308 +246,20 @@ exports[`it renders and matches with snapshot 1`] = `
                   style="display: flex; align-items: center;"
                 >
                   <span
-                    data-testid="like-count"
+                    data-testid="book-card-like-count"
                   >
                     10
                   </span>
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="book-card-like-button"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="like-button"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                      />
-                    </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              class="PrivateSwipeArea-root css-x15wq9"
-              style="width: 20px;"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="Loading"
-      >
-        Loading ...
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`it renders and matches with snapshot 2`] = `
-<DocumentFragment>
-  <div
-    class="infinite-scroll-component__outerdiv"
-  >
-    <div
-      class="infinite-scroll-component "
-      style="height: auto; overflow: auto;"
-    >
-      <div
-        class="BookList col-md-8 offset-md-2"
-      >
-        <div
-          class="SearchBox "
-        >
-          <form
-            class="SearchForm"
-          >
-            <div
-              class="SearchInputContainer"
-            >
-              <input
-                placeholder="Book search"
-                value=""
-              />
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-magnifying-glass SubmitButton-inside"
-                data-icon="magnifying-glass"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 512 512"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <button
-              class="ToggleButton-large"
-              data-testid="filter-toggle"
-              title="Toggle Advanced Search"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-filter "
-                data-icon="filter"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 512 512"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
-                  fill="currentColor"
-                />
-              </svg>
-            </button>
-          </form>
-        </div>
-        <div
-          class="BookList-list"
-        >
-          <div
-            class="BookCard"
-          >
-            <a
-              class="Title"
-              href="/books/1"
-            >
-              <img
-                alt="Book 1"
-                class="CardImage"
-                src="Cover 1"
-              />
-            </a>
-            <div
-              class="CardContent"
-            >
-              <a
-                class="Title"
-                data-testid="book-title-link"
-                href="/books/1"
-              >
-                <h2
-                  data-testid="book-title"
-                >
-                  Book 1
-                </h2>
-              </a>
-              <h3
-                data-testid="book-author"
-              >
-                by Author 1
-              </h3>
-              <p>
-                Description 1
-              </p>
-              <div
-                class="CardFooter"
-              >
-                <div
-                  style="display: flex; align-items: center;"
-                >
-                  <span
-                    data-testid="review-count"
-                  >
-                    1
-                  </span>
-                  <button
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                    data-testid="review-button"
-                    style="color: yellowgreen;"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="CommentIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
-                      />
-                    </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </button>
-                </div>
-                <div
-                  style="display: flex; align-items: center;"
-                >
-                  <span
-                    data-testid="like-count"
-                  >
-                    5
-                  </span>
-                  <button
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="like-button"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                      />
-                    </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              class="PrivateSwipeArea-root css-x15wq9"
-              style="width: 20px;"
-            />
-          </div>
-          <div
-            class="BookCard"
-          >
-            <a
-              class="Title"
-              href="/books/2"
-            >
-              <img
-                alt="Book 2"
-                class="CardImage"
-                src="Cover 2"
-              />
-            </a>
-            <div
-              class="CardContent"
-            >
-              <a
-                class="Title"
-                data-testid="book-title-link"
-                href="/books/2"
-              >
-                <h2
-                  data-testid="book-title"
-                >
-                  Book 2
-                </h2>
-              </a>
-              <h3
-                data-testid="book-author"
-              >
-                by Author 2
-              </h3>
-              <p>
-                Description 2
-              </p>
-              <div
-                class="CardFooter"
-              >
-                <div
-                  style="display: flex; align-items: center;"
-                >
-                  <span
-                    data-testid="review-count"
-                  >
-                    0
-                  </span>
-                  <button
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                    data-testid="review-button"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="CommentIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
-                      />
-                    </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </button>
-                </div>
-                <div
-                  style="display: flex; align-items: center;"
-                >
-                  <span
-                    data-testid="like-count"
-                  >
-                    10
-                  </span>
-                  <button
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="like-button"
+                      data-testid="FavoriteIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >

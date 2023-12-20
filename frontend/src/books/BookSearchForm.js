@@ -26,39 +26,39 @@ const BookSearchForm = ({searchFor}) => {
     const [advancedSearch, setAdvancedSearch] = useState(false)
     const timeoutId = useRef();
 
-    //  Handles form submission and triggers the search function which API calls for data.
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (formData.title) formData.title = formData.title.trim()
-        if (formData.author) formData.author = formData.author.trim()
-        if (formData.publisher) formData.publisher = formData.publisher.trim()
-        if (formData.subject) formData.subject = formData.subject.trim()
+    const sendSearchData = () => {
+        let title
+        let author
+        let publisher
+        let subject 
+
+        if (formData.title) title = formData.title.trim()
+        if (formData.author) author = formData.author.trim()
+        if (formData.publisher) publisher = formData.publisher.trim()
+        if (formData.subject) subject = formData.subject.trim()
 
         const searchData = {
             search:
                 formData.search ||
-                formData.title ||
-                formData.author ||
-                formData.publisher ||
-                formData.subject,
+                title ||
+                author ||
+                publisher ||
+                subject,
             terms: {
-                title: formData.title,
-                author: formData.author,
-                publisher: formData.publisher,
-                subject: formData.subject,
+                title,
+                author,
+                publisher,
+                subject
             },
         };
 
-        searchFor(searchData || undefined)
-         // Pass search data as URL parameters
-        let queryTerms = ""
-        queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
-        queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
-        queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
-        queryTerms += searchData.terms.subject ? `&subject=${searchData.terms.subject}` : ""
+        if(searchData.search) searchFor(searchData || undefined)
+      }
 
-        navigate(`/books/search?search=${searchData.search}${queryTerms}`);
-
+    //  Handles form submission and sends searchData 
+    const handleSubmit = e => {
+        e.preventDefault();
+        sendSearchData();
     }
     
     // Handles changes in form inputs and updates the component's state accordingly.
@@ -69,21 +69,25 @@ const BookSearchForm = ({searchFor}) => {
             ...data,
             [prompt] : value || undefined
         }))
+
         if (!advancedSearch) { 
             if (timeoutId.current) {
                 clearTimeout(timeoutId.current);
             }
-            
-            timeoutId.current = setTimeout(() => {
-                handleSubmit(e)
-            }, 1200);
         }  
-
     }
 
     // Clear the timeout when the component unmounts or when input changes
     useEffect(() => {
         if (!advancedSearch) {
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
+            }
+            
+            timeoutId.current = setTimeout(() => {
+                sendSearchData();
+            }, 1200);
+
             return () => {
                 if (timeoutId.current) {
                 clearTimeout(timeoutId.current);
@@ -91,7 +95,7 @@ const BookSearchForm = ({searchFor}) => {
                 }
             };
         }    
-    }, []);
+    }, [formData]);
 
     // Toggle advancedSearch state
     const toggleAdvancedSearch = () => {

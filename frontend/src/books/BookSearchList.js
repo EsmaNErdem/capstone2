@@ -110,59 +110,70 @@ const BookSearchList = () => {
         setIndexSearch(index => index + 20)
     }
 
-    const searchBookData = (data) => {
-        setSearchData(data)
-
-        // if (!data) {
-        //     navigate('/books');
-        // }
+    const searchBookData = (searchData) => {
+        if (!searchData) {
+            navigate('/books');
+        }
         
-        // let queryTerms = ""
-        // queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
-        // queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
-        // queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
-        // queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
+        let queryTerms = ""
+        queryTerms = searchData.terms.title ? `&title=${searchData.terms.title}` : ""
+        queryTerms += searchData.terms.author ? `&author=${searchData.terms.author}` : ""
+        queryTerms += searchData.terms.publisher ? `&publisher=${searchData.terms.publisher}` : ""
+        queryTerms += searchData.terms.subject ? `&title=${searchData.terms.subject}` : ""
     
-        // navigate(`/books/search?search=${searchData.search}${queryTerms}`);  
+        navigate(`/books/search?search=${searchData.search}${queryTerms}`);  
     }
 
     if (loading || !searchData) return <Loading />;
 
     return (
-    <InfiniteScroll
-        dataLength={books.length}
-        next={searchBookList}
-        hasMore={hasMore}
-        loader={<Loading />}
-    >
-        <div className="BookList col-md-8 offset-md-2">
-            <BookSearchForm searchFor={searchBookData} />
-            {books.length
-                ? (
-                    <div className="BookList-list">
-                    {books.map(({ id, title, author, description, publisher, category, cover, bookLikeCount, reviews }) => (
-                        <BookCard 
-                            key={id}
-                            id={id}
-                            title={title}
-                            author={author}
-                            description={description}
-                            publisher={publisher}
-                            category={category}
-                            cover={cover}
-                            bookLikeCount={+bookLikeCount}
-                            reviews={reviews}
-                        />
-                    ))}
-                    </div>
-                ) : (
-                    <>
-                    <p className="lead">Sorry, no results were found!</p>
-                    {error ? <Alert type="danger" messages={[error]} />: null}
-                    </>
-                )}
-        </div>
-        </InfiniteScroll>
+        <>
+        {books.length
+            ? (
+            <InfiniteScroll
+                dataLength={books.length}
+                next={searchBookList}
+                hasMore={hasMore}
+                loader={<Loading />}
+            >
+                <div className="BookList col-md-8 offset-md-2">
+                    <BookSearchForm searchFor={searchBookData} />
+                    <h3>Results for {search}</h3>
+                    {books.length
+                        ? (
+                            <div className="BookList-list">
+                            {books.map(({ id, title, author, description, publisher, category, cover, bookLikeCount, reviews }) => (
+                                <BookCard 
+                                    key={id}
+                                    id={id}
+                                    title={title}
+                                    author={author}
+                                    description={description}
+                                    publisher={publisher}
+                                    category={category}
+                                    cover={cover}
+                                    bookLikeCount={+bookLikeCount}
+                                    reviews={reviews}
+                                />
+                            ))}
+                            </div>
+                        ) : (
+                            <>
+                            <p className="lead">Sorry, no results were found!</p>
+                            {error ? <Alert type="danger" messages={[error]} />: null}
+                            </>
+                        )}
+                </div>
+                </InfiniteScroll>
+            ) : (
+                <>
+                <p className="lead">Sorry, no results were found!</p>
+                {error ? <Alert type="danger" messages={[error]} />: null}
+                </>
+            )
+        }
+        </>
+   
     );
 }
 

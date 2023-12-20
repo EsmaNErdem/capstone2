@@ -126,13 +126,14 @@ const ReviewList = () => {
             onClick={openReviewAddForm}
             className="ReviewButton"
             style={{ color:"orangered" }}
+            data-testid="add-review-button"
             >
           <span>Add New Book Review</span><AddCommentIcon data-testid="review-button" />
         </IconButton>
 
         <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigateForward={true}/>
 
-        {error ? <Alert type="danger" messages={error} />: null}
+        {error ? <Alert type="danger" messages={[error]} />: null}
         {(deleteError || addError )&& <Alert type="danger" messages={[deleteError || addError]} />}
         
         {reviews.length

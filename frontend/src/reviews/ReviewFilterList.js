@@ -147,6 +147,7 @@ const ReviewFilterList = () => {
             onClick={openReviewAddForm}
             className="ReviewButton"
             style={{ color:"orangered" }}
+            data-testid="add-review-button"
             >
           <span>Add New Book Review</span><AddCommentIcon data-testid="review-button" />
         </IconButton>
@@ -176,7 +177,7 @@ const ReviewFilterList = () => {
             ) : (
                 <>
                   <p className="lead">Sorry, no results were found!</p>
-                  {error ? <Alert type="danger" messages={error} />: null}
+                  {error ? <Alert type="danger" messages={[error]} />: null}
                   {(deleteError)&& <Alert type="danger" messages={[deleteError]} />}
 
                 </>

@@ -48,7 +48,7 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
     <React.Fragment>
       <ListItem disablePadding className="ReviewDisplay">
         <div className="UserInfo">
-          <Link to={`/profile/${username}`} className="UsernameLink">
+          <Link to={`/profile/${username}`} className="UsernameLink" data-testid="review-display-profile-link">
             <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
             <ListItemText 
               primary={username} 
@@ -65,15 +65,15 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
                   <span>{likes}</span>
                   <FavoriteIcon />
                 </IconButton>
-                <IconButton onClick={handleDeleteReview} color="secondary">
+                <IconButton onClick={handleDeleteReview} color="secondary" data-testid="review-display-review-delete">
                     <DeleteIcon />
                 </IconButton>
               </div>
             </>
           ) : (
             <div>
-              <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'}>
-                <span>{likes}</span>
+              <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'} data-testid="review-display-review-like">
+                <span data-testid="display-like-count">{likes}</span>
                 <FavoriteIcon />
               </IconButton>
             </div>
@@ -92,7 +92,7 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
             </Link>
             <div>
                 <h2>
-                <Link to={`/books/${bookId}`} className="TitleLink">
+                <Link to={`/books/${bookId}`} className="TitleLink" data-testid="review-display-book-title-link">
                     {title}
                 </Link>
                 </h2>

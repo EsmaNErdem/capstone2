@@ -28,8 +28,8 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
         setError(null);
         try {
             const bookData = await BookClubApi.getBooksFromDatabase(5, {search: formData.book}); 
-            console.log("Rrrrrrr", bookData, !book)
-          if (bookData.length === 0 && !book) {
+
+            if (bookData.length === 0 && !book) {
             // If no matching books from the database, fetch from external API
             const externalBooks = await BookClubApi.getSearchedBookResult(5, { search: formData.book });
             setBookSuggestions(externalBooks);

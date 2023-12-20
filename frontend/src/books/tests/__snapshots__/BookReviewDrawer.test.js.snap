@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`BookReviewDrawer adds new review 1`] = `<DocumentFragment />`;
-
-exports[`BookReviewDrawer it renders and matches with snapshot 1`] = `<DocumentFragment />`;

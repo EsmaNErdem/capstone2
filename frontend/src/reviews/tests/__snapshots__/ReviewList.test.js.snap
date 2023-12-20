@@ -1,0 +1,693 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="infinite-scroll-component__outerdiv"
+  >
+    <div
+      class="infinite-scroll-component "
+      style="height: auto; overflow: auto;"
+    >
+      <div
+        class="ReviewList col-md-8 offset-md-2"
+      >
+        <button
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium ReviewButton css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="add-review-button"
+          style="color: orangered;"
+          tabindex="0"
+          type="button"
+        >
+          <span>
+            Add New Book Review
+          </span>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="review-button"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM17 11h-4v4h-2v-4H7V9h4V5h2v4h4v2z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <div
+          class="FilterBox"
+        >
+          <form
+            class="FilterForm"
+          >
+            <input
+              placeholder="Book title"
+              value=""
+            />
+            <input
+              placeholder="Book author"
+              value=""
+            />
+            <input
+              placeholder="Book category"
+              value=""
+            />
+            <input
+              placeholder="Review Owner"
+              value=""
+            />
+            <select
+              name="sortBy"
+            >
+              <option
+                value=""
+              >
+                Sort by
+              </option>
+              <option
+                value="date"
+              >
+                Sort by Date ↑
+              </option>
+              <option
+                value="user"
+              >
+                User by Alphabet ↓
+              </option>
+              <option
+                value="popular"
+              >
+                Sort by Popularity ↑
+              </option>
+            </select>
+            <button
+              class="SubmitButton-large"
+              title="Apply Filters"
+              type="submit"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-filter "
+                data-icon="filter"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+        <div
+          class="ReviewList-list"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters ReviewDisplay css-1nxmd3h-MuiListItem-root"
+          >
+            <div
+              class="UserInfo"
+            >
+              <a
+                class="UsernameLink"
+                data-testid="review-display-profile-link"
+                href="/profile/Test1"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+                >
+                  <img
+                    alt="Test1"
+                    class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                    src="UserImg1"
+                  />
+                </div>
+                <div
+                  class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  >
+                    Test1
+                  </span>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                  >
+                    12/18/2023 12:00:00 AM
+                  </p>
+                </div>
+              </a>
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  data-testid="review-display-review-like"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    data-testid="display-like-count"
+                  >
+                    2
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="FavoriteIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="ReviewInfo"
+            >
+              <div
+                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1k48cxs-MuiTypography-root"
+                >
+                  Review 1
+                </span>
+              </div>
+            </div>
+            <div
+              class="BookInfo"
+            >
+              <a
+                class="Title"
+                href="/books/1"
+              >
+                <img
+                  alt="Book 1"
+                  class="CardImage"
+                  src="Cover 1"
+                />
+              </a>
+              <div>
+                <h2>
+                  <a
+                    class="TitleLink"
+                    data-testid="review-display-book-title-link"
+                    href="/books/1"
+                  >
+                    Book 1
+                  </a>
+                </h2>
+                <p>
+                  Author: Author 1
+                </p>
+                <p>
+                  Category: Category 1
+                </p>
+              </div>
+            </div>
+          </li>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+          <li
+            class="MuiListItem-root MuiListItem-gutters ReviewDisplay css-1nxmd3h-MuiListItem-root"
+          >
+            <div
+              class="UserInfo"
+            >
+              <a
+                class="UsernameLink"
+                data-testid="review-display-profile-link"
+                href="/profile/Test2"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+                >
+                  <img
+                    alt="Test2"
+                    class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                    src="UserImg2"
+                  />
+                </div>
+                <div
+                  class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  >
+                    Test2
+                  </span>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                  >
+                    12/18/2023 12:00:00 AM
+                  </p>
+                </div>
+              </a>
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  data-testid="review-display-review-like"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    data-testid="display-like-count"
+                  >
+                    2
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="FavoriteIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="ReviewInfo"
+            >
+              <div
+                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1k48cxs-MuiTypography-root"
+                >
+                  Review 2
+                </span>
+              </div>
+            </div>
+            <div
+              class="BookInfo"
+            >
+              <a
+                class="Title"
+                href="/books/1"
+              >
+                <img
+                  alt="Book 1"
+                  class="CardImage"
+                  src="Cover 1"
+                />
+              </a>
+              <div>
+                <h2>
+                  <a
+                    class="TitleLink"
+                    data-testid="review-display-book-title-link"
+                    href="/books/1"
+                  >
+                    Book 1
+                  </a>
+                </h2>
+                <p>
+                  Author: Author 1
+                </p>
+                <p>
+                  Category: Category 1
+                </p>
+              </div>
+            </div>
+          </li>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+        </div>
+      </div>
+      <div
+        class="Loading"
+      >
+        Loading ...
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`it renders and matches with snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="infinite-scroll-component__outerdiv"
+  >
+    <div
+      class="infinite-scroll-component "
+      style="height: auto; overflow: auto;"
+    >
+      <div
+        class="ReviewList col-md-8 offset-md-2"
+      >
+        <button
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium ReviewButton css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="add-review-button"
+          style="color: orangered;"
+          tabindex="0"
+          type="button"
+        >
+          <span>
+            Add New Book Review
+          </span>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="review-button"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM17 11h-4v4h-2v-4H7V9h4V5h2v4h4v2z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <div
+          class="FilterBox"
+        >
+          <form
+            class="FilterForm"
+          >
+            <input
+              placeholder="Book title"
+              value=""
+            />
+            <input
+              placeholder="Book author"
+              value=""
+            />
+            <input
+              placeholder="Book category"
+              value=""
+            />
+            <input
+              placeholder="Review Owner"
+              value=""
+            />
+            <select
+              name="sortBy"
+            >
+              <option
+                value=""
+              >
+                Sort by
+              </option>
+              <option
+                value="date"
+              >
+                Sort by Date ↑
+              </option>
+              <option
+                value="user"
+              >
+                User by Alphabet ↓
+              </option>
+              <option
+                value="popular"
+              >
+                Sort by Popularity ↑
+              </option>
+            </select>
+            <button
+              class="SubmitButton-large"
+              title="Apply Filters"
+              type="submit"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-filter "
+                data-icon="filter"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+        <div
+          class="ReviewList-list"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters ReviewDisplay css-1nxmd3h-MuiListItem-root"
+          >
+            <div
+              class="UserInfo"
+            >
+              <a
+                class="UsernameLink"
+                data-testid="review-display-profile-link"
+                href="/profile/Test1"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+                >
+                  <img
+                    alt="Test1"
+                    class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                    src="UserImg1"
+                  />
+                </div>
+                <div
+                  class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  >
+                    Test1
+                  </span>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                  >
+                    12/18/2023 12:00:00 AM
+                  </p>
+                </div>
+              </a>
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  data-testid="review-display-review-like"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    data-testid="display-like-count"
+                  >
+                    2
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="FavoriteIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="ReviewInfo"
+            >
+              <div
+                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1k48cxs-MuiTypography-root"
+                >
+                  Review 1
+                </span>
+              </div>
+            </div>
+            <div
+              class="BookInfo"
+            >
+              <a
+                class="Title"
+                href="/books/1"
+              >
+                <img
+                  alt="Book 1"
+                  class="CardImage"
+                  src="Cover 1"
+                />
+              </a>
+              <div>
+                <h2>
+                  <a
+                    class="TitleLink"
+                    data-testid="review-display-book-title-link"
+                    href="/books/1"
+                  >
+                    Book 1
+                  </a>
+                </h2>
+                <p>
+                  Author: Author 1
+                </p>
+                <p>
+                  Category: Category 1
+                </p>
+              </div>
+            </div>
+          </li>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+          <li
+            class="MuiListItem-root MuiListItem-gutters ReviewDisplay css-1nxmd3h-MuiListItem-root"
+          >
+            <div
+              class="UserInfo"
+            >
+              <a
+                class="UsernameLink"
+                data-testid="review-display-profile-link"
+                href="/profile/Test2"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+                >
+                  <img
+                    alt="Test2"
+                    class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                    src="UserImg2"
+                  />
+                </div>
+                <div
+                  class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  >
+                    Test2
+                  </span>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                  >
+                    12/18/2023 12:00:00 AM
+                  </p>
+                </div>
+              </a>
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  data-testid="review-display-review-like"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    data-testid="display-like-count"
+                  >
+                    2
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="FavoriteIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="ReviewInfo"
+            >
+              <div
+                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1k48cxs-MuiTypography-root"
+                >
+                  Review 2
+                </span>
+              </div>
+            </div>
+            <div
+              class="BookInfo"
+            >
+              <a
+                class="Title"
+                href="/books/1"
+              >
+                <img
+                  alt="Book 1"
+                  class="CardImage"
+                  src="Cover 1"
+                />
+              </a>
+              <div>
+                <h2>
+                  <a
+                    class="TitleLink"
+                    data-testid="review-display-book-title-link"
+                    href="/books/1"
+                  >
+                    Book 1
+                  </a>
+                </h2>
+                <p>
+                  Author: Author 1
+                </p>
+                <p>
+                  Category: Category 1
+                </p>
+              </div>
+            </div>
+          </li>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+        </div>
+      </div>
+      <div
+        class="Loading"
+      >
+        Loading ...
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`renders mock data 1`] = `<DocumentFragment />`;

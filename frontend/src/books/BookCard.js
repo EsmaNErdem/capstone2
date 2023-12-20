@@ -65,9 +65,9 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                             </IconButton>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <span data-testid="like-count">{likes}</span>
-                            <IconButton onClick={handleLikeBook} color={liked ? 'error' : 'default'}>
-                                <FavoriteIcon data-testid="like-button"/>
+                            <span data-testid="book-card-like-count">{likes}</span>
+                            <IconButton onClick={handleLikeBook} color={liked ? 'error' : 'default'}  data-testid="book-card-like-button">
+                                <FavoriteIcon/>
                             </IconButton>
                         </div>
                 </div>
