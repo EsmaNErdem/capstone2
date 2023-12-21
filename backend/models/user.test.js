@@ -503,3 +503,117 @@ describe("update", function () {
       }
     });
 });
+
+/************************************** follow */
+describe("follow", function () {
+  test("works", async function () {
+    let follow = await User.followUser("u1", "u2");
+    expect(follow).toEqual({
+      following: "u1",
+      followedBy: "u2",
+    });
+  });
+
+  test("fail if user is following already", async function () {
+    try {
+      await User.followUser("u2", "u1");
+    } catch (err) {
+      expect(err instanceof Error).toBeTruthy();
+    }
+
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.followUser("nope", "u1");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.followUser("u2", "nope");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+/************************************** unfollow */
+describe("unfollow", function () {
+  test("works", async function () {
+    let follow = await User.unfollowUser("u2", "u1");
+    expect(follow).toEqual({
+      unfollowedBy: "u1",
+    });
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.unfollowUser("nope", "u1");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.unfollowUser("u2", "nope");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+/************************************** getUserFollowers */
+describe("getUserFollowers", function () {
+  test("works", async function () {
+    let follower = await User.getUserFollowers( "u2");
+    expect(follower).toEqual([
+      {
+        followedBy: "u1",
+        userImg: 'img1'
+      }
+    ]);
+  });
+
+  test("works", async function () {
+    let follower = await User.getUserFollowers( "u1");
+    expect(follower).toEqual([]);
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.getUserFollowers("nope");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+/************************************** getUserFollowing */
+describe("getUserFollowing", function () {
+  test("works", async function () {
+    let following = await User.getUserFollowing( "u1");
+    expect(following).toEqual([
+      {
+        following: "u2",
+        userImg: 'img2'
+      }
+    ]);
+  });
+
+  test("works", async function () {
+    let following = await User.getUserFollowing( "u2");
+    expect(following).toEqual([]);
+  });
+
+  test("not found if no such user", async function () {
+    try {
+      await User.getUserFollowing("nope");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});

@@ -10,6 +10,12 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM books");  
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM book_likes");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM reviews");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM review_likes");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM followers");
 
   await db.query(`
     INSERT INTO users(username,
@@ -55,9 +61,12 @@ async function commonBeforeAll() {
             (20000, 'u2'),
             (20000, 'u1')`
   );
-  
 
-
+  await db.query(
+    `INSERT INTO followers
+     (following, followed_by)
+     VALUES ('u2', 'u1')`
+  );
 }
 
 async function commonBeforeEach() {

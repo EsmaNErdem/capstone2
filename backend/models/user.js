@@ -105,6 +105,25 @@ class User {
 
     throw new UnauthorizedError("Invalid username/password");
    }
+  
+  /** Return review's like counts
+   * 
+   *  Gets Review by Review ID
+   */
+  static async getAllReviewsLikeCount() { 
+    const likeCountsQuery = await db.query(
+        `SELECT review_id AS id,
+                COUNT(review_id) AS "reviewLikeCount"
+        FROM review_likes
+        GROUP BY id`
+    );
+
+    const likeCounts = {};
+    likeCountsQuery.rows.forEach((row) => {
+      likeCounts[row.id] = row.reviewLikeCount;
+    });
+    return likeCounts
+  }
 
   /**Get user reviews
    * 
@@ -169,18 +188,18 @@ class User {
   }  
 
   /**Get user like books
-     * 
-     * Gets all books that were liked by the user
-     * Filters (all optional):
-     * - Book Title, 
-     * - Book Author,
-     * - Book Category
-     * Sort by:
-     * - Popular books (default)
-     * - Title in alphabethical order
-     * 
-     * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
-     */
+   * 
+   * Gets all books that were liked by the user
+   * Filters (all optional):
+   * - Book Title, 
+   * - Book Author,
+   * - Book Category
+   * Sort by:
+   * - Popular books (default)
+   * - Title in alphabethical order
+   * 
+   * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
+   */
   static async getUserLikedBooks(username, searchFilters={}) {
     let query = `SELECT
             b.id AS book_id,
@@ -229,37 +248,17 @@ class User {
     return likedBooks
   } 
 
-  
-    /** Return review's like counts
-     * 
-     *  Gets Review by Review ID
-     */
-    static async getAllReviewsLikeCount() { 
-      const likeCountsQuery = await db.query(
-          `SELECT review_id AS id,
-                  COUNT(review_id) AS "reviewLikeCount"
-          FROM review_likes
-          GROUP BY id`
-      );
-
-      const likeCounts = {};
-      likeCountsQuery.rows.forEach((row) => {
-        likeCounts[row.id] = row.reviewLikeCount;
-      });
-      return likeCounts
-  }
-
-    /**Get user like books
-     * 
-     * Gets all books that were liked by the user
-     * Filters (all optional):
-     * - Book Title, 
-     * - Book Author,
-     * - Book Category
-     * 
-     * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
-     */
-    static async getUserLikedReviews(username, searchFilters={}) {
+  /**Get user like books
+   * 
+   * Gets all books that were liked by the user
+   * Filters (all optional):
+   * - Book Title, 
+   * - Book Author,
+   * - Book Category
+   * 
+   * Returns [{ bookId, title, author, publisher, description, category, cover, bookLikeCount }, ...]
+   */
+  static async getUserLikedReviews(username, searchFilters={}) {
       let query = `SELECT
               r.id AS "reviewId",
               r.review,
@@ -408,35 +407,94 @@ class User {
     return user;
   }
 
-  // /** Given usernames, following and followedBy accordingly, send follow to database
-  //  *
-  //  * Returns { following,  followedBy }
-  //  * 
-  //  * Throws NotFoundError if users not found.
-  //  **/
-  // static async followUser(following, followedBy) {
-  //   const userCheck1 = await this.getUserByUsername(following);
-  //   const userCheck2 = await this.getUserByUsername(followedBy);
-  //   if (!userCheck1 || !userCheck2) {
-  //       throw new UnauthorizedError(`No user found with username: ${username}`);
-  //   }
-  //   const followRes = await db.query(
-  //       ``,
-  //       [],
-  //     );
+  /** Given usernames, following and followedBy accordingly, send follow to database
+   *
+   * Returns { following,  followedBy }
+   * Throws NotFoundError if users not found.
+   **/
+  static async followUser(following, followedBy) {
+    const userCheck1 = await this.getUserByUsername(following);
+    const userCheck2 = await this.getUserByUsername(followedBy);
+    if (!userCheck1 || !userCheck2) {
+        throw new NotFoundError(`No user found with username: ${following, followedBy}`);
+    }
+    
+    const followRes = await db.query(
+        `INSERT INTO followers (following, followed_by)
+        VALUES ($1, $2)
+        RETURNING following, followed_by AS "followedBy"`, [following, followedBy]
+    );
 
-  //     const user = userRes.rows[0];
-  //     if (!user) throw new NotFoundError(`No user: ${username}`);
+    return followRes.rows[0];
+  }
 
-  //     user.reviews = await this.getUserReviews(username, searchFilters);
-  //     user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
-  //     user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
-  //     user.recievedLikeCount = await this.getUserLikeCount(username);
+  /** Given usernames, following and followedBy accordingly, delete follow from database
+   *
+   * Returns { followedBy }
+   * Throws NotFoundError if users not found.
+   **/
+    static async unfollowUser(following, followedBy) {
+      const userCheck1 = await this.getUserByUsername(following);
+      const userCheck2 = await this.getUserByUsername(followedBy);
+      if (!userCheck1 || !userCheck2) {
+          throw new NotFoundError(`No user found with username: ${following, followedBy}`);
+      }
+      
+      const unfollowRes = await db.query(
+          `DELETE 
+           FROM followers
+           WHERE following=$1 AND followed_by=$2
+           RETURNING followed_by AS "unfollowedBy"`, [following, followedBy]
+      );
+  
+      return unfollowRes.rows[0];
+    }
 
-  //     return user;
-  //   }
+  /**Given username, finds user's follower
+   * 
+   * Return list of users who follow given user 
+   */
+  static async getUserFollowers(username) {
+    const userCheck = await this.getUserByUsername(username);
+    if (!userCheck) {
+        throw new NotFoundError(`No user found with username: ${username}`);
+    }
+    
+    const followersRes = await db.query(
+        `SELECT 
+            f.followed_by AS "followedBy",
+            u.img AS "userImg"
+          FROM followers AS f
+          LEFT JOIN users AS u ON u.username = f.followed_by
+          WHERE f.following =$1
+          GROUP BY f.followed_by, u.img`, [username]
+    );
 
+    return followersRes.rows;
+  }
 
+  /**Finds users that are followed by given user
+   * 
+   * Return list of users
+   */
+    static async getUserFollowing(username) {
+      const userCheck = await this.getUserByUsername(username);
+      if (!userCheck) {
+          throw new NotFoundError(`No user found with username: ${username}`);
+      }
+      
+      const followersRes = await db.query(
+          `SELECT 
+              f.following,
+              u.img AS "userImg"
+            FROM followers AS f
+            LEFT JOIN users AS u ON u.username = f.following
+            WHERE f.followed_by =$1
+            GROUP BY f.following, u.img`, [username]
+      );
+  
+      return followersRes.rows;
+    }
 }
 
 module.exports = User; 
