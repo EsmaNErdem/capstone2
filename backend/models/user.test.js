@@ -427,7 +427,12 @@ describe("get", function () {
             reviewLikeCount: '2'
           }
         ],
-        recievedLikeCount: [ { likeCount: '3' } ]
+        recievedLikeCount: [ { likeCount: '3' } ],
+        followers: [],
+        following: [{
+          following: 'u2',
+          userImg: 'img2',
+        }]
       });
     });
   
@@ -543,10 +548,18 @@ describe("follow", function () {
 /************************************** unfollow */
 describe("unfollow", function () {
   test("works", async function () {
-    let follow = await User.unfollowUser("u2", "u1");
-    expect(follow).toEqual({
+    let unfollow = await User.unfollowUser("u2", "u1");
+    expect(unfollow).toEqual({
       unfollowedBy: "u1",
     });
+  });
+
+  test("fails if it wasn't following before", async function () {
+    try {
+      await User.unfollowUser("u1", "u2");
+    } catch (err) {
+      expect(err instanceof BadRequestError).toBeTruthy();
+    }
   });
 
   test("not found if no such user", async function () {

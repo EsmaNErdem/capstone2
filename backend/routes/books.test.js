@@ -3,8 +3,6 @@
 
 const request = require("supertest");
 const app = require("../app");
-const Book = require("../models/book")
-const { ApiNotFoundError } = require("../expressError");
 
 const {
   commonBeforeAll,

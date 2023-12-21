@@ -356,6 +356,8 @@ class User {
       user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
       user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
       user.recievedLikeCount = await this.getUserLikeCount(username);
+      user.following = await this.getUserFollowing(username);
+      user.followers = await this.getUserFollowers(username);
 
       return user;
     }
@@ -433,20 +435,24 @@ class User {
    * Returns { followedBy }
    * Throws NotFoundError if users not found.
    **/
-    static async unfollowUser(following, followedBy) {
+    static async unfollowUser(following, unfollowedBy) {
       const userCheck1 = await this.getUserByUsername(following);
-      const userCheck2 = await this.getUserByUsername(followedBy);
+      const userCheck2 = await this.getUserByUsername(unfollowedBy);
       if (!userCheck1 || !userCheck2) {
-          throw new NotFoundError(`No user found with username: ${following, followedBy}`);
+          throw new NotFoundError(`No user found with username: ${following, unfollowedBy}`);
       }
       
       const unfollowRes = await db.query(
           `DELETE 
            FROM followers
            WHERE following=$1 AND followed_by=$2
-           RETURNING followed_by AS "unfollowedBy"`, [following, followedBy]
+           RETURNING followed_by AS "unfollowedBy"`, [following, unfollowedBy]
       );
   
+      if(!unfollowRes.rows[0]) {
+        throw new BadRequestError(`${unfollowedBy} couldn't unfollow ${following}`);
+
+      }
       return unfollowRes.rows[0];
     }
 

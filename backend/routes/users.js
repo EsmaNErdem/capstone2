@@ -15,7 +15,6 @@ const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
 
-
 /**
  * POST /users/register: { user } => { token }
  *
@@ -76,7 +75,6 @@ router.post("/login", async function (req, res, next) {
  * 
  * Authorization required: logged-in user
  **/
-
 router.get("/:username", ensureLoggedIn, async function (req, res, next) {
     try {
       const user = await User.get(req.params.username);
@@ -95,7 +93,6 @@ router.get("/:username", ensureLoggedIn, async function (req, res, next) {
  *
  * Authorization required: same-user-as-:username
  **/
-
 router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
     try {
         const validator = jsonschema.validate(req.body, userUpdateSchema);
@@ -109,6 +106,40 @@ router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
     } catch (err) {
         return next(err);
     }
+});
+
+/** POST /users/:following/follow/:username => { following: username, followedBy: username }
+ * 
+ * Sends user follow data to database
+ * Returns username being followed and username who is following
+ * 
+ * Authorization required: ensureCorrectUser
+ */
+router.post("/:following/follow/:username", ensureCorrectUser, async function (req, res, next) {
+  try {
+    const follow = await User.followUser(req.params.following, req.params.username);
+    return res.status(201).json({ follow });
+  } catch (err) {
+    console.error("Error in POST /users/:following/follow/:username", err);
+    return next(err);
+  }
+});
+
+/** DELETE /users/:following/follow/:username => { unfollowedBy: username }
+ * 
+ * Deletes user follow data from database
+ * Returns username who is unfollowing
+ * 
+ * Authorization required: ensureCorrectUser
+ */
+router.delete("/:following/follow/:username", ensureCorrectUser, async function (req, res, next) {
+  try {
+    const unfollow = await User.unfollowUser(req.params.following, req.params.username);
+    return res.json({ unfollow });
+  } catch (err) {
+    console.error("Error in DELETE /users/:following/follow/:username", err);
+    return next(err);
+  }
 });
 
 module.exports =  router;

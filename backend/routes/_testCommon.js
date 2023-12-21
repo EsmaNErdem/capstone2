@@ -17,7 +17,8 @@ async function commonBeforeAllReviews() {
   await db.query("DELETE FROM books");  
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM book_likes");
-
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM followers");
 
   await User.register(
     {
@@ -48,6 +49,12 @@ async function commonBeforeAllReviews() {
       password: "password3",
       img: "img3"
     });
+  
+  await User.followUser("u2", "u1");
+
+  await User.followUser("u3", "u1");
+
+  await User.followUser("u1", "u2");
 
   const book1 = {
     id: '1',
@@ -75,7 +82,6 @@ async function commonBeforeAllReviews() {
   const review2 = await Review.add("u2", book1, "Review2");
   const review3 = await Review.add("u1", book2, "Review3");
   
-
   await Review.like(review1.id, "u1");
   await Review.like(review1.id, "u2");
   await Review.like(review2.id, "u1");
@@ -95,7 +101,8 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM books");  
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM book_likes");
-
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM followers");
 
   await User.register(
     {
@@ -126,6 +133,12 @@ async function commonBeforeAll() {
       password: "password3",
       img: "img3"
     });
+
+  await User.followUser("u2", "u1");
+
+  await User.followUser("u3", "u1");
+
+  await User.followUser("u1", "u2");
 
   const book1 = {
     id: '1',

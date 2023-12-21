@@ -1,20 +1,15 @@
 "use strict";
 
 const request = require("supertest");
-
-const db = require("../db.js");
 const app = require("../app");
-const User = require("../models/user");
 
 const {
   commonBeforeAll,
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
-  testJobIds,
   u1Token,
   u2Token,
-  adminToken,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -117,7 +112,6 @@ describe("POST /users/login", function () {
 });
 
 /************************************** GET /users/:username */
-
 describe("GET /users/:username", function () {
   test("shows detail of a user", async function () {
     const resp = await request(app)
@@ -154,7 +148,23 @@ describe("GET /users/:username", function () {
           }
         ],
         likedReviews: [],
-        recievedLikeCount: []
+        recievedLikeCount: [],
+        followers: [
+          {
+            followedBy: "u2",
+            userImg: 'img2'
+          }
+        ],
+        following: [
+          {
+            following: 'u2',
+            userImg: 'img2',
+          },
+          {
+            following: 'u3',
+            userImg: 'img3',
+          }
+      ]
       }
     });
   });
@@ -174,7 +184,6 @@ describe("GET /users/:username", function () {
 });
 
 /************************************** PATCH /users/:username */
-
 describe("PATCH /users/:username", () => {
   test("works for the correct user", async function () {
     const resp = await request(app)
@@ -256,5 +265,102 @@ describe("PATCH /users/:username", () => {
             password: "new-pass",
         });
     expect(updated.statusCode).toEqual(200);
+  });
+});
+
+/************************************** POST /users/:following/follow/:username */
+describe("POST /users/:following/follow/:username", () => {
+  test("works for the correct users", async function () {
+    const resp = await request(app)
+        .post(`/users/u3/follow/u2`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.body).toEqual({
+      follow: {
+        following: "u3",
+        followedBy: "u2",
+      },
+    });
+  });
+
+  test("fails for already following", async function () {
+    const resp = await request(app)
+        .post(`/users/u3/follow/u1`)
+        .set("authorization", `User Token ${u1Token}`);
+        expect(resp.statusCode).toEqual(500);
+  });
+
+  test("unauth if not same user", async function () {
+    const resp = await request(app)
+        .post(`/users/u3/follow/u1`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(401);
+  });
+
+  test("unauth for anon", async function () {
+    const resp = await request(app)
+        .post(`/users/u3/follow/u1`)
+    expect(resp.statusCode).toEqual(401);
+  });
+
+  test("not found if no such user", async function () {
+    const resp = await request(app)
+        .post(`/users/nope/follow/u2`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(404);
+  });
+
+  test("bad request if no such user", async function () {
+    const resp = await request(app)
+        .post(`/users/u3/follow/nope`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(401);
+  });
+});
+
+/************************************** DELETE /users/:following/follow/:username */
+describe("DELETE /users/:following/follow/:username", () => {
+  test("works for the correct users", async function () {
+    const resp = await request(app)
+        .delete(`/users/u3/follow/u1`)
+        .set("authorization", `User Token ${u1Token}`);
+    expect(resp.body).toEqual({
+      unfollow: {
+        unfollowedBy: "u1"
+      },
+    });
+  });
+
+  test("fails for already unfollowing", async function () {
+    const resp = await request(app)
+        .delete(`/users/u3/follow/u2 `)
+        .set("authorization", `User Token ${u2Token}`);
+        expect(resp.statusCode).toEqual(400);
+  });
+
+  test("unauth if not same user", async function () {
+    const resp = await request(app)
+        .delete(`/users/u3/follow/u1`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(401);
+  });
+
+  test("unauth for anon", async function () {
+    const resp = await request(app)
+        .delete(`/users/u3/follow/u1`)
+    expect(resp.statusCode).toEqual(401);
+  });
+
+  test("not found if no such user", async function () {
+    const resp = await request(app)
+        .delete(`/users/nope/follow/u2`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(404);
+  });
+
+  test("bad request if no such user", async function () {
+    const resp = await request(app)
+        .delete(`/users/u3/follow/nope`)
+        .set("authorization", `User Token ${u2Token}`);
+    expect(resp.statusCode).toEqual(401);
   });
 });
