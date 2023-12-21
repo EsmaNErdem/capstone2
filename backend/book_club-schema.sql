@@ -3,7 +3,7 @@ CREATE TABLE users (
   password TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  img TEXT NOT NULL DEFAULT '../static/user-profile.jpg',
+  img TEXT DEFAULT '../static/user-profile.jpg',
   email TEXT NOT NULL
     CHECK (position('@' IN email) > 1)
   -- email TEXT NOT NULL
@@ -51,6 +51,13 @@ CREATE TABLE review_likes (
   review_id INTEGER REFERENCES reviews(id) ON DELETE CASCADE,
   PRIMARY KEY (username, review_id)
 );
+
+CREATE TABLE followers (
+  following TEXT REFERENCES users(username) ON DELETE CASCADE,
+  followed_by TEXT REFERENCES users(username) ON DELETE CASCADE,
+  PRIMARY KEY (following, followed_by)
+);
+
 
 
 -- Users

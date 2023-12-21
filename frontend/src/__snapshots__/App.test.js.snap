@@ -3,68 +3,9 @@
 exports[`it renders and matches with snaphot 1`] = `
 <DocumentFragment>
   <div
-    class="App"
+    class="Loading"
   >
-    <nav
-      class="Navbar navbar navbar-expand-md"
-    >
-      <a
-        class="navbar-brand"
-        href="/"
-      >
-        <span
-          class="brand-text"
-        >
-          Book Club
-        </span>
-      </a>
-      <ul
-        class="navbar-nav ml-auto d-flex flex-row"
-      >
-        <li
-          class="nav-item mr-4"
-        >
-          <a
-            class="nav-link"
-            href="/login"
-          >
-            Login
-          </a>
-        </li>
-        <li
-          class="nav-item mr-4"
-        >
-          <a
-            class="nav-link"
-            href="/signup"
-          >
-            Sign Up
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div
-      class="Home"
-    >
-      <h1>
-        A Wrinkle in Page: Online Book Club
-      </h1>
-      <p>
-        Join this social platform to find people like you who liove readint to talk about books
-      </p>
-      <p>
-        <a
-          href="/login"
-        >
-          Login
-        </a>
-        <a
-          href="/signup"
-        >
-          Sign Up
-        </a>
-      </p>
-    </div>
+    Loading ...
   </div>
 </DocumentFragment>
 `;

@@ -61,8 +61,8 @@ const ReviewFilterList = () => {
    * Fetches the initial batch of filtered reviews from database
    * filter data from url
   */ 
- useEffect(function getBooksOnMount() {
-    console.debug("ReviewList useEffect getBooksOnMount");
+ useEffect(function getReviewsOnMount() {
+    console.debug("ReviewList useEffect getReviewsOnMount");
 
     // Make an API call to get first batch of reviews data from backend
     const getFirstList =  async () => {

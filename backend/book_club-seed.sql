@@ -52,4 +52,14 @@ INSERT INTO book_likes (username, book_id)
            ('testuser3', 'U2ioPwAACAAJ'),
            ('testuser2', 'MbW3_eSDGl4C');
 
+INSERT INTO followers (following, followed_by)
+    VALUES ('testuser1', 'testuser2'),
+           ('testuser1', 'testuser3'),
+           ('testuser1', 'testuser4'),
+           ('testuser2', 'testuser1'),
+           ('testuser3', 'testuser1'),
+           ('testuser3', 'testuser2');
+
+
+
   

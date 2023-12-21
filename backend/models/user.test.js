@@ -104,6 +104,7 @@ describe("authenticate", function () {
             date: expect.any(Date),
             book_id: '2',
             title: 'Book 2',
+            cover: 'Cover 2',
             author: 'Author 2',
             category: 'Category 2',
             reviewLikeCount: '2'
@@ -115,6 +116,7 @@ describe("authenticate", function () {
             date: expect.any(Date),
             book_id: '1',
             title: 'Book 1',
+            cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
             reviewLikeCount: '1'
@@ -133,6 +135,7 @@ describe("authenticate", function () {
           date: expect.any(Date),
           book_id: '2',
           title: 'Book 2',
+          cover: 'Cover 2',
           author: 'Author 2',
           category: 'Category 2',
           reviewLikeCount: '2'
@@ -144,6 +147,7 @@ describe("authenticate", function () {
             date: expect.any(Date),
             book_id: '1',
             title: 'Book 1',
+            cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
             reviewLikeCount: '1'
@@ -162,6 +166,7 @@ describe("authenticate", function () {
             date: expect.any(Date),
             book_id: '1',
             title: 'Book 1',
+            cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
             reviewLikeCount: '1'
@@ -186,7 +191,7 @@ describe("authenticate", function () {
   /************************************** getUserLikedBooks */
   describe("getUserLikedBooks method", function () {
     test("should return list of books data liked by user", async function () {
-        const userLikedBooks = await User.getUserLikedBooks('u1');        
+        const userLikedBooks = await User.getUserLikedBooks('u1', {sortBy: "title"});        
         expect(userLikedBooks).toEqual([
           {
             book_id: '1',
@@ -196,7 +201,7 @@ describe("authenticate", function () {
             description: 'Description 1',
             category: 'Category 1',
             cover: 'Cover 1',
-            likeCount: '1'
+            bookLikeCount: '2'
           },
           {
             book_id: '2',
@@ -206,7 +211,7 @@ describe("authenticate", function () {
             description: 'Description 2',
             category: 'Category 2',
             cover: 'Cover 2',
-            likeCount: '1'
+            bookLikeCount: '1'
           }
         ]);
     });
@@ -222,7 +227,7 @@ describe("authenticate", function () {
           description: 'Description 1',
           category: 'Category 1',
           cover: 'Cover 1',
-          likeCount: '1'
+          bookLikeCount: '2'
         }
       ]);
     });
@@ -238,7 +243,7 @@ describe("authenticate", function () {
           description: 'Description 1',
           category: 'Category 1',
           cover: 'Cover 1',
-          likeCount: '1'
+          bookLikeCount: '2'
         },
         {
           book_id: '2',
@@ -248,7 +253,7 @@ describe("authenticate", function () {
           description: 'Description 2',
           category: 'Category 2',
           cover: 'Cover 2',
-          likeCount: '1'
+          bookLikeCount: '1'
         }
       ]);
     });
@@ -276,11 +281,14 @@ describe("authenticate", function () {
                 reviewId: 20000,
                 review: 'Review2',
                 username: 'u1',
+                userImg: 'img1',
                 date: expect.any(Date),
                 book_id: '2',
                 title: 'Book 2',
+                cover: 'Cover 2',
                 author: 'Author 2',
-                category: 'Category 2'
+                category: 'Category 2',
+                reviewLikeCount: '2'
             }
         ]);
     });
@@ -292,11 +300,14 @@ describe("authenticate", function () {
               reviewId: 10000,
               review: 'Review1',
               username: 'u1',
+              userImg: 'img1',
               date: expect.any(Date),
               book_id: '1',
               title: 'Book 1',
+              cover: 'Cover 1',
               author: 'Author 1',
-              category: 'Category 1'
+              category: 'Category 1',
+              reviewLikeCount: '1'
           },
         ]);
     });
@@ -348,6 +359,7 @@ describe("get", function () {
             date: expect.any(Date),
             book_id: '1',
             title: 'Book 1',
+            cover: 'Cover 1',
             author: 'Author 1',
             category: 'Category 1',
             reviewLikeCount: '1'
@@ -359,6 +371,7 @@ describe("get", function () {
             date: expect.any(Date),
             book_id: '2',
             title: 'Book 2',
+            cover: 'Cover 2',
             author: 'Author 2',
             category: 'Category 2',
             reviewLikeCount: '2'
@@ -373,7 +386,7 @@ describe("get", function () {
             description: 'Description 1',
             category: 'Category 1',
             cover: 'Cover 1',
-            likeCount: '1'
+            bookLikeCount: '2'
           },
           {
             book_id: '2',
@@ -383,29 +396,35 @@ describe("get", function () {
             description: 'Description 2',
             category: 'Category 2',
             cover: 'Cover 2',
-            likeCount: '1'
-          }
+            bookLikeCount: '1'
+          },
         ],
         likedReviews: [
           {
             reviewId: 10000,
             review: 'Review1',
             username: 'u1',
+            userImg: 'img1',
             date: expect.any(Date),
             book_id: '1',
             title: 'Book 1',
+            cover: 'Cover 1',
             author: 'Author 1',
-            category: 'Category 1'
+            category: 'Category 1',
+            reviewLikeCount: '1'
           },
           {
             reviewId: 20000,
             review: 'Review2',
             username: 'u1',
+            userImg: 'img1',
             date: expect.any(Date),
             book_id: '2',
             title: 'Book 2',
+            cover: 'Cover 2',
             author: 'Author 2',
-            category: 'Category 2'
+            category: 'Category 2',
+            reviewLikeCount: '2'
           }
         ],
         recievedLikeCount: [ { likeCount: '3' } ]

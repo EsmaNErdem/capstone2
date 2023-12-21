@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render} from "@testing-library/react";
 import NavBar from './NavBar';
-import { UserProvider, NonUserProvider } from "../testUtils";
+import { UserProvider, CurrUserProvider, NonUserProvider } from "../testUtilities";
 
 test("renders without crashing", () => {
     render(
@@ -46,9 +46,8 @@ test("Renders protected links while loggedin user", () => {
 
     expect(getByText("Reviews")).toBeInTheDocument();
     expect(getByText("Books")).toBeInTheDocument();
-    expect(getByText("Explore")).toBeInTheDocument();
     expect(getByText("Profile")).toBeInTheDocument();
-    expect(getByText("Log Out testuser")).toBeInTheDocument();
+    expect(getByText("Log out testuser")).toBeInTheDocument();
 });
 
 test("Renders protected links while no loggedin user", () => {

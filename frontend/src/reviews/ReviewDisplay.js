@@ -17,7 +17,7 @@ import './ReviewDisplay.css';
  * 
  * - ReviewList, ReviewFilterList ==> ReviewCard
  */
-const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCount=0, deleteReview, bookId, title, author=null, cover=null, category=null }) => {
+const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCount=0, deleteReview, bookId, title, author=null, cover=null, category=null, likedReview=false, setReviews=null }) => {
   console.debug('ReviewDisplay');
 
   const { isUserReview } = useContext(UserContext);
@@ -43,6 +43,16 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
       console.error('Error handling review delete:', error);
     }
   };
+
+  const handleLikeReviewButton = async () => {
+    await handleLikeReview();
+    if(liked && likedReview) {
+      setReviews(prevReviews => {
+        const updatedReviews = prevReviews.filter(review => review.reviewId !== reviewId)
+        return updatedReviews
+      })
+    }
+  }
 
   return (
     <React.Fragment>
@@ -72,7 +82,7 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
             </>
           ) : (
             <div>
-              <IconButton onClick={handleLikeReview} color={liked ? 'error' : 'default'} data-testid="review-display-review-like">
+              <IconButton onClick={handleLikeReviewButton} color={liked ? 'error' : 'default'} data-testid="review-display-review-like">
                 <span data-testid="display-like-count">{likes}</span>
                 <FavoriteIcon />
               </IconButton>

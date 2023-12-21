@@ -25,7 +25,7 @@ exports[`it renders and matches with snapshot 1`] = `
           <svg
             aria-hidden="true"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-            data-testid="review-button"
+            data-testid="AddCommentIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -370,7 +370,7 @@ exports[`it renders and matches with snapshot 2`] = `
           <svg
             aria-hidden="true"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-            data-testid="review-button"
+            data-testid="AddCommentIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >

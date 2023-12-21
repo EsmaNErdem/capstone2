@@ -1,5 +1,6 @@
 "use strict";
 
+const Book = require("./book");
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const { sqlForPartialUpdate } = require("../helpers/sql");
@@ -126,6 +127,7 @@ class User {
                     r.created_at AS date,
                     b.id AS book_id,
                     b.title,
+                    b.cover,
                     b.author,
                     b.category,
                     COUNT(l.review_id) AS "reviewLikeCount"
@@ -188,7 +190,7 @@ class User {
             b.description,
             b.category,
             b.cover,
-            COUNT(bl.book_id) AS "likeCount"
+            COUNT(bl.username) AS "bookLikeCount"
         FROM
             books AS b 
                 LEFT JOIN book_likes AS bl ON bl.book_id = b.id`;
@@ -216,14 +218,36 @@ class User {
     }
   
     // For each possible sorting term, add to order by, default is date
-    let order = sortBy === "title" ? ` ORDER BY b.title ASC` : ` ORDER BY "likeCount" DESC`
+    let order = sortBy === "title" ? ` ORDER BY b.title ASC` : ` ORDER BY "bookLikeCount" DESC`
 
     query += whereExpressions.length > 0 ? ` WHERE bl.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE bl.username = $1";
-    query += " GROUP BY b.id" + order;
+    query += " GROUP BY b.id, b.title, b.author, b.publisher, b.description, b.category, b.cover" + order;
     const booksRes = await db.query(query, queryValues);
 
-    return booksRes.rows;
+    const likeCounts = await Book.getAllLikeCounts();
+    const likedBooks = booksRes.rows.map(book =>({...book, bookLikeCount:likeCounts[book.book_id]}));
+    return likedBooks
   } 
+
+  
+    /** Return review's like counts
+     * 
+     *  Gets Review by Review ID
+     */
+    static async getAllReviewsLikeCount() { 
+      const likeCountsQuery = await db.query(
+          `SELECT review_id AS id,
+                  COUNT(review_id) AS "reviewLikeCount"
+          FROM review_likes
+          GROUP BY id`
+      );
+
+      const likeCounts = {};
+      likeCountsQuery.rows.forEach((row) => {
+        likeCounts[row.id] = row.reviewLikeCount;
+      });
+      return likeCounts
+  }
 
     /**Get user like books
      * 
@@ -240,15 +264,19 @@ class User {
               r.id AS "reviewId",
               r.review,
               r.username,
+              u.img AS "userImg",
               r.created_at AS date,
               b.id AS book_id,
               b.title,
+              b.cover,
               b.author,
-              b.category
+              b.category,
+              COUNT(l.review_id) AS "reviewLikeCount"
           FROM
               reviews AS r
                   LEFT JOIN books AS b ON r.book_id = b.id
-                  LEFT JOIN review_likes AS l ON l.review_id = r.id`;
+                  LEFT JOIN review_likes AS l ON l.review_id = r.id
+                  LEFT JOIN users as U ON u.username = r.username`;
       
       let whereExpressions = [];
       let queryValues = [username];
@@ -276,10 +304,14 @@ class User {
        let order = " ORDER BY r.created_at DESC"
 
       query += whereExpressions.length > 0 ? ` WHERE l.username = $1 AND ${whereExpressions.join(" AND ")}` : " WHERE l.username = $1";
-      query += " GROUP BY r.id, b.id" + order;
+      query += " GROUP BY r.id, b.id, u.img" + order;
   
       const likedReviewRes = await db.query(query, queryValues);
-      return likedReviewRes.rows;
+
+      
+      const likeCounts = await this.getAllReviewsLikeCount();
+      const likedReviews = likedReviewRes.rows.map(review =>({...review, reviewLikeCount:likeCounts[review.reviewId]}));
+      return likedReviews
     }
 
   /**Get user like counts on their reviews
@@ -318,15 +350,15 @@ class User {
         [username],
       );
 
-    const user = userRes.rows[0];
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+      const user = userRes.rows[0];
+      if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    user.reviews = await this.getUserReviews(username, searchFilters);
-    user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
-    user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
-    user.recievedLikeCount = await this.getUserLikeCount(username);
+      user.reviews = await this.getUserReviews(username, searchFilters);
+      user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
+      user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
+      user.recievedLikeCount = await this.getUserLikeCount(username);
 
-    return user;
+      return user;
     }
 
 
@@ -346,7 +378,6 @@ class User {
    * Callers of this function must be certain they have validated inputs to this
    * or a serious security risks are opened.
    */
-
    static async update(username, data) {
     if (data.password) {
       data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
@@ -376,6 +407,35 @@ class User {
     delete user.password;
     return user;
   }
+
+  // /** Given usernames, following and followedBy accordingly, send follow to database
+  //  *
+  //  * Returns { following,  followedBy }
+  //  * 
+  //  * Throws NotFoundError if users not found.
+  //  **/
+  // static async followUser(following, followedBy) {
+  //   const userCheck1 = await this.getUserByUsername(following);
+  //   const userCheck2 = await this.getUserByUsername(followedBy);
+  //   if (!userCheck1 || !userCheck2) {
+  //       throw new UnauthorizedError(`No user found with username: ${username}`);
+  //   }
+  //   const followRes = await db.query(
+  //       ``,
+  //       [],
+  //     );
+
+  //     const user = userRes.rows[0];
+  //     if (!user) throw new NotFoundError(`No user: ${username}`);
+
+  //     user.reviews = await this.getUserReviews(username, searchFilters);
+  //     user.likedBooks = await this.getUserLikedBooks(username, searchFilters);
+  //     user.likedReviews = await this.getUserLikedReviews(username, searchFilters)
+  //     user.recievedLikeCount = await this.getUserLikeCount(username);
+
+  //     return user;
+  //   }
+
 
 }
 

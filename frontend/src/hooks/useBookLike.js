@@ -19,6 +19,14 @@ const useBookLike = (bookId, initialLikes, bookData={}) => {
   const [likes, setLikes] = useState();
   const [error, setError] = useState(null);
 
+    // Helper function to convert "undefined" or "null" strings to actual undefined
+  const convertUndefined = (value) => (value === "undefined" || value === null ? undefined : value);
+
+   // Convert undefined/null strings in the bookData object
+  const convertedBookData = Object.fromEntries(
+      Object.keys(bookData).map((key) => [key, convertUndefined(bookData[key])])
+  );
+    
   /**By using the useEffect, the liked status is only recalculated when the id avoiding unnecessary recalculations on every render.  */
   useEffect(() => {
       setLiked(hasLikedBook(bookId));
@@ -39,7 +47,7 @@ const useBookLike = (bookId, initialLikes, bookData={}) => {
                     setLiked(false);
                 }
             } else {
-                const likedBookId = await likeBook(bookId, bookData);
+                const likedBookId = await likeBook(bookId, convertedBookData);
                 if (likedBookId === bookId) {
                     setLikes((likes) => likes + 1);
                     setLiked(true);

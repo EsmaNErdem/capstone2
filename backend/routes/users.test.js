@@ -140,7 +140,7 @@ describe("GET /users/:username", function () {
             description: 'Description1',
             category: 'Category 1',
             cover: 'Cover1',
-            likeCount: '1'
+            bookLikeCount: '1'
           },
           {
             book_id: '2',
@@ -150,7 +150,7 @@ describe("GET /users/:username", function () {
             description: 'Description2',
             category: 'Category 2',
             cover: 'Cover2',
-            likeCount: '1'
+            bookLikeCount: '1'
           }
         ],
         likedReviews: [],

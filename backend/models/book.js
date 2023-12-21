@@ -65,7 +65,7 @@ class Book {
             queryValues.push(limit);
             query += ` LIMIT $${queryValues.length} OFFSET 0;`;
         } 
-        console.log(query, queryValues)
+
         let books = await db.query(query, queryValues);  
         return books.rows
     }

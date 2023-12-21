@@ -44,7 +44,7 @@ const App = () => {
     const getCurrentUser = async () => {
       // const userSample = {username: 'LordOfTheBooks', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxvcmRPZlRoZUJvb2tzIiwiaWF0IjoxNzAyMjQxMTY2fQ.XtDbleW1cW69oqiW0Okbjar9dkg6-Xu4948sHhvCMrk"}
 
-      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMjI0MTk3N30.qY41zLX8dt6jW2sCu5SXPcXXlJgpnaxMr8WomLjigp0"}
+      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzEzMDc5NH0.wC3D0hZn8rTAIRJZ5JiAyU0f4JnrCURpW7k12m1p39w"}
       if (userSample) {
         try{
           // set token on BookBlubApi for API call auth.

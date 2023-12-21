@@ -20,7 +20,7 @@ import './BookCard.css';
  * 
  * - BookList ==> BookCard
  */
-const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[] }) => {
+const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[], likedBook=false, setBooks=null, currUser=false }) => {
     console.debug("BookCard");
         
     const [bookReviews, setBookReviews] = useState(reviews);
@@ -46,6 +46,16 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
         setReviewDrawerOpen(false);
     }
 
+    const handleLikeBookButton = () => {
+        handleLikeBook();
+        if(liked && currUser) {
+            setBooks(prevBooks => {
+              const updatedBooks = prevBooks.filter(book => book.book_id !== id)
+              return updatedBooks
+            })
+        }
+    }
+
     return (
         <div className="BookCard">
             <Link to={`/books/${id}`} className="Title">
@@ -58,15 +68,16 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                 <h3 data-testid="book-author">by {author}</h3>
                 <p>{description?.length > 250 ? `${description.slice(0, 250)}...` : description}</p>
                 <div className="CardFooter">
+                        {!likedBook &&
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <span data-testid="review-count">{bookReviews.length}</span>
                             <IconButton  data-testid="review-button" onClick={openReviewDrawer} style={{ color: bookReviews.length > 0 ? "yellowgreen" : ""}}>
                                 <CommentIcon  />
                             </IconButton>
-                        </div>
+                        </div>}
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <span data-testid="book-card-like-count">{likes}</span>
-                            <IconButton onClick={handleLikeBook} color={liked ? 'error' : 'default'}  data-testid="book-card-like-button">
+                            <IconButton onClick={handleLikeBookButton} color={liked ? 'error' : 'default'}  data-testid="book-card-like-button">
                                 <FavoriteIcon/>
                             </IconButton>
                         </div>

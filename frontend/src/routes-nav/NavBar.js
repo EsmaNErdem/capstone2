@@ -28,7 +28,7 @@ const NavBar = ({ logout }) => {
           </NavLink>
         </li>
         <li className="nav-item mr-4">
-          <NavLink className="nav-link" to="/profile/:username">
+          <NavLink className="nav-link" to={`/profile/${currentUser.username}`}>
             Profile
           </NavLink>
         </li>

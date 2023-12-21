@@ -177,7 +177,7 @@ class Review {
         return review.rows
     }
 
-    /** Checks if review exist 
+    /** Return review's like count
      * 
      *  Gets Review by Review ID
      */

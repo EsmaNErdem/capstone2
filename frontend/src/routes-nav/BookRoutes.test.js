@@ -3,8 +3,27 @@ import BookRoutes from "./BookRoutes";
 import { MemoryRouter } from "react-router";
 import { UserProvider, NonUserProvider } from "../testUtilities";
 
-jest.mock('../api');
-afterEach(cleanup);
+
+jest.mock("../api", () => ({
+  __esModule: true,
+  default: {
+    getUser: jest.fn(),
+    registerUser: jest.fn(),
+    loginUser: jest.fn(),
+    unlikeReview: jest.fn(),
+    likeReview: jest.fn(),
+    sendBookReview: jest.fn(),
+    deleteBookReview: jest.fn(),
+    unlikeBook: jest.fn(),
+    likeBook: jest.fn(),
+    unfollowUser: jest.fn(),
+    followUser: jest.fn(),
+  },
+}));
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 test("renders without crashing", function () {
   render(

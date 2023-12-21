@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snaphot while loggedin user 1`] = `
+<DocumentFragment>
+  <nav
+    class="Navbar navbar navbar-expand-md"
+  >
+    <a
+      class="navbar-brand"
+      href="/"
+    >
+      <span
+        class="brand-text"
+      >
+        Book Club
+      </span>
+    </a>
+    <ul
+      class="navbar-nav ml-auto d-flex flex-row"
+    >
+      <li
+        class="nav-item mr-4"
+      >
+        <a
+          class="nav-link"
+          href="/reviews"
+        >
+          Reviews
+        </a>
+      </li>
+      <li
+        class="nav-item mr-4"
+      >
+        <a
+          class="nav-link"
+          href="/books"
+        >
+          Books
+        </a>
+      </li>
+      <li
+        class="nav-item mr-4"
+      >
+        <a
+          class="nav-link"
+          href="/profile/testuser"
+        >
+          Profile
+        </a>
+      </li>
+      <li
+        class="nav-item"
+      >
+        <a
+          class="nav-link logout-link"
+          href="/"
+        >
+          Log out testuser
+        </a>
+      </li>
+    </ul>
+  </nav>
+</DocumentFragment>
+`;
+
+exports[`it renders and matches with snaphot while no user loggedin 1`] = `
+<DocumentFragment>
+  <nav
+    class="Navbar navbar navbar-expand-md"
+  >
+    <a
+      class="navbar-brand"
+      href="/"
+    >
+      <span
+        class="brand-text"
+      >
+        Book Club
+      </span>
+    </a>
+    <ul
+      class="navbar-nav ml-auto d-flex flex-row"
+    >
+      <li
+        class="nav-item mr-4"
+      >
+        <a
+          class="nav-link"
+          href="/login"
+        >
+          Login
+        </a>
+      </li>
+      <li
+        class="nav-item mr-4"
+      >
+        <a
+          class="nav-link"
+          href="/signup"
+        >
+          Sign Up
+        </a>
+      </li>
+    </ul>
+  </nav>
+</DocumentFragment>
+`;

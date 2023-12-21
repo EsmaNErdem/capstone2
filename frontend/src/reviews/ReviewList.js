@@ -41,8 +41,8 @@ const ReviewList = () => {
   /**
    * Fetches the initial batch of reviews from database.
   */  
- useEffect(function getBooksOnMount() {
-    console.debug("ReviewList useEffect getBooksOnMount");
+ useEffect(function getReviewsOnMount() {
+    console.debug("ReviewList useEffect getReviewsOnMount");
     
     // Make an API call to get first batch of reviews data from backend
     const getFirstList =  async () => {
@@ -128,7 +128,7 @@ const ReviewList = () => {
             style={{ color:"orangered" }}
             data-testid="add-review-button"
             >
-          <span>Add New Book Review</span><AddCommentIcon data-testid="review-button" />
+          <span>Add New Book Review</span><AddCommentIcon />
         </IconButton>
 
         <ReviewFilterForm applyFilters={filterReviewData} prompts={["title", "author", "category", "username"]} navigateForward={true}/>
@@ -139,7 +139,7 @@ const ReviewList = () => {
         {reviews.length
             ? (
                 <div className="ReviewList-list">
-                  {reviews.map(({ reviewId, review, date,  username, userImg, book_id, title, author, category, reviewLikeCount, cover }) => (
+                  {reviews.map(({ reviewId, review, date,  username, userImg, book_id, title, cover, author, category, reviewLikeCount }) => (
                       <ReviewDisplay 
                           key={reviewId}
                           reviewId={+reviewId}
