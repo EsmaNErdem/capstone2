@@ -30,7 +30,7 @@ const Profile = () => {
     const { currentUser } = useContext(UserContext);
 
     // checks if user on view is current user
-    const currUser = currentUser.username === username;
+    const currUserProfile = currentUser.username === username;
 
     const [loading, setLoading] = useState(true);
     const [value, setValue] = useState(0);
@@ -44,7 +44,7 @@ const Profile = () => {
     const [userEditFormOpen, setUserEditFormOpen] = useState(false);
 
     const { error: deleteError, deleteBookReview } = useReviewDelete(setUserReviews);
-    const { followed, error: followUser, handleFollowUser } = useFollowUser(user?.username, setUserFollowers)
+    const { followed, error: followUser, handleFollowUser } = useFollowUser(user?.username, setUserFollowers, currUserProfile, false)
 
     /**
      * Fetches the user data when component mounts
@@ -97,7 +97,7 @@ const Profile = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: "space-between"}}>
                         <Typography variant="h4">{user.username}</Typography>
-                        { currUser ? (
+                        { currUserProfile ? (
                             <IconButton 
                                 onClick={openEditProfileForm}
                                 color="primary" 
@@ -115,7 +115,7 @@ const Profile = () => {
                             )
                         }
                     </Box>
-                    {currUser &&
+                    {currUserProfile &&
                         <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: '1rem' }}>
                             <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
                         </Box>
@@ -178,7 +178,7 @@ const Profile = () => {
                           cover={cover}
                           category={category}
                           reviewLikeCount={+reviewLikeCount}
-                          likedReview={currUser}
+                          likedReview={currUserProfile}
                           setReviews={setUserLikedReviews}
                       />
                     ))}                
@@ -198,7 +198,7 @@ const Profile = () => {
                           cover={cover}
                           bookLikeCount={+bookLikeCount}
                           likedBook={true}
-                          currUser={currUser}
+                          currUser={currUserProfile}
                           setBooks={setUserLikedBooks}
                       />
                   ))}
@@ -212,8 +212,8 @@ const Profile = () => {
                             key={follower.followedBy}
                             username={follower.followedBy}
                             userImg={follower.userImg}
-                            setUserFollowings={setUserFollowings}
-                            setUserFollowers={setUserFollowers}
+                            setUserFollow={setUserFollowings}
+                            currUserProfile={currUserProfile}
                         />
                     ))}
                 </div>
@@ -226,8 +226,8 @@ const Profile = () => {
                             key={following.following}
                             username={following.following}
                             userImg={following.userImg}
-                            setUserFollowings={setUserFollowings}
-                            setUserFollowers={setUserFollowers}
+                            setUserFollow={setUserFollowings}
+                            currUserProfile={currUserProfile}
                         />
                     ))}
                 </div>

@@ -11,7 +11,7 @@ import UserContext from '../auth/UserContext';
  * 
  * Returns user follow status, related error nand handleFollowUser function
  */
-const useFollowUser = (userToBeFollowed, setUserFollowers) => {
+const useFollowUser = (userToBeFollowed, setUserFollow, currUserProfile, userCard, userToBeFollowedImg=null) => {
     console.debug("useFollowUser"); 
     const { hasFollowing, followUser } = useContext(UserContext);
     
@@ -35,11 +35,30 @@ const useFollowUser = (userToBeFollowed, setUserFollowers) => {
             setError(null);
             if (followed) {
                 const unfollowedUsername = await followUser(userToBeFollowed);
-                setUserFollowers(followers => followers.filter(follower => follower.followedBy !== unfollowedUsername));
+                if(!currUserProfile) {
+                    if(!userCard){
+                        setUserFollow(followers => followers.filter(follower => follower.followedBy !== unfollowedUsername));
+                    }
+                } else if (currUserProfile) {
+                    if(userCard){
+                        setUserFollow(followings => followings.filter(following => following.following !== userToBeFollowed));
+                    }
+                }
+
                 setFollowed(false) 
             } else {
                 const followingUser = await followUser(userToBeFollowed);
-                setUserFollowers(followers => [...followers, followingUser])
+
+                if(!currUserProfile) {
+                    if(!userCard){
+                        setUserFollow(followers => [...followers, followingUser])
+                    }
+                } else if (currUserProfile) {
+                    if(userCard){
+                        setUserFollow(followings => [...followings, {following:userToBeFollowed, userImg:userToBeFollowedImg }])
+                    }
+                }
+
                 setFollowed(true) 
             }
         } catch (error) {

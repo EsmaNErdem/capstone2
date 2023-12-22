@@ -42,9 +42,9 @@ const App = () => {
     console.debug("App useEffect loadUserInfo", "user=", user);
 
     const getCurrentUser = async () => {
-      // const userSample = {username: 'LordOfTheBooks', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxvcmRPZlRoZUJvb2tzIiwiaWF0IjoxNzAyMjQxMTY2fQ.XtDbleW1cW69oqiW0Okbjar9dkg6-Xu4948sHhvCMrk"}
+      // const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzIxNTIwNH0.4SEVhlLl_jw0iCXBHQdojv7L6Zux5eQWfh0K5MquNOY"}
+      const userSample = {username: 'Nimbus4000', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pbWJ1czQwMDAiLCJpYXQiOjE3MDMyNzgxNzJ9.H4EKLphUQL06MduWF0ItV-0ufbldNUpaANZX-toRNhc"}
 
-      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzIxNTIwNH0.4SEVhlLl_jw0iCXBHQdojv7L6Zux5eQWfh0K5MquNOY"}
       if (userSample) {
         try{
           // set token on BookBlubApi for API call auth.

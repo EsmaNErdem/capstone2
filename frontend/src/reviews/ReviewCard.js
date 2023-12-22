@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from "../auth/UserContext";
 import useReviewLike from '../hooks/useReviewLike';
-import Alert from "../utilities/Alert"
+import Alert from "../utilities/Alert";
 import { Divider, ListItem, ListItemText, Avatar, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';

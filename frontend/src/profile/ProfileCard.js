@@ -1,6 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
+import Alert from "../utilities/Alert";
 import UserContext from '../auth/UserContext';
+import useFollowUser from "../hooks/userFollowUser";
 import { Avatar, IconButton } from '@mui/material';
 import "./ProfileCard.css"
 
@@ -9,26 +11,17 @@ import "./ProfileCard.css"
  * 
  * - Used in the user's followers and following lists in the Profile component
  */
-const ProfileCard = ({ username, userImg, setUserFollowings, setUserFollowers }) => {
+const ProfileCard = ({ username, userImg, setUserFollow, currUserProfile }) => {
     console.debug("ProfileCard");
 
-    const { hasFollowing, currentUser } = useContext(UserContext);
-    const currUser = currentUser.username === username;
+    const { currentUser } = useContext(UserContext);
+    const { followed, error: followUser, handleFollowUser } = useFollowUser(username, setUserFollow, currUserProfile, true, userImg)
 
-    const [isFollowed, setIsFollowed] = useState()
+    const profileCardOwner = currentUser.username === username;
 
-    console.log(currUser, "::::::")
-    /**By using the useEffect, the liked status is only recalculated when the id or the   */
-    useEffect(() => {
-        console.debug("ProfileCard useEffect",)
-        setIsFollowed(hasFollowing(username))
-    }, [username])
-
-    const handleFollow = () => {
-        setIsFollowed(f => !f)
-    }
     return (
-      <div className={currUser ? "ProfileCard-full" :  "ProfileCard"}>
+      <div className={profileCardOwner ? "ProfileCard-full" :  "ProfileCard"}>
+        {followUser ? <Alert type="danger" messages={[followUser]} />: null}
         <div className="profile-info">
             <Link to={`/profile/${username}`} className="profile-link">
                 <Avatar alt={username} src={userImg} sx={{ width: 50, height: 50, marginRight: 2, marginTop: 2 }} />
@@ -37,9 +30,9 @@ const ProfileCard = ({ username, userImg, setUserFollowings, setUserFollowers })
                 <span className="profile-username">{username}</span>
             </Link>
         </div>
-        {!currUser &&
-        <IconButton onClick={handleFollow} color={isFollowed ? 'error' : 'default'} className="profile-follow-button">
-            {isFollowed ? "Unfollow" : "+ Follow"}
+        {!profileCardOwner &&
+        <IconButton onClick={() => handleFollowUser()} color={followed ? 'error' : 'default'} className="profile-follow-button">
+            {followed ? "Unfollow" : "+ Follow"}
         </IconButton>}
       </div>
     );
