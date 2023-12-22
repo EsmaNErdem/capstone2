@@ -12,23 +12,23 @@ import UserContext from '../auth/UserContext';
  * Returns user like status, book like count states and handleLike function
  */
 const useBookLike = (bookId, initialLikes, bookData={}) => {
-  console.debug("useBookLike"); 
+    console.debug("useBookLike"); 
 
-  const { hasLikedBook, likeBook } = useContext(UserContext);
-  const [liked, setLiked] = useState();
-  const [likes, setLikes] = useState();
-  const [error, setError] = useState(null);
+    const { hasLikedBook, likeBook } = useContext(UserContext);
+    const [liked, setLiked] = useState();
+    const [likes, setLikes] = useState();
+    const [error, setError] = useState(null);
 
     // Helper function to convert "undefined" or "null" strings to actual undefined
-  const convertUndefined = (value) => (value === "undefined" || value === null ? undefined : value);
+    const convertUndefined = (value) => (value === "undefined" || value === null ? undefined : value);
 
-   // Convert undefined/null strings in the bookData object
-  const convertedBookData = Object.fromEntries(
-      Object.keys(bookData).map((key) => [key, convertUndefined(bookData[key])])
-  );
-    
-  /**By using the useEffect, the liked status is only recalculated when the id avoiding unnecessary recalculations on every render.  */
-  useEffect(() => {
+    // Convert undefined/null strings in the bookData object
+    const convertedBookData = Object.fromEntries(
+        Object.keys(bookData).map((key) => [key, convertUndefined(bookData[key])])
+    );
+        
+    /**By using the useEffect, the liked status is only recalculated when the id avoiding unnecessary recalculations on every render.  */
+    useEffect(() => {
       setLiked(hasLikedBook(bookId));
       setLikes(initialLikes)
     }, [bookId, initialLikes]);

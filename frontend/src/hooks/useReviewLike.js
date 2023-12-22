@@ -19,10 +19,9 @@ const useReviewLike = (reviewId, reviewLikeCount) => {
     const [likes, setLikes] = useState(reviewLikeCount);
     const [error, setError] = useState(null);
 
-    
     /**By using the useEffect, the liked status is only recalculated when the id avoiding unnecessary recalculations on every render.  */
     useEffect(() => {
-        console.debug("BookReview useEffect, reviewId=", reviewId)
+        console.debug("BookReview like useEffect, reviewId=", reviewId)
 
         setLiked(hasLikedReview(reviewId))
     }, [reviewId])

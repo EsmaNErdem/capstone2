@@ -32,7 +32,7 @@ const App = () => {
   const [reviews, setReviews] = useState(new Set([]))
   const [likedReviews, setLikedReviews] = useState(new Set([]))
   const [likedBooks, setLikedBooks] = useState(new Set([]))
-  const [following, setFollowing] = useState(new Set([]))
+  const [followings, setFollowings] = useState(new Set([]))
 
   /**
    * Load user data from API, runs when user signup or login and get a token
@@ -44,7 +44,7 @@ const App = () => {
     const getCurrentUser = async () => {
       // const userSample = {username: 'LordOfTheBooks', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxvcmRPZlRoZUJvb2tzIiwiaWF0IjoxNzAyMjQxMTY2fQ.XtDbleW1cW69oqiW0Okbjar9dkg6-Xu4948sHhvCMrk"}
 
-      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzEzMDc5NH0.wC3D0hZn8rTAIRJZ5JiAyU0f4JnrCURpW7k12m1p39w"}
+      const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzIxNTIwNH0.4SEVhlLl_jw0iCXBHQdojv7L6Zux5eQWfh0K5MquNOY"}
       if (userSample) {
         try{
           // set token on BookBlubApi for API call auth.
@@ -56,7 +56,7 @@ const App = () => {
           setReviews(new Set(currentUser.reviews.map(r => r.reviewId)));
           setLikedReviews(new Set(currentUser.likedReviews.map(r => r.reviewId)))
           setLikedBooks(new Set(currentUser.likedBooks.map(b => b.book_id)))
-          // setFollowing(new Set(currentUser.following))
+          setFollowings(new Set(currentUser.following.map(u => u.following)))
         } catch (e) {
           console.error("App loadUserInfo: problem loading", e)
           setCurrentUser(null)
@@ -128,7 +128,7 @@ const App = () => {
    * Searches through current user following set to find if user is following 
    * */
   const hasFollowing = (username) => {
-    return following.has(username)
+    return followings.has(username)
   }
 
   /**
@@ -216,21 +216,22 @@ const App = () => {
   /** 
   * Send user like review, check if it is already liked, update likedReviews state 
   * */
-  const followUser = async (userToFollow) => {
-    if(hasFollowing(userToFollow)) {
-      try{
-        const unfollowedUserId = await BookClubApi.unfollowUser(userToFollow, currentUser.username)
-        setFollowing(u => u.delete(unfollowedUserId))
-      } catch (e) {
-        console.error("Send user unfollow user error:", e)
-      }
+  const followUser = async (userToBeFollowed) => {
+    
+    if(hasFollowing(userToBeFollowed)) {
+      const { unfollowedBy } = await BookClubApi.unfollowUser(userToBeFollowed, currentUser.username)
+      setFollowings(prevFollowedUsers => {
+        const newFollowedUsers = new Set(prevFollowedUsers)
+        newFollowedUsers.delete(userToBeFollowed)
+        return newFollowedUsers
+      })
+      
+      return unfollowedBy
     } else {    
-      try{
-        const followedUserId = await BookClubApi.followUser(userToFollow, currentUser.username)
-        setFollowing(u => new Set([...u, followedUserId]))
-      } catch (e) {
-        console.error("Send user follow user error:", e)
-      }
+      const {following, followedBy} = await BookClubApi.followUser(userToBeFollowed, currentUser.username)
+      setFollowings(u => new Set([...u, following]))
+    
+      return { followedBy, userImg: currentUser.img };
     }
   }
 

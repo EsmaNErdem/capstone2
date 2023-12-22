@@ -120,21 +120,21 @@ class BookClubApi {
         return res.user;
     }
 
-    // /**
-    //  * Send user follow
-    //  */
-    // static async followUser(userToFollow, username) {
-    //     const res = await this.request(`users/${username}`, data, "patch")
-    //     return res.user;
-    // }
+    /**
+     * Send user follow
+     */
+    static async followUser(following, followedBy) {
+        const res = await this.request(`users/${following}/follow/${followedBy}`, {}, "post")
+        return res.follow;
+    }
 
-    // /**
-    //  * Send user unfollow
-    //  */
-    // static async unfollowUser(usertoUnfollow, data) {
-    //     const res = await this.request(`users/${username}/`, data, "patch")
-    //     return res.user;
-    // }
+    /**
+     * Send user unfollow
+     */
+    static async unfollowUser(following, unfollowedBy) {
+        const res = await this.request(`users/${following}/follow/${unfollowedBy}`, {}, "delete")
+        return res.unfollow;
+    }
 
     /**
      * Send user book review

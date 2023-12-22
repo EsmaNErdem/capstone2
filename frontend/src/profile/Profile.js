@@ -4,10 +4,12 @@ import useReviewDelete from "../hooks/useReviewDelete";
 import BookClubApi from "../api";
 import ReviewDisplay from "../reviews/ReviewDisplay";
 import BookCard from "../books/BookCard";
+import ProfileCard from "./ProfileCard";
 import ProfileEditForm from "./ProfileEditForm"
 import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert";
 import UserContext from '../auth/UserContext';
+import useFollowUser from "../hooks/userFollowUser";
 import { AppBar, Avatar, Box, Tab, Tabs, Typography, Modal, IconButton  } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import "./Profile.css"
@@ -27,6 +29,9 @@ const Profile = () => {
     const { username } = useParams();
     const { currentUser } = useContext(UserContext);
 
+    // checks if user on view is current user
+    const currUser = currentUser.username === username;
+
     const [loading, setLoading] = useState(true);
     const [value, setValue] = useState(0);
     const [error, setError] = useState(null);
@@ -39,6 +44,7 @@ const Profile = () => {
     const [userEditFormOpen, setUserEditFormOpen] = useState(false);
 
     const { error: deleteError, deleteBookReview } = useReviewDelete(setUserReviews);
+    const { followed, error: followUser, handleFollowUser } = useFollowUser(user?.username, setUserFollowers)
 
     /**
      * Fetches the user data when component mounts
@@ -52,8 +58,8 @@ const Profile = () => {
         try {
             const userApi = await BookClubApi.getUser(username);
             setUser(userApi);
-            // setUserFollowings(userApi.following)
-            // setUserFollowers(userApi.follower)
+            setUserFollowings(userApi.following)
+            setUserFollowers(userApi.followers)
             setUserReviews(userApi.reviews)
             setUserLikedReviews(userApi.likedReviews)
             setUserLikedBooks(userApi.likedBooks)
@@ -72,10 +78,6 @@ const Profile = () => {
         getuserProfile();
     }, [username]);
 
-    const handleFollow = () => {
-
-    }
-
     // Opens Modal to display user profile edit form
     const openEditProfileForm = async () => {
         setUserEditFormOpen(true)
@@ -86,10 +88,6 @@ const Profile = () => {
         setUserEditFormOpen(false)
     }
 
-    // checks if user on view is current user
-    const likedReview = username === currentUser;
-    const currUser = username === currentUser;
-
     if(!user || loading) return <Loading />;
 
     return (
@@ -99,7 +97,7 @@ const Profile = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: "space-between"}}>
                         <Typography variant="h4">{user.username}</Typography>
-                        { currentUser.username === user.username ? (
+                        { currUser ? (
                             <IconButton 
                                 onClick={openEditProfileForm}
                                 color="primary" 
@@ -111,16 +109,17 @@ const Profile = () => {
                             </IconButton>
                             )
                             : (
-                                <IconButton color="primary" aria-label="follow" onClick={handleFollow} sx={{ marginLeft: '2rem', color: '#6d17b7' }}>
-                                    {/* {isFollowing ? "Unfollow" : "+ Follow"} */}
+                                <IconButton color="primary" aria-label="follow" onClick={handleFollowUser} sx={{ marginLeft: '2rem', color: '#6d17b7' }}>
+                                    {followed ? "Unfollow" : "+ Follow"}
                                 </IconButton>
                             )
                         }
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Typography variant="h6">Followers: {userFollowers.length}</Typography>
-                        <Typography variant="h6" sx={{ marginLeft: '1rem' }}>Following: {userFollowings.length}</Typography>
-                    </Box>
+                    {currUser &&
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: '1rem' }}>
+                            <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                        </Box>
+                    }
                 </Box>
             </Box> 
 
@@ -130,13 +129,15 @@ const Profile = () => {
                 </Box>
             </Modal>
 
-            {error || deleteError ? <Alert type="danger" messages={[error || deleteError]} />: null}
+            {error || deleteError || followUser ? <Alert type="danger" messages={[error || deleteError || followUser]} />: null}
 
             <AppBar position="static" color="transparent" className="appBarWithShadow">
                 <Tabs value={value} onChange={(event, newValue) => setValue(newValue)} >
                     <Tab label={`${userReviews.length} User Reviews`} className={value === 0 ? "selectedTab" : ""} />
                     <Tab label={`${userLikedReviews.length} Liked Reviews`} className={value === 1 ? "selectedTab" : ""} />
                     <Tab label={`${userLikedBooks.length} Liked Books`} className={value === 2 ? "selectedTab" : ""} />
+                    <Tab label={`${userFollowers.length} Followers`} className={value === 3 ? "selectedTab" : ""} />
+                    <Tab label={`${userFollowings.length} Following`} className={value === 4 ? "selectedTab" : ""} />
                 </Tabs>
             </AppBar>
 
@@ -177,7 +178,7 @@ const Profile = () => {
                           cover={cover}
                           category={category}
                           reviewLikeCount={+reviewLikeCount}
-                          likedReview={likedReview}
+                          likedReview={currUser}
                           setReviews={setUserLikedReviews}
                       />
                     ))}                
@@ -203,6 +204,35 @@ const Profile = () => {
                   ))}
                 </div>
             )}
+
+            {value === 3 && (
+                <div className="Profile-Followers-List">
+                    {userFollowers.map((follower) => (
+                        <ProfileCard
+                            key={follower.followedBy}
+                            username={follower.followedBy}
+                            userImg={follower.userImg}
+                            setUserFollowings={setUserFollowings}
+                            setUserFollowers={setUserFollowers}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {value === 4 && (
+                <div className="Profile-Following-List">
+                    {userFollowings.map((following) => (
+                        <ProfileCard
+                            key={following.following}
+                            username={following.following}
+                            userImg={following.userImg}
+                            setUserFollowings={setUserFollowings}
+                            setUserFollowers={setUserFollowers}
+                        />
+                    ))}
+                </div>
+            )}
+
         </div>
     )
 }

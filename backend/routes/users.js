@@ -4,6 +4,7 @@
 
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
 const { ensureLoggedIn, ensureCorrectUser } = require("../middleware/auth")
 
 const jsonschema = require("jsonschema");
@@ -14,7 +15,10 @@ const { BadRequestError } = require("../expressError");
 
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
-
+// creating multer middleware for user profile image upload
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+// , upload('profileImage')
 /**
  * POST /users/register: { user } => { token }
  *

@@ -1,0 +1,22 @@
+.ProfileCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0% 10%;
+}
+
+.ProfileCard-full {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: stretch;
+    padding: 0% 10%;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}
