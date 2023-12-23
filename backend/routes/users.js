@@ -4,7 +4,6 @@
 
 const express = require("express");
 const router = express.Router();
-const multer = require('multer');
 const { ensureLoggedIn, ensureCorrectUser } = require("../middleware/auth")
 
 const jsonschema = require("jsonschema");
@@ -15,10 +14,29 @@ const { BadRequestError } = require("../expressError");
 
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
-// creating multer middleware for user profile image upload
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-// , upload('profileImage')
+
+// // creating multer middleware for user profile image upload
+// const multer = require('multer');
+// const maxFileSize = 500 * 1024; // 500 KB
+// // const storage = multer.memoryStorage();
+
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     console.log("**************", file)
+//     cb(null, '../uploads')
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//     cb(null, file.fieldname + '-' + uniqueSuffix)  }
+// })
+// const upload = multer({
+//   storage: storage,
+//   // limits: {
+//   //   fileSize: maxFileSize,
+//   // },
+// });
+// upload.single('userImg'), 
+
 /**
  * POST /users/register: { user } => { token }
  *
@@ -99,6 +117,7 @@ router.get("/:username", ensureLoggedIn, async function (req, res, next) {
  **/
 router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
     try {
+      console.log("RRRRR", req.params.username)
         const validator = jsonschema.validate(req.body, userUpdateSchema);
         if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);

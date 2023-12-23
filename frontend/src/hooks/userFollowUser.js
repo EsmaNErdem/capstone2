@@ -25,39 +25,34 @@ const useFollowUser = (userToBeFollowed, setUserFollow, currUserProfile, userCar
         setFollowed(hasFollowing(userToBeFollowed))
     }, [userToBeFollowed])
     
-
     /** 
      * Sends user follow and unfollow data to database
-     * Update users followers list
+     * -Updates users followers list if user on profile view is not current user and handleFollow is called from profile follow button
+     * -Updates users following list if user on profile view is current user and handleFollow is called from  user profile card follow button
     */
     const handleFollowUser = async () =>{
         try {
             setError(null);
             if (followed) {
                 const unfollowedUsername = await followUser(userToBeFollowed);
-                if(!currUserProfile) {
-                    if(!userCard){
-                        setUserFollow(followers => followers.filter(follower => follower.followedBy !== unfollowedUsername));
-                    }
-                } else if (currUserProfile) {
-                    if(userCard){
-                        setUserFollow(followings => followings.filter(following => following.following !== userToBeFollowed));
-                    }
-                }
+                if (!currUserProfile && !userCard) {
+                    // Current user is not on the profile, and the unfollow button is not from the user profile card
+                    setUserFollow(followers => followers.filter(follower => follower.followedBy !== unfollowedUsername));
+                } else if (currUserProfile && userCard) {
+                    // Current user is on the profile, and the unfollow button is from the user profile card
+                    setUserFollow(followings => followings.filter(following => following.following !== userToBeFollowed));
+                } 
 
                 setFollowed(false) 
             } else {
                 const followingUser = await followUser(userToBeFollowed);
-
-                if(!currUserProfile) {
-                    if(!userCard){
-                        setUserFollow(followers => [...followers, followingUser])
-                    }
-                } else if (currUserProfile) {
-                    if(userCard){
-                        setUserFollow(followings => [...followings, {following:userToBeFollowed, userImg:userToBeFollowedImg }])
-                    }
-                }
+                if (!currUserProfile && !userCard) {
+                    // Current user is not on the profile, and the follow button is not from the user profile card
+                    setUserFollow(followers => [...followers, followingUser]);
+                } else if (currUserProfile && userCard) {
+                    // Current user is on the profile, and the follow button is from the user profile card
+                    setUserFollow(followings => [...followings, { following: userToBeFollowed, userImg: userToBeFollowedImg }]);
+                }                  
 
                 setFollowed(true) 
             }

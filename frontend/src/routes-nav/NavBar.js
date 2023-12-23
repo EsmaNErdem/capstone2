@@ -10,7 +10,7 @@ import "./NavBar.css";
  *
  * Rendered by App.
  */
-const NavBar = ({ logout }) => {
+const NavBar = ({ logOut }) => {
   const { currentUser } = useContext(UserContext);
   console.debug("NavBar", "currentUser=", currentUser);
 
@@ -33,7 +33,7 @@ const NavBar = ({ logout }) => {
           </NavLink>
         </li>
         <li className="nav-item">
-          <Link className="nav-link logout-link" to="/" onClick={logout}>
+          <Link className="nav-link logout-link" to="/" onClick={logOut}>
             Log out {currentUser.first_name || currentUser.username}
           </Link>
         </li>

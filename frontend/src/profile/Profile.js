@@ -102,7 +102,7 @@ const Profile = () => {
                                 onClick={openEditProfileForm}
                                 color="primary" 
                                 aria-label="edit" 
-                                sx={{ marginLeft: '2rem', color: '#6d17b7' }}
+                                sx={{ marginLeft: '2rem', color:"orangered" }}
                                 data-testid="edit-profile-button"
                             >
                                 <EditIcon /><span>Edit</span>
@@ -125,7 +125,18 @@ const Profile = () => {
 
             <Modal open={userEditFormOpen} onClose={closeEditProfileForm}>
                 <Box className="Profile-edit" >
-                    <ProfileEditForm close={true} closeModal={closeEditProfileForm}/>
+                    <ProfileEditForm 
+                        close={true} 
+                        closeModal={closeEditProfileForm}
+                        initialValues={{
+                            username: user.username,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            img: user.img,
+                            email: user.email,
+                        }}
+                        updateUser={setUser}
+                        />
                 </Box>
             </Modal>
 

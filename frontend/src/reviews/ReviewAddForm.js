@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BookClubApi from '../api';
-import Alert from "../utilities/Alert"
+import Alert from "../utilities/Alert";
+import Loading from "../utilities/Loading";
 import { ListItem, TextField, Button, Autocomplete } from '@mui/material';
 
 /**
@@ -100,6 +101,8 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
             book: e.target.value || undefined,
           }));
     };
+
+    if(loading) return <Loading />;
 
     return (
         <>

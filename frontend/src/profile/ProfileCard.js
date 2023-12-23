@@ -17,6 +17,7 @@ const ProfileCard = ({ username, userImg, setUserFollow, currUserProfile }) => {
     const { currentUser } = useContext(UserContext);
     const { followed, error: followUser, handleFollowUser } = useFollowUser(username, setUserFollow, currUserProfile, true, userImg)
 
+    // Check if profile card if current user's 
     const profileCardOwner = currentUser.username === username;
 
     return (

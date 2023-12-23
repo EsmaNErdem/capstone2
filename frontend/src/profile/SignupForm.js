@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-import BookClubApi from '../api';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Typography } from '@mui/material';
 import Alert from "../utilities/Alert"
 import * as Yup from 'yup';
 import "./FormContainer.css"
 
-/**ProfileEditForm Component
- * Displays a form with and rendered controlled component functionality and uses modal functionality
+/**
+ * SignUpForm Component
+ * Displays form and renders controlled components functionality
+ * Provides form validation with formik
  * 
- * * A form component for user profile update. Handles user input for, first name, last name, email and user image while username constant.
+ * A form component for user registration. Handles user input for username, password, first name, last name, email and user image.
  * Displays form errors if registration fails.
  * On submission:
- * - calls API to user info
- * - update currentUser state
- * - shows conformation message when update is successful
+ * - calls signup function prop
+ * - redirects to / route
  *
- * Routes ==> ProfileForm ==> Alert
+ * Routes ==> SignupForm ==> Alert
  */
-const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser }) => {
-    console.debug("ProfileEditForm");
+const SignupForm = ({ signup }) => {
+    console.debug("SignupForm");
 
+    const navigate = useNavigate();
     const [error, setError] = useState(null);
 
     /**
@@ -29,45 +31,53 @@ const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser })
      */
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            const updatedUser =  await BookClubApi.updateUser(initialValues.username, values)
-            updateUser(user => ({
-                ...user,
-                firstName: updatedUser.firstName,
-                lastName: updatedUser.lastName,
-                img: updatedUser.img,
-                email: updatedUser.email,
-            }))
-            if (close) closeModal();
+            const result = await signup(values);
+    
+            if (result.success) {
+                navigate("/");
+            } else {
+                setError(result.error);
+            }
         } catch (error) {
-            setError("An error occurred during edit.");
+            setError("An error occurred during signup.");
         } finally {
             setSubmitting(false);
         }
     };
 
     return (
-        <div className='ProfileEditForm'>
+        <div>
+            <Typography variant="h2" sx={{  marginBottom: 2 }}>Sign Up</Typography>
+            {error ? <Alert type="danger" messages={[error]} />: null}
             <Formik
-                initialValues={{ firstName: initialValues.firstName, lastName: initialValues.lastName, email: initialValues.email, img: initialValues.img }}
+                initialValues={{ username: '', password: '', firstName: '', lastName: '', email: '', img: '' }}
                 validationSchema={Yup.object({
+                    username: Yup.string()
+                    .max(15, 'Must be 15 characters or less')
+                    .required('Username is required'),
                     password: Yup.string()
-                        .notRequired(),
+                    .max(20, 'Must be 20 characters or less')
+                    .required('Password is required'),
                     firstName: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
-                        .notRequired(),
+                    .max(15, 'Must be 15 characters or less')
+                    .required('First name is required'),
                     lastName: Yup.string()
-                        .max(20, 'Must be 20 characters or less')
-                        .notRequired(),
+                    .max(20, 'Must be 20 characters or less')
+                    .required('Last name is required'),
                     email: Yup.string()
                     .email('Invalid email address')
-                    .notRequired(),
+                    .required('Email is required'),
                     img: Yup.string().notRequired(),
                 })}
                 onSubmit={handleSubmit}
                 >
                 <Form className='FormContainer'>
-                    <Typography variant="h2" sx={{  marginBottom: 2 }}>Edit User</Typography>
-                    {error ? <Alert type="danger" messages={[error]} />: null}
+                    <div>
+                        <label htmlFor="username">Username</label>
+                        <Field name="username" type="text" placeholder="Username" />
+                        <span className='ErrorMessageContainer'><ErrorMessage name="username"/></span>
+                    </div>
+
                     <div>
                         <label htmlFor="password">Password</label>
                         <Field name="password" type="password" placeholder="Password" />
@@ -98,11 +108,21 @@ const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser })
                         <span className='ErrorMessageContainer'><ErrorMessage name="img" /></span>
                     </div>
 
+                    {/* <div>
+                        <label htmlFor="userImg">Profile Image</label>
+                        <Field name="userImg" type="file" encType="multipart/form-data"/>
+                        <input type="file" name="userImg" encType="multipart/form-data"/>
+                        <span className='ErrorMessageContainer'><ErrorMessage name="profileImage" /></span>
+                    </div> */}
+
                     <button type="submit">Submit</button>
                 </Form>
             </Formik>
+            <Link to={`/login`} data-testid="user-signup-link">
+                <p>Login instead?</p>
+            </Link>
         </div>
     );
 };
 
-export default ProfileEditForm;
+export default SignupForm;

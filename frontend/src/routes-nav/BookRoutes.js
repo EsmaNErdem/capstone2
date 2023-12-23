@@ -9,9 +9,8 @@ import BookDetail from "../books/BookDetail";
 import ReviewList from "../reviews/ReviewList";
 import ReviewFilterList from "../reviews/ReviewFilterList";
 import Profile from "../profile/Profile";
-// import LoginForm from "../auth/LoginForm";
-// import SignUpFormForm from "../auth/SignUpForm";
-// import ProfileForm from "../profile/ProfileForm";
+import LoginForm from "../profile/LoginForm";
+import SignupForm from "../profile/SignupForm";
 
 /** App routes.
  *
@@ -30,17 +29,15 @@ const BookRoutes = ({ login, signup }) => {
   return (
     <>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/books" element={<BookList />} />
-      <Route path="/books/search" element={<BookSearchList />} />
-      <Route path="/books/:id" element={<BookDetail />} />
-      <Route path="/reviews" element={<ReviewList />} />
-      <Route path="/reviews/filter" element={<ReviewFilterList />} />
-      <Route path="/profile/:username" element={<Profile />} />
-      {/* <Route path="/login" element={<Home />} />
-      <Route path="/signup" element={<Home />} />
-      <Route path="*" element={<Navigate to="/" />} /> */}
-
+        <Route path="/" element={<Home />} />
+        <Route path="/books" element={<BookList />} />
+        <Route path="/books/search" element={<BookSearchList />} />
+        <Route path="/books/:id" element={<BookDetail />} />
+        <Route path="/reviews" element={<ReviewList />} />
+        <Route path="/reviews/filter" element={<ReviewFilterList />} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/login" element={<LoginForm login={login} />} />
+        <Route path="/signup" element={<SignupForm signup={signup} />} />
       </Routes>
       {/* <ProtectedRoute element={<Home />} path="/reviews"/>
       <ProtectedRoute element={<BookList />} path="/books"/>

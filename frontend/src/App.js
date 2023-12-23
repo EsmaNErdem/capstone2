@@ -43,14 +43,14 @@ const App = () => {
 
     const getCurrentUser = async () => {
       // const userSample = {username: 'TheBookSnake', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRoZUJvb2tTbmFrZSIsImlhdCI6MTcwMzIxNTIwNH0.4SEVhlLl_jw0iCXBHQdojv7L6Zux5eQWfh0K5MquNOY"}
-      const userSample = {username: 'Nimbus4000', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pbWJ1czQwMDAiLCJpYXQiOjE3MDMyNzgxNzJ9.H4EKLphUQL06MduWF0ItV-0ufbldNUpaANZX-toRNhc"}
+      // const userSample = {username: 'Nimbus4000', token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pbWJ1czQwMDAiLCJpYXQiOjE3MDMyNzgxNzJ9.H4EKLphUQL06MduWF0ItV-0ufbldNUpaANZX-toRNhc"}
 
-      if (userSample) {
+      if (user) {
         try{
           // set token on BookBlubApi for API call auth.
-          BookClubApi.token = userSample.token
+          BookClubApi.token = user.token
           // get data on the current user
-          const currentUser = await BookClubApi.getUser(userSample.username)
+          const currentUser = await BookClubApi.getUser(user.username)
 
           setCurrentUser(currentUser)
           setReviews(new Set(currentUser.reviews.map(r => r.reviewId)));
