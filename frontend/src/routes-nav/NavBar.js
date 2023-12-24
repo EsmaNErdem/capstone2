@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import UserContext from "../auth/UserContext";
+import { Menu, MenuItem, Avatar } from '@mui/material';
 import "./NavBar.css";
 
 /** Navbar bar for site. Shows up on every page.
@@ -12,7 +13,15 @@ import "./NavBar.css";
  */
 const NavBar = ({ logOut }) => {
   const { currentUser } = useContext(UserContext);
-  console.debug("NavBar", "currentUser=", currentUser);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   function loggedInNav() {
     return (
@@ -28,14 +37,26 @@ const NavBar = ({ logOut }) => {
           </NavLink>
         </li>
         <li className="nav-item mr-4">
-          <NavLink className="nav-link" to={`/profile/${currentUser.username}`}>
-            Profile
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link logout-link" to="/" onClick={logOut}>
-            Log out {currentUser.first_name || currentUser.username}
-          </Link>
+          <Avatar
+            alt={currentUser.username}
+            src={currentUser.img}
+            className="avatar"
+            onClick={handleMenuOpen}
+          />
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleMenuClose}>
+              <NavLink to={`/profile/${currentUser.username}`} className="dropdown-link">
+                Profile
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={() => { logOut(); handleMenuClose(); }}>
+              Log out {currentUser.first_name || currentUser.username}
+            </MenuItem>
+          </Menu>
         </li>
       </ul>
     );
@@ -61,7 +82,7 @@ const NavBar = ({ logOut }) => {
   return (
     <nav className="Navbar navbar navbar-expand-md">
       <Link className="navbar-brand" to="/">
-        <span className="brand-text">Book Club</span>
+        <span className="brand-text">Book Chat</span>
       </Link>
       {currentUser ? loggedInNav() : loggedOutNav()}
     </nav>

@@ -117,7 +117,6 @@ router.get("/:username", ensureLoggedIn, async function (req, res, next) {
  **/
 router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
     try {
-      console.log("RRRRR", req.params.username)
         const validator = jsonschema.validate(req.body, userUpdateSchema);
         if (!validator.valid) {
         const errs = validator.errors.map(e => e.stack);

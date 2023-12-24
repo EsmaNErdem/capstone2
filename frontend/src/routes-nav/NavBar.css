@@ -14,6 +14,7 @@
 
 .navbar-brand {
   text-decoration: none; 
+  margin-left: 70px;
 }
 
 .navbar-brand .brand-text:hover {
@@ -31,8 +32,9 @@
 
 .navbar-nav {
   display: flex;
+  align-items: center;
   list-style: none;
-  padding-right: 20px;
+  margin-right: 70px;
 }
 
 .nav-item {
@@ -51,6 +53,17 @@
   color: orangered; 
 }
 
+.avatar {
+  cursor: pointer;
+}
+
+.dropdown-link {
+  color: #36b9cc;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .logout-link {
   color: #6d17b7;
   font-weight: bold;
@@ -59,18 +72,22 @@
 /* Media Queries for Responsive Design */
 
 @media (max-width: 768px) {
+  .navbar-brand {
+    margin-left: 0;
+  }
+
   .Navbar {
     flex-direction: column;
   }
 
   .navbar-nav {
     margin-top: 10px;
-    padding-right: 0;
+    margin-right: 0;
     flex-direction: row;
   }
 
   .nav-item {
-    margin-right: 0;
+    margin-right: 10px;
     margin-bottom: 10px;
   }
 }

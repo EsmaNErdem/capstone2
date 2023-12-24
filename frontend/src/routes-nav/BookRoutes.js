@@ -30,12 +30,12 @@ const BookRoutes = ({ login, signup }) => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/books" element={<BookList />} />
-        <Route path="/books/search" element={<BookSearchList />} />
-        <Route path="/books/:id" element={<BookDetail />} />
-        <Route path="/reviews" element={<ReviewList />} />
-        <Route path="/reviews/filter" element={<ReviewFilterList />} />
-        <Route path="/profile/:username" element={<Profile />} />
+        <ProtectedRoute path="/books" element={<BookList />} />
+        <ProtectedRoute path="/books/search" element={<BookSearchList />} />
+        <ProtectedRoute path="/books/:id" element={<BookDetail />} />
+        <ProtectedRoute path="/reviews" element={<ReviewList />} />
+        <ProtectedRoute path="/reviews/filter" element={<ReviewFilterList />} />
+        <ProtectedRoute path="/profile/:username" element={<Profile />} />
         <Route path="/login" element={<LoginForm login={login} />} />
         <Route path="/signup" element={<SignupForm signup={signup} />} />
       </Routes>

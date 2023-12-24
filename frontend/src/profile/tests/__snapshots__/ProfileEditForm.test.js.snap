@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snaphot 1`] = `
+<DocumentFragment>
+  <div
+    class="ProfileEditForm"
+  >
+    <form
+      action="#"
+      class="FormContainer"
+    >
+      <button
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-agcxlm-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="CloseIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+      <h2
+        class="MuiTypography-root MuiTypography-h2 css-vqgaav-MuiTypography-root"
+      >
+        Edit User
+      </h2>
+      <div>
+        <label
+          for="password"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="firstName"
+        >
+          First Name
+        </label>
+        <input
+          id="firstName"
+          name="firstName"
+          placeholder="First Name"
+          type="text"
+          value="TestFirs1"
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="lastName"
+        >
+          Last Name
+        </label>
+        <input
+          id="lastName"
+          name="lastName"
+          placeholder="Last Name"
+          type="text"
+          value="TestLast1"
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="email"
+        >
+          Email Address
+        </label>
+        <input
+          id="email"
+          name="email"
+          placeholder="Email"
+          type="email"
+          value="u1@email.com"
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="img"
+        >
+          Profile Image URL
+        </label>
+        <input
+          id="img"
+          name="img"
+          placeholder="Profile Image URL"
+          type="text"
+          value="UserImg1"
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <button
+        type="submit"
+      >
+        Save Changes
+      </button>
+    </form>
+  </div>
+</DocumentFragment>
+`;

@@ -1,6 +1,8 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../auth/UserContext";
+import { Typography, Button, Container } from '@mui/material';
+import "./Home.css"
 
 /**
  * Homepage Component
@@ -11,23 +13,32 @@ import UserContext from "../auth/UserContext";
  */
 
 const Home = () => {
-    const { currentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
-    return (
-        <div className="Home">
-            <h1>A Wrinkle in Page: Online Book Club</h1>
-            <p>Join this social platform to find people like you who liove readint to talk about books</p>
-            {currentUser ?
-                <h2>Welcome, {currentUser.username}!</h2> :
-                (
-                    <p>
-                        <Link to="/login">Login</Link>
-                        <Link to="/signup">Sign Up</Link> 
-                    </p>
-                )
-            }
+  return (
+    <Container className="homeContainer">
+      <Typography variant="h3" className="headline">
+        Book Talk: Your Social Platform for Book Enthusiasts
+      </Typography>
+      <Typography variant="body1" className="description">
+        Welcome to Book Talk, where book lovers unite to share their passion for reading.
+      </Typography>
+      {currentUser ? (
+        <Typography variant="h4" className="welcomeMessage">
+          Welcome, {currentUser.username}!
+        </Typography>
+      ) : (
+        <div className="authButtons">
+          <Button component={Link} to="/login" variant="contained" color="primary">
+            Login
+          </Button>
+          <Button component={Link} to="/signup" variant="contained" color="secondary">
+            Sign Up
+          </Button>
         </div>
-    )
-}
+      )}
+    </Container>
+  );
+};
 
 export default Home;

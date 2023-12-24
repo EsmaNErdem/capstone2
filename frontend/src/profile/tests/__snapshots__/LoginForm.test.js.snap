@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snaphot 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-vqgaav-MuiTypography-root"
+    >
+      Login
+    </h2>
+    <form
+      action="#"
+      class="FormContainer"
+    >
+      <div>
+        <label
+          for="username"
+        >
+          Username
+        </label>
+        <input
+          id="username"
+          name="username"
+          placeholder="Username"
+          type="text"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="password"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          label="password"
+          name="password"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+    <a
+      data-testid="user-signup-link"
+      href="/signup"
+    >
+      <p>
+        Don't have an account?
+      </p>
+    </a>
+  </div>
+</DocumentFragment>
+`;

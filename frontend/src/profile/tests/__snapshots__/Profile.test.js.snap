@@ -1,0 +1,246 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Profile"
+  >
+    <div
+      class="MuiBox-root css-1obp3ff"
+    >
+      <div
+        class="MuiAvatar-root MuiAvatar-circular css-1lycc6k-MuiAvatar-root"
+      >
+        <img
+          alt="Test1"
+          class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+          src="UserImg1"
+        />
+      </div>
+      <div
+        class="MuiBox-root css-kra275"
+      >
+        <div
+          class="MuiBox-root css-1lekzkb"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+            Test1
+          </h4>
+          <button
+            aria-label="follow"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeMedium css-1d5a7g5-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="follow-profile-button"
+            tabindex="0"
+            type="button"
+          >
+            + Follow
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic appBarWithShadow css-v526sl-MuiPaper-root-MuiAppBar-root"
+    >
+      <div
+        class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+            role="tablist"
+          >
+            <button
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected selectedTab css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              1 User Reviews
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              1 Liked Reviews
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              1 Liked Books
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              1 Followers
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              1 Following
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+    </header>
+    <div
+      class="Profile-UserReviews-List"
+    >
+      <li
+        class="MuiListItem-root MuiListItem-gutters ReviewDisplay css-1nxmd3h-MuiListItem-root"
+      >
+        <div
+          class="UserInfo"
+        >
+          <a
+            class="UsernameLink"
+            data-testid="review-display-profile-link"
+            href="/profile/Test1"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+            >
+              <img
+                alt="Test1"
+                class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                src="UserImg1"
+              />
+            </div>
+            <div
+              class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+            >
+              <span
+                class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+              >
+                Test1
+              </span>
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+              >
+                12/18/2023 12:00:00 AM
+              </p>
+            </div>
+          </a>
+          <div>
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+              data-testid="review-display-review-like"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                data-testid="display-like-count"
+              >
+                2
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="FavoriteIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          class="ReviewInfo"
+        >
+          <div
+            class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1k48cxs-MuiTypography-root"
+            >
+              Review 1
+            </span>
+          </div>
+        </div>
+        <div
+          class="BookInfo"
+        >
+          <a
+            class="Title"
+            href="/books/1"
+          >
+            <img
+              alt="Book 1"
+              class="CardImage"
+              src="Cover 1"
+            />
+          </a>
+          <div>
+            <h2>
+              <a
+                class="TitleLink"
+                data-testid="review-display-book-title-link"
+                href="/books/1"
+              >
+                Book 1
+              </a>
+            </h2>
+            <p>
+              Author: Author 1
+            </p>
+            <p>
+              Category: Category 1
+            </p>
+          </div>
+        </div>
+      </li>
+      <hr
+        class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

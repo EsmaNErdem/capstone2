@@ -1,6 +1,5 @@
-// Routes.js
 import React, { useContext } from "react";
-import {Routes, Route, Navigate } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 
 /**
@@ -14,11 +13,12 @@ import UserContext from "../auth/UserContext";
 const ProtectedRoute = ({ element, path }) => {
   const { currentUser } = useContext(UserContext);
 
-  if (!currentUser) {
-    return
-  }
-
-  return <Route element={element} path={path} />;
+  return (
+    <Route
+      path={path}
+      element={currentUser ? element : <Navigate to="/" replace />}
+    />
+  );
 };
 
 export default ProtectedRoute;

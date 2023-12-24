@@ -74,37 +74,37 @@ const SignupForm = ({ signup }) => {
                 <Form className='FormContainer'>
                     <div>
                         <label htmlFor="username">Username</label>
-                        <Field name="username" type="text" placeholder="Username" />
+                        <Field id="username" name="username" type="text" placeholder="Username" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="username"/></span>
                     </div>
 
                     <div>
                         <label htmlFor="password">Password</label>
-                        <Field name="password" type="password" placeholder="Password" />
+                        <Field id="password" name="password" type="password" placeholder="Password" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="password" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="firstName">First Name</label>
-                        <Field name="firstName" type="text" placeholder="First Name" />
+                        <Field id="firstName" name="firstName" type="text" placeholder="First Name" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="firstName" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="lastName">Last Name</label>
-                        <Field name="lastName" type="text" placeholder="Last Name" />
+                        <Field id="lastName" name="lastName" type="text" placeholder="Last Name" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="lastName" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="email">Email Address</label>
-                        <Field name="email" type="email" placeholder="Email" />
+                        <Field id="email" name="email" type="email" placeholder="Email" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="email" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="img">Profile Image URL</label>
-                        <Field name="img" type="text" placeholder="Profile Image URL"/>
+                        <Field id="img" name="img" type="text" placeholder="Profile Image URL"/>
                         <span className='ErrorMessageContainer'><ErrorMessage name="img" /></span>
                     </div>
 
@@ -118,7 +118,7 @@ const SignupForm = ({ signup }) => {
                     <button type="submit">Submit</button>
                 </Form>
             </Formik>
-            <Link to={`/login`} data-testid="user-signup-link">
+            <Link to={`/login`} data-testid="user-login-link">
                 <p>Login instead?</p>
             </Link>
         </div>

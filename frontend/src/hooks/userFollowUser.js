@@ -57,7 +57,7 @@ const useFollowUser = (userToBeFollowed, setUserFollow, currUserProfile, userCar
                 setFollowed(true) 
             }
         } catch (error) {
-            setError("Error following user.")
+            setError(`Error following user: ${error}`)
             console.error("Error handling user follow:", error);
         }
     }

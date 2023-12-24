@@ -109,7 +109,13 @@ const Profile = () => {
                             </IconButton>
                             )
                             : (
-                                <IconButton color="primary" aria-label="follow" onClick={handleFollowUser} sx={{ marginLeft: '2rem', color: '#6d17b7' }}>
+                                <IconButton 
+                                    onClick={handleFollowUser} 
+                                    color="primary" 
+                                    aria-label="follow" 
+                                    sx={{ marginLeft: '2rem', color: '#6d17b7' }}
+                                    data-testid="follow-profile-button"
+                                >
                                     {followed ? "Unfollow" : "+ Follow"}
                                 </IconButton>
                             )

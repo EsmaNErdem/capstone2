@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import BookClubApi from '../api';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Typography } from '@mui/material';
+import { Typography, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import Alert from "../utilities/Alert"
 import * as Yup from 'yup';
 import "./FormContainer.css"
@@ -66,39 +67,42 @@ const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser })
                 onSubmit={handleSubmit}
                 >
                 <Form className='FormContainer'>
+                    <IconButton onClick={closeModal} sx={{ width: "20px"}}>
+                        <CloseIcon />
+                    </IconButton>
                     <Typography variant="h2" sx={{  marginBottom: 2 }}>Edit User</Typography>
                     {error ? <Alert type="danger" messages={[error]} />: null}
                     <div>
                         <label htmlFor="password">Password</label>
-                        <Field name="password" type="password" placeholder="Password" />
+                        <Field id="password" name="password" type="password" placeholder="Password" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="password" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="firstName">First Name</label>
-                        <Field name="firstName" type="text" placeholder="First Name" />
+                        <Field id="firstName" name="firstName" type="text" placeholder="First Name" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="firstName" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="lastName">Last Name</label>
-                        <Field name="lastName" type="text" placeholder="Last Name" />
+                        <Field id="lastName" name="lastName" type="text" placeholder="Last Name" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="lastName" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="email">Email Address</label>
-                        <Field name="email" type="email" placeholder="Email" />
+                        <Field id="email" name="email" type="email" placeholder="Email" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="email" /></span>
                     </div>
 
                     <div>
                         <label htmlFor="img">Profile Image URL</label>
-                        <Field name="img" type="text" placeholder="Profile Image URL"/>
+                        <Field id="img" name="img" type="text" placeholder="Profile Image URL"/>
                         <span className='ErrorMessageContainer'><ErrorMessage name="img" /></span>
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <button type="submit">Save Changes</button>
                 </Form>
             </Formik>
         </div>

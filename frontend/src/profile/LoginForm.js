@@ -64,12 +64,12 @@ const LoginForm = ({ login }) => {
                 <Form className='FormContainer'>
                     <div>
                         <label htmlFor="username">Username</label>
-                        <Field name="username" type="text" placeholder="Username"/>
+                        <Field id="username" name="username" type="text" placeholder="Username"/>
                         <span className='ErrorMessageContainer'><ErrorMessage name="username"/></span>
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
-                        <Field label="password" name="password" type="password" placeholder="Password" />
+                        <Field id="password" label="password" name="password" type="password" placeholder="Password" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="password" /></span>
                     </div>      
 

@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snaphot 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-vqgaav-MuiTypography-root"
+    >
+      Sign Up
+    </h2>
+    <form
+      action="#"
+      class="FormContainer"
+    >
+      <div>
+        <label
+          for="username"
+        >
+          Username
+        </label>
+        <input
+          id="username"
+          name="username"
+          placeholder="Username"
+          type="text"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="password"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="firstName"
+        >
+          First Name
+        </label>
+        <input
+          id="firstName"
+          name="firstName"
+          placeholder="First Name"
+          type="text"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="lastName"
+        >
+          Last Name
+        </label>
+        <input
+          id="lastName"
+          name="lastName"
+          placeholder="Last Name"
+          type="text"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="email"
+        >
+          Email Address
+        </label>
+        <input
+          id="email"
+          name="email"
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <div>
+        <label
+          for="img"
+        >
+          Profile Image URL
+        </label>
+        <input
+          id="img"
+          name="img"
+          placeholder="Profile Image URL"
+          type="text"
+          value=""
+        />
+        <span
+          class="ErrorMessageContainer"
+        />
+      </div>
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+    <a
+      data-testid="user-login-link"
+      href="/login"
+    >
+      <p>
+        Login instead?
+      </p>
+    </a>
+  </div>
+</DocumentFragment>
+`;
