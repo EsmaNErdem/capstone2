@@ -1,23 +1,20 @@
 import React, { useContext } from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 
 /**
- * PrivateRoute Component
+ * ProtectedRoute Component
  * Routes private routes
  * 
- * Checks if there is logged in user and show protected routes
- * if no user logged in, redirect them to the login form. 
+ * Checks if there is a logged-in user and shows protected routes.
+ * If no user is logged in, redirect them to the login form. 
  * 
  */
-const ProtectedRoute = ({ element, path }) => {
+const ProtectedRoute = () => {
   const { currentUser } = useContext(UserContext);
 
   return (
-    <Route
-      path={path}
-      element={currentUser ? element : <Navigate to="/" replace />}
-    />
+    currentUser ? <Outlet/> : <Navigate to='/login'/>
   );
 };
 

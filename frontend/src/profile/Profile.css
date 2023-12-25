@@ -1,5 +1,5 @@
 .Profile {
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,8 +22,4 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px; 
-}
-
-.appBarFollowers {
-    
 }
