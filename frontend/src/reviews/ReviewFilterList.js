@@ -178,7 +178,7 @@ const ReviewFilterList = () => {
                 <>
                   <p className="lead">Sorry, no results were found!</p>
                   {error ? <Alert type="danger" messages={[error]} />: null}
-                  {(deleteError)&& <Alert type="danger" messages={[deleteError]} />}
+                  {(deleteError || addError)&& <Alert type="danger" messages={[deleteError || addError]} />}
 
                 </>
             )}

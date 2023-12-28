@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import Prompt from "../utilities/Prompt";
 import "./BookSearchForm.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,7 +20,6 @@ import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 const BookSearchForm = ({searchFor}) => {
     console.debug("BookSearchForm", "searchFor=", typeof searchFor);
 
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({})
     const [advancedSearch, setAdvancedSearch] = useState(false)
     const timeoutId = useRef();

@@ -40,6 +40,7 @@ const BookRoutes = ({ login, signup }) => {
         </Route>
         <Route path="/login" element={<LoginForm login={login} />} />
         <Route path="/signup" element={<SignupForm signup={signup} />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

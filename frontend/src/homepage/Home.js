@@ -19,7 +19,7 @@ const Home = () => {
       <div className="Home-Card">
         <div className="Home-Cover">
           <img src="https://media.istockphoto.com/id/453166187/photo/dirty-old-green-book-cover.jpg?s=612x612&w=0&k=20&c=CwPKZXsGQNHUhoH_-tL7yFZT87rW4iDkCJsoIGCZPMI=" alt="home-cover" />
-          <img src="https://img.freepik.com/premium-photo/dark-purple-old-velvet-fabric-texture-used-as-background-empty-purple-fabric-background-soft-smooth-textile-material-there-is-space-textx9_661047-2260.jpg" />
+          <img src="https://img.freepik.com/premium-photo/dark-purple-old-velvet-fabric-texture-used-as-background-empty-purple-fabric-background-soft-smooth-textile-material-there-is-space-textx9_661047-2260.jpg"  alt="home=cover-backside"/>
           
           <Typography variant="h3" className="book-headline">
             BOOK CHAT
