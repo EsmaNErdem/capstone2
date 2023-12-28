@@ -15,7 +15,7 @@ exports[`it renders and matches with snaphot 1`] = `
         <span
           class="brand-text"
         >
-          Book Club
+          Book Chat
         </span>
       </a>
       <ul
@@ -46,24 +46,85 @@ exports[`it renders and matches with snaphot 1`] = `
     <div
       class="Home"
     >
-      <h1>
-        A Wrinkle in Page: Online Book Club
-      </h1>
-      <p>
-        Join this social platform to find people like you who liove readint to talk about books
-      </p>
-      <p>
-        <a
-          href="/login"
+      <div
+        class="Home-Card"
+      >
+        <div
+          class="Home-Cover"
         >
-          Login
-        </a>
-        <a
-          href="/signup"
+          <img
+            alt="home-cover"
+            src="https://media.istockphoto.com/id/453166187/photo/dirty-old-green-book-cover.jpg?s=612x612&w=0&k=20&c=CwPKZXsGQNHUhoH_-tL7yFZT87rW4iDkCJsoIGCZPMI="
+          />
+          <img
+            src="https://img.freepik.com/premium-photo/dark-purple-old-velvet-fabric-texture-used-as-background-empty-purple-fabric-background-soft-smooth-textile-material-there-is-space-textx9_661047-2260.jpg"
+          />
+          <h3
+            class="MuiTypography-root MuiTypography-h3 book-headline css-gepadz-MuiTypography-root"
+          >
+            BOOK CHAT
+          </h3>
+        </div>
+        <div
+          class="Home-Content"
         >
-          Sign Up
-        </a>
-      </p>
+          <h3
+            class="MuiTypography-root MuiTypography-h3 headline css-gepadz-MuiTypography-root"
+          >
+            Book CHAT
+          </h3>
+          <p
+            class="MuiTypography-root MuiTypography-body1 description css-ahj2mt-MuiTypography-root"
+          >
+            Welcome to Book Talk, where book lovers unite to share their passion for reading.
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 description css-ahj2mt-MuiTypography-root"
+          >
+            Book Talk is not just an app; it's your gateway to a vibrant community of book lovers. Immerse yourself in the world of literature, connect with like-minded readers, and elevate your reading experience. Write your opions and take aways on your favorites books and read others books reviews to open your understanding
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 description css-ahj2mt-MuiTypography-root"
+          >
+            Ground Rules: Be Kind
+          </p>
+        </div>
+      </div>
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg homeContainer css-1oqqzyl-MuiContainer-root"
+      >
+        <div
+          class="authButtons"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 welcomeMessage css-5lbw0b-MuiTypography-root"
+          >
+            Sign Up to look around book and write reviews
+          </h4>
+          <div>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium buttons css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              href="/login"
+              tabindex="0"
+            >
+              Login
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium buttons css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              href="/signup"
+              tabindex="0"
+            >
+              Sign Up
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

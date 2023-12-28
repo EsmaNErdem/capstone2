@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BookClubApi from '../api';
 import Alert from "../utilities/Alert";
-import Loading from "../utilities/Loading";
 import { ListItem, TextField, Button, Autocomplete } from '@mui/material';
 
 /**
@@ -102,7 +101,6 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
           }));
     };
 
-    if(loading) return <Loading />;
 
     return (
         <>
@@ -115,7 +113,7 @@ const ReviewAddForm = ({addReviews, rowCount=3, close=false, closeModal, addBook
                         getOptionLabel={(option) => `${option.title} by ${option.author}`}
                         onChange={(e, value) => handleChange({ target: { value } })}
                         onInputChange={(e, value) => handleChangeBook({ target: { value } })}
-                        renderInput={(params) => <TextField {...params} label="Book Title, Author" />}
+                        renderInput={(params) => <TextField {...params} label="Book Title by Author" />}
                     />
                 )}
                 <TextField

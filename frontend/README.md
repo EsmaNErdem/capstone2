@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Book Chat App - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+Welcome to the frontend documentation of the Book Chat App. This React app is designed to provide frontend functionality for the Book Chat Backend. Below, you'll find detailed information about the architecture, features, and technologies used in the development of this frontend.
 
-In the project directory, you can run:
+## Key Features
 
-### `npm start`
+- **Backend API Integration:** Utilize Axios to load data from the backend seamlessly, providing a smooth user experience.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Debounce Form Submission:** Implement debouncing for book and review filter forms to enhance user experience and prevent unnecessary API calls.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Form Validation:** Utilize Formik for form validation, guiding users through the login and signup processes and ensuring data integrity.
 
-### `npm test`
+- **Infinite Scrolling:** Implement infinite scrolling to provide users with a seamless data browsing experience, allowing them to explore a vast library of books effortlessly.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Reusability with Custom Hooks:** Enhance code reusability by implementing custom hooks for book liking, review liking, adding reviews, and user following. This modular approach ensures flexibility and maintainability.
 
-### `npm run build`
+- **Testing and Error Handling:** Thoroughly test each component and functionality to ensure a bug-free user experience. Implement robust error handling mechanisms to gracefully handle unexpected situations.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# To Install Dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the Project: Navigate to the directory where you want to clone the project and run:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/EsmaNErdem/capstone2
+```
 
-### `npm run eject`
+2. Install Dependencies: Install the project dependencies using npm:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Run Tests: To run the tests and ensure everything is working correctly:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm test
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Tech Stack
 
-## Learn More
+- React: The frontend is built using the React library for building user interfaces.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Axios: Utilize Axios for making HTTP requests to the backend API.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Formik: Implement Formik for form validation and to guide users through the login and signup processes.
 
-### Code Splitting
+- Infinite Scrolling: Implement infinite scrolling for seamless data browsing.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Custom Hooks: Utilize custom hooks for book liking, review liking, adding reviews, and user following to enhance reusability.

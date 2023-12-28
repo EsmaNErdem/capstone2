@@ -59,15 +59,6 @@ CREATE TABLE followers (
 );
 
 
-
--- Users
--- -
--- Username  PK string
--- FirstName string
--- LastName string
--- Email string
--- Password
-
 -- BookShelves
 -- -
 -- BookShelfID PK int
@@ -80,26 +71,44 @@ CREATE TABLE followers (
 -- BookShelfID int FK >- BookShelves.BookShelfID
 -- BookID int FK >- Books.BookID
 
+-- Users
+-- -
+-- Username  PK string
+-- FirstName string
+-- LastName string
+-- Email string
+-- Img string
+-- Password
+
 -- Books
 -- ------------
 -- BookID PK int
 -- Title string
 -- Author string
--- Img string
+-- Publisher string
+-- Description string
+-- Category string
+-- Cover string
 
 -- BookLikes
 -- ----
--- Username string FK >- Users.Username
--- BookID int FK >- Books.BookID
-
--- ReviewLikes
--- ----
--- Username string FK >- Users.Username
--- ReviewsID int FK >- Reviews.ReviewID
+-- Username string FK >- Users.Username PK
+-- BookID int FK >- Books.BookID PK
 
 -- Reviews
 -- ----
 -- ReviewID PK int
--- Review text 
 -- Username string FK >- Users.Username
 -- BookID int FK >- Books.BookID
+-- Review text 
+-- Created_At time
+
+-- ReviewLikes
+-- ----
+-- Username string FK >- Users.Username PK
+-- ReviewsID int FK >- Reviews.ReviewID PK
+
+-- Followerr
+-- ----
+-- Following string FK >- Users.Username PK
+-- Followed_By string FK >- Users.Username PK

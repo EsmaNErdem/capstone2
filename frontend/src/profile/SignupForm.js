@@ -53,7 +53,7 @@ const SignupForm = ({ signup }) => {
                 initialValues={{ username: '', password: '', firstName: '', lastName: '', email: '', img: '' }}
                 validationSchema={Yup.object({
                     username: Yup.string()
-                    .max(15, 'Must be 15 characters or less')
+                    .max(35, 'Must be 35 characters or less')
                     .required('Username is required'),
                     password: Yup.string()
                     .max(20, 'Must be 20 characters or less')

@@ -28,7 +28,7 @@ const BookSearchList = () => {
     const [loading, setLoading] = useState(true)
     const [books, setBooks] = useState([]);
     const [searchData, setSearchData] = useState(null)
-    const [indexSearch, setIndexSearch] = useState(15)
+    const [indexSearch, setIndexSearch] = useState(20)
     const [hasMore, setHasMore] = useState(true);
     const [error, setError] = useState(null);
     

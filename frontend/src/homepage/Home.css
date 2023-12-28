@@ -3,14 +3,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap');
 
 .Home {
-    padding: 5% 25%;
+    padding: 2% 25%;
     display: flex;
     flex-direction: row;
     align-items: center;
     text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   .Home {
     flex-direction: column-reverse;
     padding: 5%;
@@ -27,7 +27,7 @@
     border-bottom-right-radius: 10px;
     cursor: pointer;
     box-shadow: 10px 0 20px rgb(0, 0, 0, 0.4), inset 10px 0 20px rgb(0, 0, 0, 0.4);
-    transform: perspective(2000px) rotateZ(0);
+    transform: perspective(2000px) rotateZ(-8deg);
     transform-style: preserve-3d;
     transition: all 1s ease;
     margin: 20px;
@@ -125,7 +125,7 @@
     color: yellowgreen;
     text-shadow: green 1px 0 3px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-top: 20px;
 }
