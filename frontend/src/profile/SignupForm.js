@@ -120,8 +120,7 @@ const SignupForm = ({ signup }) => {
                     </div> */}
 
                     <button type="submit">Submit</button>
-                    {loading && <Loading />}
-                </Form>
+                    {loading && <Loading style={{ color:"orangered" }} />}                </Form>
             </Formik>
             <Link to={`/login`} data-testid="user-login-link">
                 <p>Login instead?</p>
