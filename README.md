@@ -1,5 +1,8 @@
 # Book Chat App
 
+[LIVE](https://bookchat.surge.sh/)
+![Homepage](/static/homepage.png)
+
 ## Introduction
 
 Welcome to the documentation of the Book Chat App. This project consists of a Node.js, Express, and PostgreSQL-based RESTful API for the backend and a React-based frontend. The application serves as a feature-rich book discussion platform, allowing users to explore, discuss, and engage with library of books from Google Book API.

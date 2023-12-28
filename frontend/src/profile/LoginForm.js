@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Typography } from '@mui/material';
-import Alert from "../utilities/Alert"
+import Alert from "../utilities/Alert";
+import Loading from "../utilities/Loading";
 import * as Yup from 'yup';
 import "./FormContainer.css"
 
@@ -24,6 +25,7 @@ const LoginForm = ({ login }) => {
 
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false)
 
     /**
      * Handles form submission. Calls the login function with the form data.
@@ -31,10 +33,12 @@ const LoginForm = ({ login }) => {
      */
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
+            setLoading(true);
             const result = await login(values);
     
             if (result.success) {
                 navigate("/");
+                setLoading(false)
             } else {
                 setError(result.error);
             }
@@ -74,6 +78,7 @@ const LoginForm = ({ login }) => {
                     </div>      
 
                     <button type="submit">Submit</button>
+                    {loading && <Loading />}
                 </Form>
             </Formik>
             <Link to={`/signup`} data-testid="user-signup-link">
