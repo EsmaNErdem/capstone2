@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
+exports[`it renders and matches with snaphot 1`] = `
 <DocumentFragment>
   <div
     class="Home"
@@ -53,27 +53,43 @@ exports[`matches snapshot 1`] = `
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg homeContainer css-1oqqzyl-MuiContainer-root"
     >
-      <h4
-        class="MuiTypography-root MuiTypography-h4 welcomeMessage css-5lbw0b-MuiTypography-root"
+      <div
+        class="authButtons"
       >
-        Welcome, testuser!
-      </h4>
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium browse-button css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-        href="/books"
-        tabindex="0"
-      >
-        Browse Books
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
-      </a>
+        <h4
+          class="MuiTypography-root MuiTypography-h4 welcomeMessage css-5lbw0b-MuiTypography-root"
+        >
+          Sign Up to look around book and write reviews
+        </h4>
+        <div>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium buttons css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            href="/login"
+            tabindex="0"
+          >
+            Login
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium buttons css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            href="/signup"
+            tabindex="0"
+          >
+            Sign Up
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`matches snapshot 2`] = `
+exports[`it renders and matches with snaphot 2`] = `
 <DocumentFragment>
   <div
     class="Home"

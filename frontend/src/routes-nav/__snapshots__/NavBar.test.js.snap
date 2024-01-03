@@ -12,7 +12,7 @@ exports[`it renders and matches with snaphot while loggedin user 1`] = `
       <span
         class="brand-text"
       >
-        Book Club
+        Book Chat
       </span>
     </a>
     <ul
@@ -41,22 +41,21 @@ exports[`it renders and matches with snaphot while loggedin user 1`] = `
       <li
         class="nav-item mr-4"
       >
-        <a
-          class="nav-link"
-          href="/profile/testuser"
+        <div
+          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault avatar css-2s90m6-MuiAvatar-root"
         >
-          Profile
-        </a>
-      </li>
-      <li
-        class="nav-item"
-      >
-        <a
-          class="nav-link logout-link"
-          href="/"
-        >
-          Log out testuser
-        </a>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+            data-testid="PersonIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </div>
       </li>
     </ul>
   </nav>
@@ -75,7 +74,7 @@ exports[`it renders and matches with snaphot while no user loggedin 1`] = `
       <span
         class="brand-text"
       >
-        Book Club
+        Book Chat
       </span>
     </a>
     <ul

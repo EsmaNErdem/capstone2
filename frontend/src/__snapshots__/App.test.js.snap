@@ -57,6 +57,7 @@ exports[`it renders and matches with snaphot 1`] = `
             src="https://media.istockphoto.com/id/453166187/photo/dirty-old-green-book-cover.jpg?s=612x612&w=0&k=20&c=CwPKZXsGQNHUhoH_-tL7yFZT87rW4iDkCJsoIGCZPMI="
           />
           <img
+            alt="home=cover-backside"
             src="https://img.freepik.com/premium-photo/dark-purple-old-velvet-fabric-texture-used-as-background-empty-purple-fabric-background-soft-smooth-textile-material-there-is-space-textx9_661047-2260.jpg"
           />
           <h3
@@ -76,7 +77,7 @@ exports[`it renders and matches with snaphot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 description css-ahj2mt-MuiTypography-root"
           >
-            Welcome to Book Talk, where book lovers unite to share their passion for reading.
+            Welcome to Book Chat, where book lovers unite to share their passion for reading.
           </p>
           <p
             class="MuiTypography-root MuiTypography-body1 description css-ahj2mt-MuiTypography-root"

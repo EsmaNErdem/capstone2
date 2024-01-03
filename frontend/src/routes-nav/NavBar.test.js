@@ -1,5 +1,5 @@
 import { MemoryRouter } from 'react-router-dom';
-import { render} from "@testing-library/react";
+import { render, act, waitFor, fireEvent } from "@testing-library/react";
 import NavBar from './NavBar';
 import { UserProvider, CurrUserProvider, NonUserProvider } from "../testUtilities";
 
@@ -35,19 +35,26 @@ test("it renders and matches with snaphot while no user loggedin", () => {
     expect(asFragment()).toMatchSnapshot();
 });
 
-test("Renders protected links while loggedin user", () => {
-    const { getByText } = render(
+test("Renders protected links while loggedin user", async () => {
+    const { getByText, getByTestId } = render(
         <MemoryRouter >
-            <UserProvider>
+            <CurrUserProvider>
                 <NavBar />
-            </UserProvider>
+            </CurrUserProvider>
         </MemoryRouter>
     );
-
+    // "
     expect(getByText("Reviews")).toBeInTheDocument();
     expect(getByText("Books")).toBeInTheDocument();
-    expect(getByText("Profile")).toBeInTheDocument();
-    expect(getByText("Log out testuser")).toBeInTheDocument();
+    
+    const profile = getByTestId('PersonIcon');
+    await act(async () => {
+        fireEvent.click(profile); 
+    });
+    await waitFor(() => {
+        expect(getByText("Profile")).toBeInTheDocument();
+        expect(getByText("Log out testuser")).toBeInTheDocument();
+    }); 
 });
 
 test("Renders protected links while no loggedin user", () => {
@@ -61,5 +68,5 @@ test("Renders protected links while no loggedin user", () => {
     
     expect(getByText("Login")).toBeInTheDocument();
     expect(getByText("Sign Up")).toBeInTheDocument();
-    expect(getByText("Book Club")).toBeInTheDocument();
+    expect(getByText("Book Chat")).toBeInTheDocument();
 });

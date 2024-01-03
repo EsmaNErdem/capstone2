@@ -1,7 +1,7 @@
 import { render, cleanup } from "@testing-library/react";
 import ProtectedRoute from "./ProtectedRoute";
 import { MemoryRouter } from "react-router";
-import { UserProvider, NonUserProvider } from "../testUtils";
+import { UserProvider, NonUserProvider } from "../testUtilities";
 
 jest.mock('../api');
 afterEach(cleanup);

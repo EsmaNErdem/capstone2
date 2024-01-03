@@ -30,7 +30,7 @@ const Home = () => {
             Book CHAT
           </Typography>
           <Typography variant="body1" className="description">
-            Welcome to Book Talk, where book lovers unite to share their passion for reading.
+            Welcome to Book Chat, where book lovers unite to share their passion for reading.
           </Typography>
           <Typography variant="body1" className="description">
             Book Talk is not just an app; it's your gateway to a vibrant community of book lovers. Immerse yourself in the world of literature, connect with like-minded readers, and elevate your reading experience.
