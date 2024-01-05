@@ -23,7 +23,7 @@ Welcome to the frontend documentation of the Book Chat App. This React app is de
 1. Clone the Project: Navigate to the directory where you want to clone the project and run:
 
 ```
-git clone https://github.com/EsmaNErdem/capstone2
+git clone https://github.com/EsmaNErdem/BookChat-Frontend
 ```
 
 2. Install Dependencies: Install the project dependencies using npm:
