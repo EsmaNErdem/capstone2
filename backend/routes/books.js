@@ -19,7 +19,7 @@ const Book = require("../models/book")
  * Return JSON list of API retrieved books data
  * Authorization required: none
  */
-router.get("/all/:startIndex", async function (req, res, next) {
+router.get("/all/:startIndex", ensureLoggedIn,  async function (req, res, next) {
     try {  
       const books = await Book.getListOfBooks(req.params.startIndex);
       
@@ -38,7 +38,7 @@ router.get("/all/:startIndex", async function (req, res, next) {
  * 
  * Authorization required: none
  */
-router.get("/search/:startIndex", async function (req, res, next) {
+router.get("/search/:startIndex", ensureLoggedIn, async function (req, res, next) {
     const {terms, search} = req.query;
 
     try {
@@ -63,7 +63,7 @@ router.get("/search/:startIndex", async function (req, res, next) {
  * 
  * Authorization required: none
  */
-router.get("/:id", async function (req, res, next) {
+router.get("/:id", ensureLoggedIn, async function (req, res, next) {
     try {
       const book = await Book.getBook(req.params.id);
       return res.json({ book });
@@ -78,7 +78,7 @@ router.get("/:id", async function (req, res, next) {
  * Returns a list of books from database
  * Authorization required: none
  */
-router.get("/all-db/:limit", async function (req, res, next) {
+router.get("/all-db/:limit", ensureLoggedIn, async function (req, res, next) {
   try {  
     const books = await Book.findAllBooksFromDatabase(req.params.limit, req.query); 
     return res.json({ books });

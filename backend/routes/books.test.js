@@ -25,6 +25,7 @@ describe("Books Database Routes", function () {
       test("should returns books from database", async function () {
           const resp = await request(app)
           .get("/books/all-db/5")
+          .set("authorization", `User Token ${u2Token}`);
           expect(resp.body).toEqual({
                   books: [
                     {
@@ -55,6 +56,7 @@ describe("Books Database Routes", function () {
           .query({
             search: "1"
           })
+          .set("authorization", `User Token ${u2Token}`);
           expect(resp.body).toEqual({
                   books: [
                     {
@@ -73,6 +75,7 @@ describe("Books Database Routes", function () {
       test("should returns books from database", async function () {
         const resp = await request(app)
         .get("/books/all-db/1")
+        .set("authorization", `User Token ${u2Token}`);
         expect(resp.body).toEqual({
                 books: [
                   {
@@ -86,6 +89,12 @@ describe("Books Database Routes", function () {
                   }
                 ]
         });
+      });
+
+      test("should fail for anon", async function () {
+        const resp = await request(app)
+          .get("/books/all-db/1");
+        expect(resp.statusCode).toEqual(401);
       });
   });
 

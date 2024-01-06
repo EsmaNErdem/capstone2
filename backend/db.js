@@ -1,4 +1,5 @@
 "use strict";
+
 /** Database setup for book club app. */
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");

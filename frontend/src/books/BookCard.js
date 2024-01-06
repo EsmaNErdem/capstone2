@@ -31,6 +31,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
     const { error: addError, addBookReview } = useReviewAdd(setBookReviews, { id, title, author, description, publisher, category, cover }, setReviewDrawerOpen)
     const { error: deleteError, deleteBookReview } = useReviewDelete(setBookReviews);
 
+    // open side drawer to show book related reviews
     const openReviewDrawer = async () => {
         try {
             const reviews = await BookClubApi.getAllReviewsByBook(id)
@@ -42,10 +43,12 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
         }
     }
 
+    // closes drawer with book related reviews
     const closeReviewDrawer = () => {
         setReviewDrawerOpen(false);
     }
 
+    // sends book likes to database. if BookCard component is called from Profile component, it updates user liked-book list.
     const handleLikeBookButton = () => {
         handleLikeBook();
         if(liked && currUser) {

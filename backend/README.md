@@ -6,21 +6,21 @@ Welcome to the backend documentation of the Book Chat App. This Node, Express, a
 
 ## Key Features
 
-- **External API Integration:** Utilize Axios to load book data from the Google Book API, enabling users to search and explore a vast library of books.
+- **External API Integration:** Utilizing Axios to load book data from the Google Book API, enabling users to search and explore a vast library of books.
 
-- **Relational Database and Validation:** Design a robust PostgreSQL database schema with JSON Schema validation for seamless data storage and retrieval.
+- **Relational Database and Validation:** Designing a robust PostgreSQL database schema with JSON Schema validation for seamless data storage and retrieval.
 
-- **User Authentication and Authorization:** Implement user registration, login, and JWT token-based authentication to secure routes and protect user data.
+- **User Authentication and Authorization:** Implementing user registration, login, and JWT token-based authentication to secure routes and protect user data.
 
-- **Browsing and Filtering Books:** Allow users to browse and filter books, view detailed information,like books, add reviews, and like reviews for user engagement.
+- **Browsing and Filtering Books:** Allowing users to browse and filter books, view detailed information,like books, add reviews, and like reviews for user engagement.
 
-- **Browsing and Filtering Book Reviews:** Enable users to browse book reviews, filter by various criteria, like reviews, and add their own book reviews.
+- **Browsing and Filtering Book Reviews:** Enabling users to browse book reviews, filter by various criteria, like reviews, and add their own book reviews.
 
-- **User Follow System:** Implement a user-follow system to enhance social interaction, allowing users to follow each other and view their followers and following lists.
+- **User Follow System:** Implementing a user-follow system to enhance social interaction, allowing users to follow each other and view their followers and following lists.
 
-- **Modularization and Code Reusability:** Use object classes to enhance code reusability, maintainability, and flexibility in adding new features.
+- **Modularization and Code Reusability:** Using object-oriented programming to enhance code reusability, maintainability, and flexibility in adding new features.
 
-- **Testing and Error Handling:** Thoroughly test each route and model method to ensure a bug-free user experience, and implement robust error handling mechanisms.
+- **Testing and Error Handling:** Thoroughly testing each route and model method to ensure a bug-free user experience, and implement robust error handling mechanisms.
 
 ## Tech Stack
 
@@ -58,7 +58,7 @@ node server.js
 5. Run Tests: To run the tests and ensure everything is working correctly, use Jest:
 
 ```
-jest -i
+npm test
 ```
 
 ## Database Schema
