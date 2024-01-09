@@ -10,12 +10,59 @@ Welcome to the frontend documentation of the Book Chat App. This React app is de
 
 - **Debounce Form Submission:** Implement debouncing for book and review filter forms to enhance user experience and prevent unnecessary API calls.
 
+```javascript
+    useEffect(() => {
+      if (timerId.current) {
+        clearTimeout(timerId.current);
+        timerId.current = null
+      }
+      
+      timerId.current = setTimeout(() => {
+        sendFilterData()
+      }, 1500);
+
+      return () => {
+        if (timerId.current) {
+          clearTimeout(timerId.current);
+          timerId.current = null
+        }
+      };
+    }, [filterData]);    
+```
 - **Form Validation:** Utilize Formik for form validation, guiding users through the login and signup processes and ensuring data integrity.
+
+```JSX
+   <Formik
+         initialValues={{ username: '', password: ''}}
+         validationSchema={Yup.object({
+            username: Yup.string()
+            .max(15, 'Must be 15 characters or less')
+            .required('Username Required'),
+            password: Yup.string()
+            .max(20, 'Must be 20 characters or less')
+            .required('Password Required'),
+         })}
+         onSubmit={handleSubmit} 
+         >
+         <Form className='FormContainer'>
+   ...
+```
 
 - **Infinite Scrolling:** Implement infinite scrolling to provide users with a seamless data browsing experience, allowing them to explore a vast library of books effortlessly.
 
 - **Reusability with Custom Hooks:** Enhance code reusability by implementing custom hooks for book liking, review liking, adding reviews, and user following. This modular approach ensures flexibility and maintainability.
 
+```javascript
+const useReviewLike = (reviewId, reviewLikeCount) => {   
+    console.debug("useReviewLike"); 
+  
+    const { hasLikedReview, likeReview } = useContext(UserContext);
+    const [liked, setLiked] = useState();
+    const [likes, setLikes] = useState(reviewLikeCount);
+    const [error, setError] = useState(null);
+    ...
+}
+```
 - **Testing and Error Handling:** Thoroughly test each component and functionality to ensure a bug-free user experience. Implement robust error handling mechanisms to gracefully handle unexpected situations.
 
 # To Install Dependencies

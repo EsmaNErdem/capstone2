@@ -10,24 +10,48 @@ Welcome to the documentation of the Book Chat App. This project consists of a No
 
 ## Key Features
 
-- **External API Integration:** Utilize Axios to load book data from the Google Book API, enabling users to search and explore a vast library of books.
+- **External API Integration:** Seamlessly incorporate book data from the Google Book API using Axios, providing users access to an extensive library of books for exploration.
 
-- **Relational Database and Validation:** Design a robust PostgreSQL database schema with JSON Schema validation for seamless data storage and retrieval.
+- **Relational Database and Validation:** Design and implement a resilient PostgreSQL database schema coupled with JSON Schema validation. This ensures a smooth process of storing and retrieving data, enhancing overall database integrity and safeguarding against malformed data.
 
-- **User Authentication and Authorization:** Implement user registration, login, and JWT token-based authentication to secure routes and protect user data. For frontend validation, Formik is utilized to guide users through the login and signup processes, ensuring data integrity.
+- **User Authentication and Authorization:** Strengthen security measures with user registration, login functionalities, and JWT token-based authentication. Frontend validation is facilitated by Formik, guiding users through secure login and signup processes while maintaining data integrity.
 
-- **Browsing and Filtering Books:** Allow users to browse and filter books, view detailed information, like books, add reviews, and like reviews for user engagement. In the frontend, debouncing is implemented for book filter forms to enhance user experience and prevent unnecessary API calls.
+- **Browsing and Filtering Books:** Empower users to effortlessly browse and filter books, explore detailed information, like books, add reviews, and engage with liked reviews. Employ debouncing in the frontend to enhance user experience by preventing unnecessary API calls. In the backend, efficiently retrieve filtered data from the Google Books API through external API AJAX calls.
 
-- **Browsing and Filtering Book Reviews:** Enable users to browse book reviews, filter by various criteria, like reviews, and add their own book reviews. In the frontend, debouncing is implemented for book review filter forms to enhance user experience and prevent unnecessary API calls.
+- **Browsing and Filtering Book Reviews:** Enable users to navigate through book reviews, applying various filters such as likes and adding their own reviews. Employ debouncing in the frontend for streamlined user interactions. On the backend, leverage SQL queries to efficiently fetch filtered review data from the database.
 
-- **User Follow System:** Implement a user-follow system to enhance social interaction, allowing users to follow each other and view their followers and following lists.
+- **User Follow System:** Foster social interaction by implementing a user-follow system, allowing users to connect with each other. The frontend dynamically updates to enhance user experience, creating an engaging social environment.
 
-- **App Flow:** To provide seamless follow, in the frontend, infinite scrolling is implemented to provide users with a seamless data browsing experience, allowing them to explore a vast library of books effortlessly.
+- **App Flow:** Implement infinite scrolling in the frontend to provide users with a seamless data browsing experience. This feature allows users to explore a vast library of books effortlessly, enhancing the overall app flow. The UI, partially created with Material UI, contributes to an aesthetically pleasing and user-friendly interface.
 
-- **Modularization and Code Reusability:** Use object classes to enhance code reusability, maintainability, and flexibility in adding new features.
+- **Modularization and Code Reusability:** Prioritize code reusability, maintainability, and flexibility by utilizing object classes. In the frontend, emphasize component reusability and implement common hooks for efficient code organization and scalability.
 
-- **Testing and Error Handling:** Thoroughly test each route and model method to ensure a bug-free user experience, and implement robust error handling mechanisms.
+- **Testing and Error Handling:** Ensure a bug-free user experience through thorough testing of each route and model method. Implement robust error handling mechanisms, covering both frontend and backend components. Conduct unit tests and integration tests that simulate various user actions and include edge cases. Test data-dependent components using mocked values to validate the application's resilience under different scenarios.
 
+```Javascript
+test("Submitting the form calls login function", async () => {
+   ...
+   fireEvent.change(usernameInput, { target: { value: "username" } });
+   fireEvent.click(submitButton);
+  
+   await waitFor(() => {
+        expect(mockLogin).toHaveBeenCalledWith({
+          username: "username",
+          ...
+        })
+      ...
+   })
+})
+```
+
+```Javascript    
+   test("should fail without correct review id", async function () {
+      const resp = await request(app)
+      .delete(`/reviews/nope/books/nope/users/u1`)
+      .set("authorization", `User Token ${u1Token}`);
+      expect(resp.statusCode).toEqual(404);
+   });        
+```
 
 ## Tech Stack
 
@@ -117,6 +141,12 @@ npm test
 
 - **Followers:** Captures the follower-followee relationship between users, indicating who follows whom.
 
+### Database Query
+- SQL queries are parameterized to avoid injection attack. 
+SQL queries are parameterized to avoid injection attacks, ensuring the security of database interactions.
+- Incoming data undergoes JSON Schema validation to ensure its conformity with the expected structure before being stored in the database, enhancing data integrity and preventing issues related to malformed data.
+- Review Filtering is implemented efficiently with SQL to optimize the retrieval of reviews based on various criteria. The code allows users to filter reviews by book title, author, category, and username of the review owner. It also supports sorting options such as date of review post (default), number of review likes, and username in alphabetical order. The use of SQL joins and groupings efficiently fetches the required data in a single query, minimizing database load and improving performance.
+- Interfered data from the database with data coming from an external API to enrich book information and user interaction.
 
 ## Further Study and Future Enhancements
 
