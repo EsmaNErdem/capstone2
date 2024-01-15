@@ -232,7 +232,7 @@ const App = () => {
     }
   }
 
-  if(loading) return <Loading className="App"/>;
+  if(loading) return <Loading className="Loading"/>;
 
   return (
     <div className="App">

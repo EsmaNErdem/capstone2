@@ -10,3 +10,12 @@
   font-family: 'Alegreya Sans SC', sans-serif;
 }
 
+.Loading {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Alegreya Sans SC', sans-serif;
+}
+

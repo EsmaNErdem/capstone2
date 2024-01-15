@@ -16,9 +16,9 @@ Welcome to the documentation of the Book Chat App. This project consists of a No
 
 - **User Authentication and Authorization:** Strengthen security measures with user registration, login functionalities, and JWT token-based authentication. Frontend validation is facilitated by Formik, guiding users through secure login and signup processes while maintaining data integrity.
 
-- **Browsing and Filtering Books:** Empower users to effortlessly browse and filter books, explore detailed information, like books, add reviews, and engage with liked reviews. Employ debouncing in the frontend to enhance user experience by preventing unnecessary API calls. In the backend, efficiently retrieve filtered data from the Google Books API through external API AJAX calls.
+- **Browsing and Filtering Books:** Empower users to effortlessly browse and filter books, explore detailed information, like books, add reviews, and engage with liked reviews. Employ debouncing in the frontend to enhance user experience by preventing unnecessary API calls with filtering. In the backend, efficiently retrieve filtered data from the Google Books API through external API AJAX calls.
 
-- **Browsing and Filtering Book Reviews:** Enable users to navigate through book reviews, applying various filters such as likes and adding their own reviews. Employ debouncing in the frontend for streamlined user interactions. On the backend, leverage SQL queries to efficiently fetch filtered review data from the database.
+- **Browsing and Filtering Book Reviews:** Enable users to navigate through book reviews, applying various filters such as likes and adding their own reviews. Employ debouncing in the frontend for streamlined user interactions with filtering. On the backend, leverage SQL queries to efficiently fetch filtered review data from the database.
 
 - **User Follow System:** Foster social interaction by implementing a user-follow system, allowing users to connect with each other. The frontend dynamically updates to enhance user experience, creating an engaging social environment.
 
@@ -142,8 +142,7 @@ npm test
 - **Followers:** Captures the follower-followee relationship between users, indicating who follows whom.
 
 ### Database Query
-- SQL queries are parameterized to avoid injection attack. 
-SQL queries are parameterized to avoid injection attacks, ensuring the security of database interactions.
+- SQL queries are parameterized to avoid injection attacks, ensuring the security of database interactions.
 - Incoming data undergoes JSON Schema validation to ensure its conformity with the expected structure before being stored in the database, enhancing data integrity and preventing issues related to malformed data.
 - Review Filtering is implemented efficiently with SQL to optimize the retrieval of reviews based on various criteria. The code allows users to filter reviews by book title, author, category, and username of the review owner. It also supports sorting options such as date of review post (default), number of review likes, and username in alphabetical order. The use of SQL joins and groupings efficiently fetches the required data in a single query, minimizing database load and improving performance.
 - Interfered data from the database with data coming from an external API to enrich book information and user interaction.
