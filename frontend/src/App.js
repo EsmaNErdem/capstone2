@@ -7,6 +7,7 @@ import NavBar from "./routes-nav/NavBar";
 import UserContext from "./auth/UserContext";
 import BookClubApi from './api';
 import Loading from "./utilities/Loading";
+import Chat from "./chats/Chat"
 // import jwt from "jsonwebtoken";
 
 // Key name for storing token in localStorage for "remember me" re-login
@@ -236,6 +237,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <Chat />
       <BrowserRouter>
         <UserContext.Provider value={{ currentUser, setCurrentUser, hasLikedReview, hasLikedBook, isUserReview, hasFollowing, likeReview, addUserReview, deleteUserReview, likeBook, followUser }}>
           <NavBar logOut={logOut} />

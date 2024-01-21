@@ -58,6 +58,25 @@ CREATE TABLE followers (
   PRIMARY KEY (following, followed_by)
 );
 
+CREATE TABLE rooms (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE room_members (
+  room INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
+  user TEXT REFERENCES users(username) ON DELETE CASCADE,
+  PRIMARY KEY (room, user)
+);
+
+CREATE TABLE messages (
+  id SERIAL PRIMARY KEY,
+  room INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
+  sender TEXT REFERENCES users(username) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- BookShelves
 -- -

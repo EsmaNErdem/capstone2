@@ -4,7 +4,7 @@ const Book = require("./book")
 const db = require("../db");
 const { NotFoundError } = require("../expressError");
 
-/** Related functions and API calls for books. */
+/** Review related functions */
 class Review {
 
     /** Add Review
