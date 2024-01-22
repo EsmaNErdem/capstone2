@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ReviewCard from '../reviews/ReviewCard';
-import BookReviewAddForm from "./BookReviewAddForm"
+import BookReviewAddForm from "./BookReviewAddForm";
 import { Box, SwipeableDrawer, List, Divider, ListItem, ListItemText, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './BookReviewDrawer.css';

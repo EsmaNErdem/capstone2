@@ -20,7 +20,7 @@ import './BookCard.css';
  * 
  * - BookList ==> BookCard
  */
-const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[], likedBook=false, setBooks=null, currUser=false }) => {
+const BookCard = ({ id, title, author, description, publisher, category, cover, bookLikeCount=0, reviews=[], likedBook=false, setBooks=null, currUserProfile=false }) => {
     console.debug("BookCard");
         
     const [bookReviews, setBookReviews] = useState(reviews);
@@ -51,7 +51,7 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
     // sends book likes to database. if BookCard component is called from Profile component, it updates user liked-book list.
     const handleLikeBookButton = () => {
         handleLikeBook();
-        if(liked && currUser) {
+        if(liked && currUserProfile) {
             setBooks(prevBooks => {
               const updatedBooks = prevBooks.filter(book => book.book_id !== id)
               return updatedBooks
@@ -88,7 +88,14 @@ const BookCard = ({ id, title, author, description, publisher, category, cover, 
                 {(likeError || addError || deleteError) && <Alert type="danger" messages={[likeError || addError || deleteError]} />}
                 {error ? <Alert type="danger" messages={[error]} />: null}
             </div>
-            <BookReviewDrawer isOpen={isReviewDrawerOpen} onClose={closeReviewDrawer} reviews={bookReviews} addReviews={addBookReview} deleteReview={deleteBookReview} bookData ={{id, title, author, cover}} />
+            <BookReviewDrawer 
+                isOpen={isReviewDrawerOpen} 
+                onClose={closeReviewDrawer} 
+                reviews={bookReviews} 
+                addReviews={addBookReview} 
+                deleteReview={deleteBookReview} 
+                bookData ={{id, title, author, cover}} 
+            />
         </div>
     )
 }

@@ -1,0 +1,13 @@
+.Messages {
+    padding: 8px; 
+    margin-bottom: 8px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 80%;
+}
+
+.Messages-sender {
+    font-weight: bold;
+    margin-right: 8px; 
+}

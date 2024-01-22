@@ -5,13 +5,15 @@ import BookClubApi from "../api";
 import ReviewDisplay from "../reviews/ReviewDisplay";
 import BookCard from "../books/BookCard";
 import ProfileCard from "./ProfileCard";
-import ProfileEditForm from "./ProfileEditForm"
+import ProfileEditForm from "./ProfileEditForm";
+import ChatDrawer from "../chats/ChatDrawer";
 import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert";
 import UserContext from '../auth/UserContext';
 import useFollowUser from "../hooks/userFollowUser";
-import { AppBar, Avatar, Box, Tab, Tabs, Typography, Modal, IconButton  } from '@mui/material';
+import { AppBar, Avatar, Box, Tab, Tabs, Typography, Modal, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import MessageIcon from '@mui/icons-material/Message';
 import "./Profile.css"
 
 /**Display User Profile data
@@ -42,6 +44,7 @@ const Profile = () => {
     const [userLikedReviews, setUserLikedReviews] = useState([]);
     const [userLikedBooks, setUserLikedBooks] = useState([]);
     const [userEditFormOpen, setUserEditFormOpen] = useState(false);
+    const [isChatDrawerOpen, setChatDrawerOpen] = useState(false);
 
     const { error: deleteError, deleteBookReview } = useReviewDelete(setUserReviews);
     const { followed, error: followUser, handleFollowUser } = useFollowUser(user?.username, setUserFollowers, currUserProfile, false)
@@ -88,6 +91,16 @@ const Profile = () => {
         setUserEditFormOpen(false)
     }
 
+    // open side drawer to start chat with websockets
+    const openChatDrawer = async () => {
+        setChatDrawerOpen(true);
+    }
+
+    // closes chat drawer 
+    const closeChatDrawer = () => {
+        setChatDrawerOpen(false);
+    }
+
     if(!user || loading) return <Loading />;
 
     return (
@@ -109,15 +122,24 @@ const Profile = () => {
                             </IconButton>
                             )
                             : (
+                                <>
                                 <IconButton 
                                     onClick={handleFollowUser} 
-                                    color="primary" 
                                     aria-label="follow" 
                                     sx={{ marginLeft: '2rem', color: '#6d17b7' }}
                                     data-testid="follow-profile-button"
                                 >
                                     {followed ? "Unfollow" : "+ Follow"}
                                 </IconButton>
+                                <IconButton 
+                                    onClick={openChatDrawer}                                   
+                                    aria-label="chat" 
+                                    sx={{ marginLeft: '2rem', color:"orangered" }}
+                                    data-testid="chat-button"
+                                >
+                                    <MessageIcon /> <span>Chat</span>
+                                </IconButton>
+                                </>
                             )
                         }
                     </Box>
@@ -146,6 +168,11 @@ const Profile = () => {
                 </Box>
             </Modal>
 
+            <ChatDrawer  
+                isOpen={isChatDrawerOpen} 
+                onClose={closeChatDrawer} 
+                receiver={username} 
+            />
             {error || deleteError || followUser ? <Alert type="danger" messages={[error || deleteError || followUser]} />: null}
 
             <AppBar position="static" color="transparent" className="appBarWithShadow">
@@ -209,7 +236,7 @@ const Profile = () => {
                           id={book_id}
                           title={title}
                           author={author}
-                          description={description}
+                          description={null}
                           publisher={publisher}
                           category={category}
                           cover={cover}

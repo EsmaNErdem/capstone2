@@ -107,8 +107,8 @@ const SignupForm = ({ signup }) => {
                     </div>
 
                     <div>
-                        <label htmlFor="img">Profile Image URL</label>
-                        <Field id="img" name="img" type="text" placeholder="Profile Image URL"/>
+                        <label htmlFor="img">Profile Image URL (optional)</label>
+                        <Field id="img" name="img" type="text" placeholder="Profile Image URL (optional)"/>
                         <span className='ErrorMessageContainer'><ErrorMessage name="img" /></span>
                     </div>
 
@@ -120,7 +120,8 @@ const SignupForm = ({ signup }) => {
                     </div> */}
 
                     <button type="submit">Submit</button>
-                    {loading && <Loading style={{ color:"orangered" }} />}                </Form>
+                    {loading && <Loading style={{ color:"orangered" }} />}                
+                </Form>
             </Formik>
             <Link to={`/login`} data-testid="user-login-link">
                 <p>Login instead?</p>
