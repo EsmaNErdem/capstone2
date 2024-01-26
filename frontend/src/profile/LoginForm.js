@@ -6,6 +6,7 @@ import Alert from "../utilities/Alert";
 import Loading from "../utilities/Loading";
 import * as Yup from 'yup';
 import "./FormContainer.css"
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * LoginForm Component
@@ -43,7 +44,8 @@ const LoginForm = ({ login }) => {
                 setError(result.error);
             }
         } catch (error) {
-            setError("An error occurred during login.");
+            setError("An error occurred during login. Please try again...");
+            setLoading(false)
         } finally {
             setSubmitting(false);
         }
@@ -78,7 +80,7 @@ const LoginForm = ({ login }) => {
                     </div>      
 
                     <button type="submit">Submit</button>
-                    {loading && <Loading style={{ color:"orangered" }} />}
+                    {loading && <Loading />}
                 </Form>
             </Formik>
             <Link to={`/signup`} data-testid="user-signup-link">

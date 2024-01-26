@@ -6,8 +6,6 @@
     "required": [
         "username",
         "password",
-        "firstName",
-        "lastName",
         "email"
     ],
     "properties": {
@@ -22,14 +20,10 @@
             "maxLength": 20
         },
         "firstName": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 30
+            "type": "string"
         },
         "lastName": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 30
+            "type": "string"
         },
         "img": {
             "type": "string"

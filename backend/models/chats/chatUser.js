@@ -4,22 +4,36 @@ const { SendMessageError } = require("../../expressError");
 const Room = require('./room');
 
 /** 
- * ChatUser is a individual connection from client -> server to chat.
+ * ChatUser is an individual connection from client -> server to chat.
  */
 class ChatUser {
-    /** make chat: store connection-device, rooom */
+  /** make chat: store connection-device, room */
   constructor(send, roomName) {
     this._send = send; // "send" function for this user
-    this.room = Room.get(roomName); // room user will be in
+    this.roomName = roomName; // room name user will be in
+    this.room = null; // room name user will be in
     this.name = null; // becomes the username of the visitor
+  }
+
+  /** 
+   * Asynchronous function to initialize the room.
+   */
+  async initializeRoom() {
+
+    const sortedUsernames = this.roomName.split(',').sort().join('');
+    // Wait for Room.get() to resolve
+    const room = await Room.get(sortedUsernames);
+    this.room = room;
 
     console.log(`created chat in ${this.room.name}`);
   }
+
 
   /** 
    * Send msgs to this client using underlying connection-send-function 
    */
   send(data) {
+    
     try {
       this._send(data);
     } catch (err) {
@@ -31,9 +45,11 @@ class ChatUser {
   /** 
    * Add to room members, announce join 
    */
-  handleJoin(name) {
+  async handleJoin(name) {
+    if(!this.room) await this.initializeRoom()
+
     this.name = name;
-    this.room.join(this);
+    await this.room.join(this);
     this.room.broadcast({
       type: 'note',
       text: `${this.name} joined "${this.room.name}".`
@@ -63,9 +79,10 @@ class ChatUser {
    * - {type: "join", name: username} : join
    * - {type: "chat", text: msg }     : chat
    */
-  handleMessage(msg) {
-    console.log(msg.type)
-    if (msg.type === 'join') this.handleJoin(msg.name);
+  async handleMessage(jsonData) {
+    const msg = JSON.parse(jsonData);
+
+    if (msg.type === 'join') await this.handleJoin(msg.name);
     else if (msg.type === 'chat') this.handleChat(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }

@@ -1,4 +1,6 @@
 const db = require("../../db");
+// in-memory storage of roomNames -> room
+const ROOMS = new Map();
 
 /** 
  * Chat rooms that can be joined/left/broadcast to. 
@@ -20,7 +22,7 @@ class Room {
         WHERE name = $1`, [roomName]
     );
 
-    if(roomId.length === 0) {
+    if(roomId.rows.length === 0) {
       // If the room doesn't exist, create a new one with a timestamp
       await db.query(
           `INSERT INTO rooms (name)
@@ -31,35 +33,46 @@ class Room {
       await db.query(
         `UPDATE rooms
         SET timestamp = CURRENT_TIMESTAMP
-        WHERE id = $1`, [roomId[0].id]
+        WHERE id = $1`, [roomId.rows[0].id]
       );
     }
 
-    return new Room(roomName)
+    if (!ROOMS.has(roomName)) {
+      ROOMS.set(roomName, new Room(roomName));
+    }
+
+    return ROOMS.get(roomName);
+
   }
 
   /** 
    * Make a new room, starting with empty set of listeners
   */
-  constructor(roomName) {
+  constructor(roomName, members=[]) {
     this.name = roomName;
-    this.members = new Set();
+    this.members = new Set(members);
   }
 
   /** Joins members a room.
    * Checks if chat member was already in database
    */
   async join(member) {
+    const roomId  =  await db.query(
+      `SELECT id
+      FROM rooms
+      WHERE name = $1`, [this.name]
+    );
+
     const existingMember  =  await db.query(
         `SELECT user
         FROM room_members
-        WHERE room = $1 AND user = $2`, [this.name, member]
+        WHERE room = $1 AND user = $2`, [roomId.rows[0].id, member]
     );
 
-    if(!existingMember ) {
+    if(!existingMember.rows) {
         await db.query(
             `INSERT INTO room_members (room, user)
-             VALUES ($1, $2)`, [this.name, member]
+             VALUES ($1, $2)`, [roomId.rows[0], member]
         );    
     }
 

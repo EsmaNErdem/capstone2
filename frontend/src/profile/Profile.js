@@ -68,7 +68,7 @@ const Profile = () => {
             setUserLikedBooks(userApi.likedBooks)
         } catch (e) {
             console.error("Profile useEffect API call data loading error:", e);
-            setError("An error occurred while fetching user profile.");
+            setError("An error occurred while fetching user profile. Please try again..");
         }
         
         setLoading(false)
@@ -143,11 +143,6 @@ const Profile = () => {
                             )
                         }
                     </Box>
-                    {currUserProfile &&
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: '1rem' }}>
-                            <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
-                        </Box>
-                    }
                 </Box>
             </Box> 
 
@@ -158,8 +153,6 @@ const Profile = () => {
                         closeModal={closeEditProfileForm}
                         initialValues={{
                             username: user.username,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
                             img: user.img,
                             email: user.email,
                         }}
@@ -172,6 +165,7 @@ const Profile = () => {
                 isOpen={isChatDrawerOpen} 
                 onClose={closeChatDrawer} 
                 receiver={username} 
+                closeChat={closeChatDrawer}
             />
             {error || deleteError || followUser ? <Alert type="danger" messages={[error || deleteError || followUser]} />: null}
 

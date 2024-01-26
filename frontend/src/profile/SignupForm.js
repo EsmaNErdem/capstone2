@@ -43,7 +43,7 @@ const SignupForm = ({ signup }) => {
                 setError(result.error);
             }
         } catch (error) {
-            setError("An error occurred during signup.");
+            setError("Please use another username. This username is taken. ");
         } finally {
             setSubmitting(false);
         }
@@ -54,7 +54,7 @@ const SignupForm = ({ signup }) => {
             <Typography variant="h2" sx={{  marginBottom: 2 }}>Sign Up</Typography>
             {error ? <Alert type="danger" messages={[error]} />: null}
             <Formik
-                initialValues={{ username: '', password: '', firstName: '', lastName: '', email: '', img: '' }}
+                initialValues={{ username: '', password: '', email: '', img: '' }}
                 validationSchema={Yup.object({
                     username: Yup.string()
                     .max(35, 'Must be 35 characters or less')
@@ -62,12 +62,6 @@ const SignupForm = ({ signup }) => {
                     password: Yup.string()
                     .max(20, 'Must be 20 characters or less')
                     .required('Password is required'),
-                    firstName: Yup.string()
-                    .max(15, 'Must be 15 characters or less')
-                    .required('First name is required'),
-                    lastName: Yup.string()
-                    .max(20, 'Must be 20 characters or less')
-                    .required('Last name is required'),
                     email: Yup.string()
                     .email('Invalid email address')
                     .required('Email is required'),
@@ -86,18 +80,6 @@ const SignupForm = ({ signup }) => {
                         <label htmlFor="password">Password</label>
                         <Field id="password" name="password" type="password" placeholder="Password" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="password" /></span>
-                    </div>
-
-                    <div>
-                        <label htmlFor="firstName">First Name</label>
-                        <Field id="firstName" name="firstName" type="text" placeholder="First Name" />
-                        <span className='ErrorMessageContainer'><ErrorMessage name="firstName" /></span>
-                    </div>
-
-                    <div>
-                        <label htmlFor="lastName">Last Name</label>
-                        <Field id="lastName" name="lastName" type="text" placeholder="Last Name" />
-                        <span className='ErrorMessageContainer'><ErrorMessage name="lastName" /></span>
                     </div>
 
                     <div>

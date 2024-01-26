@@ -56,6 +56,7 @@ const App = () => {
           setFollowings(new Set(currentUser.following.map(u => u.following)))
         } catch (e) {
           console.error("App loadUserInfo: problem loading", e)
+          setUser(null)
           setCurrentUser(null)
         }
       }
@@ -75,11 +76,15 @@ const App = () => {
   const signup = async (userSignupData) => {
     try {
       const token = await BookClubApi.registerUser(userSignupData);
-      setUser({ token, username: userSignupData.username })
-      return { success: true }
+      if (token) {
+        setUser({ token, username: userSignupData.username })
+        return { success: true }
+      } 
+      else {
+        return { success: false }
+      }
     } catch (e) {
       console.error("signup failed", e)
-      return {success: false, error: e}
     }
   }
   
@@ -90,11 +95,14 @@ const App = () => {
   const login = async userLoginData => {
     try {
       const token = await BookClubApi.loginUser(userLoginData)
-      setUser({ token, username: userLoginData.username })
-      return { success: true }
+      if (token) {
+        setUser({ token, username: userLoginData.username })
+        return { success: true }
+      } else {
+        return { success: false }
+      }
     } catch (e) {
       console.error("login failed", e)
-      return { success: false, error: e }
     }
   }
 
@@ -232,7 +240,13 @@ const App = () => {
     }
   }
 
-  if(loading) return <Loading className="Loading"/>;
+  if(loading){
+     return (
+      <div className='App'>
+        <Loading className="Loading"/>
+      </div>
+     )
+    }
 
   return (
     <div className="App">

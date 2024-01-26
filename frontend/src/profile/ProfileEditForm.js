@@ -33,8 +33,6 @@ const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser })
             const updatedUser =  await BookClubApi.updateUser(initialValues.username, values)
             updateUser(user => ({
                 ...user,
-                firstName: updatedUser.firstName,
-                lastName: updatedUser.lastName,
                 img: updatedUser.img,
                 email: updatedUser.email,
             }))
@@ -76,18 +74,6 @@ const ProfileEditForm = ({ close=false, closeModal, initialValues, updateUser })
                         <label htmlFor="password">Password</label>
                         <Field id="password" name="password" type="password" placeholder="Password" />
                         <span className='ErrorMessageContainer'><ErrorMessage name="password" /></span>
-                    </div>
-
-                    <div>
-                        <label htmlFor="firstName">First Name</label>
-                        <Field id="firstName" name="firstName" type="text" placeholder="First Name" />
-                        <span className='ErrorMessageContainer'><ErrorMessage name="firstName" /></span>
-                    </div>
-
-                    <div>
-                        <label htmlFor="lastName">Last Name</label>
-                        <Field id="lastName" name="lastName" type="text" placeholder="Last Name" />
-                        <span className='ErrorMessageContainer'><ErrorMessage name="lastName" /></span>
                     </div>
 
                     <div>
