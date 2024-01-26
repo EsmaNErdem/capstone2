@@ -31,8 +31,7 @@ app.use(authenticateJWT);
 app.use("/users", usersRoutes);
 app.use("/books", booksRoutes);
 app.use("/reviews", reviewRoutes);
-// app.use("/chats", chatRoutes);
-
+app.use("/chats", chatRoutes);
 
 // /** WEBSOCKETS-CHAT */
 // // allow for app.ws routes for websocket routes
@@ -42,15 +41,23 @@ const ChatUser = require("./models/chats/chatUser");
 
 app.ws('/chat/:roomName', function(ws, req, next) {
   try {
+    const roomName = req.params.roomName.split(',').sort().join('');
+    
     const user = new ChatUser(
         ws.send.bind(ws), // fn to call to message this user
-        req.params.roomName // name of room for user
+        roomName // name of room for user
       );
       // register handlers for message-received, connection-closed
       
       ws.on('message', function(data) {
           try {
-            user.handleMessage(data);
+            /**
+             * Handles incoming message with current room websocket connection
+             * Saves message to database
+             */
+            const msg = JSON.parse(data);
+            user.handleMessage(msg);
+            Chat.handleMessage(msg, roomName);           
           } catch (err) {
         console.error(err);
       }

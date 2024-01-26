@@ -19,10 +19,8 @@ class ChatUser {
    * Asynchronous function to initialize the room.
    */
   async initializeRoom() {
-
-    const sortedUsernames = this.roomName.split(',').sort().join('');
     // Wait for Room.get() to resolve
-    const room = await Room.get(sortedUsernames);
+    const room = await Room.get(this.roomName);
     this.room = room;
 
     console.log(`created chat in ${this.room.name}`);
@@ -33,7 +31,6 @@ class ChatUser {
    * Send msgs to this client using underlying connection-send-function 
    */
   send(data) {
-    
     try {
       this._send(data);
     } catch (err) {
@@ -79,8 +76,7 @@ class ChatUser {
    * - {type: "join", name: username} : join
    * - {type: "chat", text: msg }     : chat
    */
-  async handleMessage(jsonData) {
-    const msg = JSON.parse(jsonData);
+  async handleMessage(msg) {
 
     if (msg.type === 'join') await this.handleJoin(msg.name);
     else if (msg.type === 'chat') this.handleChat(msg.text);

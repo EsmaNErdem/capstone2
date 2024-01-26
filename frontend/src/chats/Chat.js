@@ -5,12 +5,27 @@ import { ListItem, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import "./Chat.css"
 
-const Chat = ({ isOpen, receiver }) => {
+/**
+ * Chat Component
+ * 
+ * Displays a Material UI pop-up drawer for chat between current user and user on profile view.
+ * 
+ * - Makes WebSocket client connection to server
+ * - Displays controlled-input text area for chat text input and on submit send formData to server side
+ * - Handles incoming messages and lists messages between users
+ * 
+ * - ChatDrawer ==> Chat ==> Messages
+ */
+const Chat = ({ isOpen, receiver, previousMessages }) => {
     const { currentUser } = useContext(UserContext);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState(previousMessages);
     const [formData, setFormData] = useState({ type:'chat', text: '', name: currentUser.username });
     const wsRef = useRef(null);
 
+    /**
+     * Initializes WebSocket sever connection on mount and user change
+     * Handles incoming messages
+     */
     useEffect(() => {
         if (isOpen) {
             // Initialize WebSocket only if it hasn't been initialized yet
@@ -44,6 +59,9 @@ const Chat = ({ isOpen, receiver }) => {
         }
     }, [isOpen, receiver]);
 
+    /**
+     * Sends submited text server side WebSocket after makes the connection is open
+     */
     const handleAddChat = async (e) => {
         e.preventDefault();
 
@@ -101,36 +119,7 @@ const Chat = ({ isOpen, receiver }) => {
                 </ListItem>
             </div>
         </div>
-    )
-
-    return (
-        <div className="Chat">
-          {messages.map(({ type, text, name }, index) => (
-            type === 'chat' ? <Messages ext={text} username={name} key={index} /> : null
-          ))}
-          <div className="Chat-Container">
-            <ListItem disablePadding className="Chat-Input">
-              <TextField
-                rows={2}
-                variant="outlined"
-                fullWidth
-                sx={{ width: '100%' }}
-                value={formData.text}
-                onChange={(e) => handleChangeChat(e)}
-              />
-              <IconButton
-                onClick={handleAddChat}
-                sx={{ marginLeft: '1rem', color: 'orangered' }}
-                data-testid="chat-send-button"
-              >
-                <SendIcon />
-              </IconButton>
-            </ListItem>
-            <ListItem disablePadding></ListItem>
-          </div>
-        </div>
     );
-    
 };
 
 export default Chat;

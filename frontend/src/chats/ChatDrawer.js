@@ -5,11 +5,25 @@ import CloseIcon from '@mui/icons-material/Close';
 import Chat from "./Chat";
 import BookClubApi from "../api";
 
+/**
+ * ChatDrawer Component
+ * 
+ * Displays a Material UI pop-up drawer for chat between current user and user on profile view.
+ * 
+ * - Displays input text area for chat text input
+ * - Lists previous messages between users
+ * - Makes API call to load previous messages on component mount
+ * 
+ * - Profile ==> ChatDrawer ==> Chat
+ */
 const ChatDrawer = ({ isOpen, onClose, receiver }) => {
     console.debug("ChatDrawer");
 
     const drawerRef = useRef();
-    
+
+    /**
+     * Fetches the previous messages between users from backend
+     */ 
     useEffect(() => {
         if (isOpen) {
 
