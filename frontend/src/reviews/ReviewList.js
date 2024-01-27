@@ -7,7 +7,7 @@ import ReviewFilterForm from "./ReviewFilterForm";
 import ReviewDisplay from "./ReviewDisplay";
 import ReviewAddForm from "./ReviewAddForm";
 import Loading from "../utilities/Loading";
-import Alert from "../utilities/Alert"
+import Alert from "../utilities/Alert";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Box, Modal, IconButton }from '@mui/material';
 import AddCommentIcon from '@mui/icons-material/AddComment';
@@ -58,7 +58,7 @@ const ReviewList = () => {
       setLoading(false)
     }
 
-    // set loading to true while async getCurrentUser runs; once the
+    // set loading to true while async getFirstList runs; once the
     // data is fetched (or even if an error happens!), this will be set back
     // to true to control the spinner.
     setLoading(true)

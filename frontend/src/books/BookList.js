@@ -24,7 +24,7 @@ const BookList = () => {
   console.debug("BookList");
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [indexList, setIndexList] = useState(20);
   const [hasMore, setHasMore] = useState(true);
@@ -50,7 +50,7 @@ const BookList = () => {
       setLoading(false)
     }
 
-    // set loading to true while async getCurrentUser runs; once the
+    // set loading to true while async getFirstList runs; once the
     // data is fetched (or even if an error happens!), this will be set back
     // to true to control the spinner.
     setLoading(true)

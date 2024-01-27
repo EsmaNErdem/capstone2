@@ -1,8 +1,9 @@
-
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
+import UserContext from '../auth/UserContext';
 import { Box, SwipeableDrawer,IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chat from "./Chat";
+import Alert from "../utilities/Alert";
 import BookClubApi from "../api";
 
 /**
@@ -20,15 +21,31 @@ const ChatDrawer = ({ isOpen, onClose, receiver }) => {
     console.debug("ChatDrawer");
 
     const drawerRef = useRef();
+    const { currentUser } = useContext(UserContext);
+    const [messages, setMessages] = useState([]);
+    const [websocket, setWebsocket] = useState(false)
+    const [error, setError] = useState(null);
 
     /**
-     * Fetches the previous messages between users from backend
+     * Fetches the previous messages between users from backend sends to child component after WebSocket connection is established
      */ 
-    useEffect(() => {
-        if (isOpen) {
+    useEffect(function getPreviousMessages() {
+        console.debug("ChatDrawer useEffect getPreviousMessages");
 
+        const getMessages = async () => {
+            try{
+                if (isOpen && websocket) {
+                    const roomName = `${receiver},${currentUser.username}`
+                    const previousMessages = await BookClubApi.getRoomPreviousMessages(roomName);
+                    setMessages([...previousMessages]);                 
+                }
+            } catch (e) {
+                console.error("ChatDrawer-previous messages useEffect API call data loading error:", e);
+                setError("An error occurred while fetching previous messages.");
+            }
         }
-    }, [isOpen, receiver]);
+        getMessages();
+    }, [isOpen, receiver, websocket]);
 
     return (
         <SwipeableDrawer
@@ -57,9 +74,14 @@ const ChatDrawer = ({ isOpen, onClose, receiver }) => {
                 <IconButton onClick={onClose} sx={{ position: 'absolute', top: 15, right: '27rem' }}>
                     <CloseIcon />
                 </IconButton>
+                {error ? <Alert type="danger" messages={[error]} />: null}
+                <Chat 
+                    isOpen={isOpen} 
+                    receiver={receiver}
+                    prevMessages={messages}
+                    setWebsocket={setWebsocket}
+                />
 
-                <Chat isOpen={isOpen} receiver={receiver}/>
-                
             </Box>
         </SwipeableDrawer>
     );

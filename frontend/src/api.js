@@ -137,6 +137,22 @@ class BookClubApi {
     }
 
     /**
+     * Get previous messages for a given chat room
+     */
+    static async getRoomPreviousMessages(roomName) {
+        const res = await this.request(`chats/${roomName}`, {})
+        return res.messages;
+    }
+
+    /**
+     * Get previous chat rooms with last chat text for current user
+     */
+    static async getUserPreviousMessages(currentUser) {
+        const res = await this.request(`chats/rooms/${currentUser}`, {})
+        return res.messages;
+    }
+
+    /**
      * Send user book review
      * - data: { review: string (required), book: { id, title, author, publisher, description, category, cover } (required)}
      */

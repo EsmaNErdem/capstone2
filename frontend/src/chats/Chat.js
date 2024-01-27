@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import UserContext from '../auth/UserContext';
-import Messages from "./Message";
 import { ListItem, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import Messages from "./Messages";
+import Alert from "../utilities/Alert";
 import "./Chat.css"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || "ws://localhost:3001";
 /**
  * Chat Component
  * 
@@ -16,27 +18,40 @@ import "./Chat.css"
  * 
  * - ChatDrawer ==> Chat ==> Messages
  */
-const Chat = ({ isOpen, receiver, previousMessages }) => {
+const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
     const { currentUser } = useContext(UserContext);
-    const [messages, setMessages] = useState(previousMessages);
-    const [formData, setFormData] = useState({ type:'chat', text: '', name: currentUser.username });
     const wsRef = useRef(null);
+    const [formData, setFormData] = useState({ type:'chat', text: '', name: currentUser.username });
+    const [messages, setMessages] = useState([]);
+    const [error, setError] = useState(null);
+    const roomName = `${receiver},${currentUser.username}`
+
+    /**
+     * Fetches set messages previous messages when it is fetched from backend in parent component
+     */ 
+    useEffect(function getPreviousMessages() {
+        console.debug("Chat useEffect getPreviousMessages");
+        
+        setMessages(prevMessages)
+    }, [prevMessages]);
 
     /**
      * Initializes WebSocket sever connection on mount and user change
      * Handles incoming messages
      */
-    useEffect(() => {
+    useEffect(function getWebSocketConnected(){
+        console.debug("Chat useEffect getWebSocketConnected");
+
         if (isOpen) {
             // Initialize WebSocket only if it hasn't been initialized yet
             if (!wsRef.current) {
-                const roomName = `${receiver},${currentUser.username}`
-                wsRef.current = new WebSocket(`ws://localhost:3001/chat/${roomName}`);
-
+                wsRef.current = new WebSocket(`${BASE_URL}/chat/${roomName}`);
+                
                 wsRef.current.onopen = function (evt) {
                     let data = { type: "join", name: currentUser.username};
-
+                    
                     wsRef.current.send(JSON.stringify(data));
+                    setWebsocket(true)
                     console.log("open", evt, wsRef.current);
                 };
 
@@ -74,6 +89,7 @@ const Chat = ({ isOpen, receiver, previousMessages }) => {
             }));
         } else {
             console.error("WebSocket is not open or undefined.");
+            setError("WebSocket is not open or undefined. Please restart chat")
         }
     };
 
@@ -86,11 +102,14 @@ const Chat = ({ isOpen, receiver, previousMessages }) => {
 
     return (
         <div className="ChatContainer">
+            {error ? <Alert type="danger" messages={[error]} />: null}
+
             <div className="MessagesContainer">
-                {messages.map(({ type, text, name }, index) => (
-                    type === "chat" ? <Messages text={text} username={name} key={index} /> : null
+                {messages.map(({ text, name }, index) => (
+                    <Messages text={text} username={name} key={index} />
                 ))}
             </div>
+
             <div className="ChatInputContainer">
                 <ListItem disablePadding className="ChatInput">
                     <TextField

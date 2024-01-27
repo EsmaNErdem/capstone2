@@ -42,7 +42,6 @@ class Room {
     }
 
     return ROOMS.get(roomName);
-
   }
 
   /** 
@@ -64,16 +63,16 @@ class Room {
     );
 
     const existingMember  =  await db.query(
-        `SELECT user
-        FROM room_members
-        WHERE room = $1 AND user = $2`, [roomId.rows[0].id, member]
-    );
-
-    if(!existingMember.rows) {
+      `SELECT username
+      FROM room_members
+      WHERE room = $1 AND username = $2`, [roomId.rows[0].id, member.name]
+      );
+      
+      if(existingMember.rows.length === 0) {
         await db.query(
-            `INSERT INTO room_members (room, user)
-             VALUES ($1, $2)`, [roomId.rows[0], member]
-        );    
+          `INSERT INTO room_members (room, username)
+          VALUES ($1, $2)`, [roomId.rows[0].id, member.name]
+          );    
     }
 
     this.members.add(member);

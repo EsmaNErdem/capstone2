@@ -37,6 +37,11 @@ const NavBar = ({ logOut }) => {
           </NavLink>
         </li>
         <li className="nav-item mr-4">
+          <NavLink className="nav-link" to="/chats">
+            Chats
+          </NavLink>
+        </li>
+        <li className="nav-item mr-4">
           <Avatar
             alt={currentUser.username}
             src={currentUser.img}

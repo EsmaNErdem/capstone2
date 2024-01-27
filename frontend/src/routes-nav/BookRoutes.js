@@ -8,6 +8,8 @@ import BookSearchList from "../books/BookSearchList";
 import BookDetail from "../books/BookDetail";
 import ReviewList from "../reviews/ReviewList";
 import ReviewFilterList from "../reviews/ReviewFilterList";
+import ChatList from "../chats/ChatList";
+import ChatUser from "../chats/ChatUser";
 import Profile from "../profile/Profile";
 import LoginForm from "../profile/LoginForm";
 import SignupForm from "../profile/SignupForm";
@@ -36,6 +38,8 @@ const BookRoutes = ({ login, signup }) => {
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/reviews" element={<ReviewList />} />
           <Route path="/reviews/filter" element={<ReviewFilterList />} />
+          <Route path="/chats" element={<ChatList />} />
+          <Route path="/chats/:username" element={<ChatUser />} />
           <Route path="/profile/:username" element={<Profile />} />
         </Route>
         <Route path="/login" element={<LoginForm login={login} />} />
