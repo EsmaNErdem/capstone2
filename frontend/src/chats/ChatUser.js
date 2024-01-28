@@ -3,7 +3,7 @@ import UserContext from '../auth/UserContext';
 import Chat from "./Chat";
 import Alert from "../utilities/Alert";
 import BookClubApi from "../api";
-import { ListItem, ListItemText, Avatar } from "@mui/material";
+import { ListItem, ListItemText, Avatar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const ChatUser = ({ receiver, receiverImg }) => {
@@ -40,9 +40,10 @@ const ChatUser = ({ receiver, receiverImg }) => {
             {error ? <Alert type="danger" messages={[error]} />: null}
             <Link to={`/profile/${receiver}`} style={{ textDecoration: 'none', color: 'redorange' }}>
                 <ListItem>
-                    <Avatar alt={receiver} src={receiverImg} sx={{ width: 40, height: 40, marginRight: 2 }} />
-                    <ListItemText 
-                        primary={receiver} 
+                    <Avatar alt={receiver} src={receiverImg} sx={{ width: 50, height: 50, marginRight: 2 }} />  
+                    <ListItemText
+                        disableTypography
+                        primary={<Typography variant="body2" style={{ color: 'orangered', fontSize: '1.3rem' }}>{receiver}</Typography>}
                     />
                 </ListItem>
             </Link>

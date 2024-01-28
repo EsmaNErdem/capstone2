@@ -3,7 +3,7 @@
 .ChatContainer {
     position: relative;
     margin-top: 45px;
-    min-height: 90vh;
+    /* min-height: 90vh; */
     max-height: 100%;
     padding-bottom: 3rem;
   }

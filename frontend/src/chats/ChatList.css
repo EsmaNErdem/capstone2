@@ -1,0 +1,19 @@
+.ChatList-Paper {
+    width: 80%;
+    height: 85vh;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.ChatList-Rooms {
+    background-color: rgb(109, 23, 183, 0.12);
+    overflow-y: auto;
+}
+
+
+.ChatList-Chat {
+    overflow-y: auto;
+}
+
+

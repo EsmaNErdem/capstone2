@@ -5,7 +5,7 @@ import Loading from "../utilities/Loading";
 import Alert from "../utilities/Alert";
 import ChatUser from "./ChatUser";
 import { List, ListItem, ListItemText, Paper, Avatar } from "@mui/material";
-import { Link } from "react-router-dom";
+import "./ChatList.css"
 
 /**
  * Displays current user's previously open chat rooms
@@ -39,6 +39,8 @@ const ChatList = () => {
             try {
                 const userChatRooms = await BookClubApi.getUserPreviousMessages(currentUser.username);
                 setRooms([userChatRooms[0]]);
+                
+                // setRooms([userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0] ]);
                 console.log(userChatRooms)
                 if (userChatRooms.lenght !== 0) setReceiver(userChatRooms[0].user)
             } catch (e) {
@@ -73,8 +75,8 @@ const ChatList = () => {
         <div className="ChatList">
             {error ? <Alert type="danger" messages={[error]} />: null}
             
-            <Paper elevation={3} style={{ display: 'flex', maxWidth: '80%', height:'85vh', margin: 'auto' }}>
-                <List style={{ flex: 2 }}>
+            <Paper elevation={6} className='ChatList-Paper' >
+                <List className="ChatList-Rooms" style={{ flex: 2 }}>
                     {rooms.map((roomDetails) => (
                             <ListItem
                                 key={roomDetails.room.id}
@@ -95,7 +97,7 @@ const ChatList = () => {
                         // </Link>    
                     ))}
                 </List>
-                <List style={{ flex: 3 }}>
+                <List className="ChatList-Chat" style={{ flex: 4 }}>
                     {receiver && 
                         <ChatUser 
                             receiver={receiver.username} 

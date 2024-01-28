@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import UserContext from '../auth/UserContext';
 import useReviewLike from '../hooks/useReviewLike';
 import Alert from '../utilities/Alert';
-import { Divider, ListItem, ListItemText, Avatar, IconButton } from '@mui/material';
+import { Divider, ListItem, ListItemText, Avatar, IconButton, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './ReviewDisplay.css';
@@ -60,11 +60,13 @@ const ReviewDisplay = ({ reviewId, review, date, username, userImg, reviewLikeCo
         <div className="UserInfo">
           <Link to={`/profile/${username}`} className="UsernameLink" data-testid="review-display-profile-link">
             <Avatar alt={username} src={userImg} sx={{ width: 32, height: 32, marginRight: 2 }} />
-            <ListItemText 
-              primary={username} 
-              secondary={`${new Date(date).toLocaleDateString()} ${new Date(
+            
+            <ListItemText
+              disableTypography
+              primary={<Typography variant="body2" style={{ color: 'orangered', fontSize: '1.2rem' }}>{username}</Typography>}
+              secondary={<Typography variant="body2" style={{ color: '#6d17b7' }}>{`${new Date(date).toLocaleDateString()} ${new Date(
                 date
-              ).toLocaleTimeString()}`}
+              ).toLocaleTimeString()}`}</Typography>}
             />
           </Link>
           {userReview ? 
