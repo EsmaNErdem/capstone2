@@ -13,7 +13,7 @@
 
 
 .ChatList-Chat {
-    overflow-y: auto;
+    height: 100%;
 }
 
 

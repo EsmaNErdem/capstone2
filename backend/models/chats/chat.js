@@ -32,7 +32,8 @@ class Chat {
 
         const messages =  await db.query(
             `SELECT m.message AS text, 
-                    m.username AS name
+                    m.username AS name,
+                    m.timestamp AS date
             FROM messages AS m
                 LEFT JOIN users AS u ON m.username = u.username
             WHERE m.room = $1
@@ -112,7 +113,7 @@ class Chat {
             );
 
             roomDetails.room = room
-            roomDetails.message = message.rows[0]
+            roomDetails.message = message.rows[0] || null
             roomDetails.user = await this.findWhomCurrentUserChatsWithByRoom(room.id, currentUser)
             messages.push(roomDetails)
         }

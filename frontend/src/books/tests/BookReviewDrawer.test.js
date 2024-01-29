@@ -3,8 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { UserProvider } from "../../testUtilities";
 import { render, act } from '@testing-library/react';
 import BookCard from '../BookCard';
-import BookReviewDrawer from '../BookReviewDrawer';
-import BookReviewAddForm from '../BookReviewAddForm'; // Make sure to import your components
 
 const mockReviews = [
   {

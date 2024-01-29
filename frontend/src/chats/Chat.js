@@ -7,6 +7,7 @@ import Alert from "../utilities/Alert";
 import "./Chat.css"
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "ws://localhost:3001";
+
 /**
  * Chat Component
  * 
@@ -21,6 +22,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "ws://localhost:3001";
 const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
     const { currentUser } = useContext(UserContext);
     const wsRef = useRef(null);
+    const messagesRef = useRef(null);
     const [formData, setFormData] = useState({ type:'chat', text: '', name: currentUser.username });
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
@@ -33,6 +35,7 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
         console.debug("Chat useEffect getPreviousMessages");
         
         setMessages(prevMessages)
+        scrollToBottom();
     }, [prevMessages]);
 
     /**
@@ -48,7 +51,7 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
                 wsRef.current = new WebSocket(`${BASE_URL}/chat/${roomName}`);
                 
                 wsRef.current.onopen = function (evt) {
-                    let data = { type: "join", name: currentUser.username};
+                    let data = { type: "join", name: currentUser.username, receiver};
                     
                     wsRef.current.send(JSON.stringify(data));
                     setWebsocket(true)
@@ -83,6 +86,7 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
         // Check if the WebSocket is open before sending a message
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify(formData));
+            scrollToBottom()
             setFormData((data) => ({
                 ...data,
                 text: "",
@@ -100,17 +104,26 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
         }));
     };
 
+    const scrollToBottom = () => {
+        // Using `scrollIntoView` to scroll to the bottom
+        if (messagesRef.current) {
+            // Using `scrollIntoView` to scroll to the bottom
+            // messagesRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        }
+      };
+    
+
     return (
-        <div className="ChatContainer">
+        <div className="Chat">
             {error ? <Alert type="danger" messages={[error]} />: null}
 
-            <div className="MessagesContainer">
-                {messages.map(({ text, name }, index) => (
-                    <Messages text={text} username={name} key={index} />
+            <div className="Chat-Messages" ref={messagesRef}>
+                {messages.map(({ text, name, date }, index) => (
+                    <Messages text={text} username={name} date={date} key={index} />
                 ))}
             </div>
 
-            <div className="ChatInputContainer">
+            <div className="Chat-ChatInput">
                 <ListItem disablePadding className="ChatInput">
                     <TextField
                         rows={2}
@@ -119,17 +132,18 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
                         sx={{ width: '90%', marginLeft: '1rem'}}
                         value={formData.text}
                         onChange={(e) => handleChangeChat(e)}
-                    />
-                    <IconButton
-                        onClick={handleAddChat}
-                        sx={{ marginLeft: '1rem', color: "orangered" }}
-                        data-testid="chat-send-button"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault(); // Prevent the default behavior of Enter key (e.g., new line)
                                 handleAddChat(e);
                             }
                         }}
+                    />
+                    <IconButton
+                        onClick={handleAddChat}
+                        sx={{ marginLeft: '1rem', color: "orangered" }}
+                        data-testid="chat-send-button"
+                        
                     >
                         <SendIcon />
                     </IconButton>

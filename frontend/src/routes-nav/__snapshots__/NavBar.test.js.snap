@@ -41,6 +41,16 @@ exports[`it renders and matches with snaphot while loggedin user 1`] = `
       <li
         class="nav-item mr-4"
       >
+        <a
+          class="nav-link"
+          href="/chats"
+        >
+          Chats
+        </a>
+      </li>
+      <li
+        class="nav-item mr-4"
+      >
         <div
           class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault avatar css-2s90m6-MuiAvatar-root"
         >

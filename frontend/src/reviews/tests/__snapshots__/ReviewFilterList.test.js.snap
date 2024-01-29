@@ -132,13 +132,15 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
                 >
-                  <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: orangered; font-size: 1.2rem;"
                   >
                     Test1
-                  </span>
+                  </p>
                   <p
-                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: rgb(109, 23, 183);"
                   >
                     12/18/2023 12:00:00 AM
                   </p>
@@ -244,13 +246,15 @@ exports[`it renders and matches with snapshot 1`] = `
                 <div
                   class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
                 >
-                  <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: orangered; font-size: 1.2rem;"
                   >
                     Test2
-                  </span>
+                  </p>
                   <p
-                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: rgb(109, 23, 183);"
                   >
                     12/18/2023 12:00:00 AM
                   </p>
@@ -477,13 +481,15 @@ exports[`it renders and matches with snapshot 2`] = `
                 <div
                   class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
                 >
-                  <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: orangered; font-size: 1.2rem;"
                   >
                     Test1
-                  </span>
+                  </p>
                   <p
-                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: rgb(109, 23, 183);"
                   >
                     12/18/2023 12:00:00 AM
                   </p>
@@ -589,13 +595,15 @@ exports[`it renders and matches with snapshot 2`] = `
                 <div
                   class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
                 >
-                  <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: orangered; font-size: 1.2rem;"
                   >
                     Test2
-                  </span>
+                  </p>
                   <p
-                    class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                    style="color: rgb(109, 23, 183);"
                   >
                     12/18/2023 12:00:00 AM
                   </p>

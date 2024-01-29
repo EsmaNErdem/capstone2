@@ -38,11 +38,11 @@ const ChatList = () => {
             setError(null);
             try {
                 const userChatRooms = await BookClubApi.getUserPreviousMessages(currentUser.username);
-                setRooms([userChatRooms[0]]);
+                setRooms([...userChatRooms]);
                 
-                // setRooms([userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0], userChatRooms[0] ]);
                 console.log(userChatRooms)
-                if (userChatRooms.lenght !== 0) setReceiver(userChatRooms[0].user)
+                if (Object.keys(userChatRooms).length !== 0) setReceiver(userChatRooms[0].user)
+                else setError("No message yet")
             } catch (e) {
                 console.error("ChatList useEffect API call data loading error:", e);
                 setError("An error occurred while fetching chat rooms.");
@@ -88,13 +88,12 @@ const ChatList = () => {
                                     primary={roomDetails.user.username} 
                                     secondary={
                                         <React.Fragment>
-                                            <div>{roomDetails.message.username === currentUser.username ? "You" : roomDetails.message.username}:</div>
-                                            <div>{`${roomDetails.message.message} • ${formatMessageDate(roomDetails.message.messageDate)}`}</div>
+                                            <span>{roomDetails.message.username === currentUser.username ? "You" : roomDetails.message.username}:</span>
+                                            <span>{`${roomDetails.message.message} • ${formatMessageDate(roomDetails.message.messageDate)}`}</span>
                                         </React.Fragment>
                                     }
                                 />
-                            </ListItem>
-                        // </Link>    
+                            </ListItem> 
                     ))}
                 </List>
                 <List className="ChatList-Chat" style={{ flex: 4 }}>

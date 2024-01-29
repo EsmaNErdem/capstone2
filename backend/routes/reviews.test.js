@@ -1,4 +1,4 @@
-/** Books Routes Tests with API call mocking*/
+/** Review Routes Tests with API call mocking*/
 "use strict";
 
 const request = require("supertest");

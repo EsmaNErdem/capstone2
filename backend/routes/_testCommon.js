@@ -4,6 +4,8 @@ const db = require("../db.js");
 const User = require("../models/user");
 const Book = require("../models/book.js")
 const Review = require("../models/review.js")
+const Chat = require("../models/chats/chat.js");
+const { Room } = require("../models/chats/room.js");
 const { createToken } = require("../helpers/tokens");
 
 async function commonBeforeAllReviews() {
@@ -19,6 +21,12 @@ async function commonBeforeAllReviews() {
   await db.query("DELETE FROM book_likes");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM followers");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM rooms");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM room_members");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM messages");
 
   await User.register(
     {
@@ -78,6 +86,7 @@ async function commonBeforeAllReviews() {
   
   await Book.likeBook(book1, "u1");
   await Book.likeBook(book2,  "u1");
+  
   const review1 = await Review.add("u1", book1, "Review1");
   const review2 = await Review.add("u2", book1, "Review2");
   const review3 = await Review.add("u1", book2, "Review3");
@@ -85,6 +94,14 @@ async function commonBeforeAllReviews() {
   await Review.like(review1.id, "u1");
   await Review.like(review1.id, "u2");
   await Review.like(review2.id, "u1");
+
+  const room1 = await Room.get("chatRoom1");
+  const room2 = await Room.get("chatRoom2");
+
+  room1.join({name: 'u1', receiver: 'u2'})
+
+  await Chat.handleMessage({type: 'chat', name:'u1', text:'test1'}, 'chatRoom1')
+  await Chat.handleMessage({type: 'chat', name:'u2', text:'test2'}, 'chatRoom1')
 
   return { 
     review1: review1.id,
@@ -103,6 +120,12 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM book_likes");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM followers");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM rooms");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM room_members");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM messages");
 
   await User.register(
     {

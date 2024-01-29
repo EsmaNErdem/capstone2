@@ -1,24 +1,24 @@
 /* Chat.css */
 
-.ChatContainer {
-    position: relative;
-    margin-top: 45px;
-    /* min-height: 90vh; */
-    max-height: 100%;
-    padding-bottom: 3rem;
+.Chat {
+    margin-top: 2rem;
+    height: 100%;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
   }
   
-  .MessagesContainer {
-    width: 100%;
+  .Chat-Messages {
+    height: 100%;
     margin-top: 2px;
     margin-bottom: 3rem;
     overflow-y: auto;
     max-height: calc(98vh - 3rem);
   }
   
-  .ChatInputContainer {
-    position: absolute;
-    bottom: 5px;
+  .Chat-ChatInput {
     left: 0;
     right: 0;
     background-color: #fff;

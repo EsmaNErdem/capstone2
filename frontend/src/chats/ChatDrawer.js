@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import UserContext from '../auth/UserContext';
-import { Box, SwipeableDrawer,IconButton} from '@mui/material';
+import { Box, SwipeableDrawer, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chat from "./Chat";
 import Alert from "../utilities/Alert";
@@ -59,7 +59,7 @@ const ChatDrawer = ({ isOpen, onClose, receiver }) => {
                 sx={{
                     width: '30rem',
                     padding: '10px', 
-                    maxHeight: '100vh',
+                    height: '100vh',
                     display: 'flex', 
                     flexDirection: 'column', 
                     justifyContent: "center"
@@ -70,6 +70,7 @@ const ChatDrawer = ({ isOpen, onClose, receiver }) => {
                         onClose();
                     }
                 }}
+                data-testid="box"
             >
                 <IconButton onClick={onClose} sx={{ position: 'absolute', top: 15, right: '27rem' }}>
                     <CloseIcon />

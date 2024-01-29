@@ -47,8 +47,8 @@ app.ws('/chat/:roomName', function(ws, req, next) {
         ws.send.bind(ws), // fn to call to message this user
         roomName // name of room for user
       );
-      // register handlers for message-received, connection-closed
       
+      // register handlers for message-received, connection-closed
       ws.on('message', function(data) {
           try {
             /**

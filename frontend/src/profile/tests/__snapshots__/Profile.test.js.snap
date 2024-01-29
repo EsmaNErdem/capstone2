@@ -30,7 +30,7 @@ exports[`it renders and matches with snapshot 1`] = `
           </h4>
           <button
             aria-label="follow"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeMedium css-1d5a7g5-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-16nj3oi-MuiButtonBase-root-MuiIconButton-root"
             data-testid="follow-profile-button"
             tabindex="0"
             type="button"
@@ -40,9 +40,39 @@ exports[`it renders and matches with snapshot 1`] = `
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
           </button>
+          <button
+            aria-label="chat"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1d8rwkd-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="chat-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="MessageIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+             
+            <span>
+              Chat
+            </span>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
         </div>
       </div>
     </div>
+    <div
+      class="PrivateSwipeArea-root css-x15wq9"
+      style="width: 20px;"
+    />
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic appBarWithShadow css-v526sl-MuiPaper-root-MuiAppBar-root"
     >
@@ -151,13 +181,15 @@ exports[`it renders and matches with snapshot 1`] = `
             <div
               class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
             >
-              <span
-                class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                style="color: orangered; font-size: 1.2rem;"
               >
                 Test1
-              </span>
+              </p>
               <p
-                class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                style="color: rgb(109, 23, 183);"
               >
                 12/18/2023 12:00:00 AM
               </p>

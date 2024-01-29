@@ -48,40 +48,6 @@ exports[`it renders and matches with snaphot 1`] = `
       </div>
       <div>
         <label
-          for="firstName"
-        >
-          First Name
-        </label>
-        <input
-          id="firstName"
-          name="firstName"
-          placeholder="First Name"
-          type="text"
-          value=""
-        />
-        <span
-          class="ErrorMessageContainer"
-        />
-      </div>
-      <div>
-        <label
-          for="lastName"
-        >
-          Last Name
-        </label>
-        <input
-          id="lastName"
-          name="lastName"
-          placeholder="Last Name"
-          type="text"
-          value=""
-        />
-        <span
-          class="ErrorMessageContainer"
-        />
-      </div>
-      <div>
-        <label
           for="email"
         >
           Email Address
@@ -101,12 +67,12 @@ exports[`it renders and matches with snaphot 1`] = `
         <label
           for="img"
         >
-          Profile Image URL
+          Profile Image URL (optional)
         </label>
         <input
           id="img"
           name="img"
-          placeholder="Profile Image URL"
+          placeholder="Profile Image URL (optional)"
           type="text"
           value=""
         />
@@ -119,7 +85,6 @@ exports[`it renders and matches with snaphot 1`] = `
       >
         Submit
       </button>
-                      
     </form>
     <a
       data-testid="user-login-link"

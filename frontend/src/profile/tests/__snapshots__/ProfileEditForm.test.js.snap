@@ -53,40 +53,6 @@ exports[`it renders and matches with snaphot 1`] = `
       </div>
       <div>
         <label
-          for="firstName"
-        >
-          First Name
-        </label>
-        <input
-          id="firstName"
-          name="firstName"
-          placeholder="First Name"
-          type="text"
-          value="TestFirs1"
-        />
-        <span
-          class="ErrorMessageContainer"
-        />
-      </div>
-      <div>
-        <label
-          for="lastName"
-        >
-          Last Name
-        </label>
-        <input
-          id="lastName"
-          name="lastName"
-          placeholder="Last Name"
-          type="text"
-          value="TestLast1"
-        />
-        <span
-          class="ErrorMessageContainer"
-        />
-      </div>
-      <div>
-        <label
           for="email"
         >
           Email Address

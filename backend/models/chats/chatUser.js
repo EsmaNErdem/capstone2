@@ -1,7 +1,7 @@
 const { SendMessageError } = require("../../expressError");
 
 // Room is an abstraction of a chat channel
-const Room = require('./room');
+const { Room } = require('./room');
 
 /** 
  * ChatUser is an individual connection from client -> server to chat.
@@ -12,7 +12,8 @@ class ChatUser {
     this._send = send; // "send" function for this user
     this.roomName = roomName; // room name user will be in
     this.room = null; // room name user will be in
-    this.name = null; // becomes the username of the visitor
+    this.name = null;  // becomes the username of the visitor
+    this.receiver = null;  // becomes the receiver
   }
 
   /** 
@@ -42,10 +43,11 @@ class ChatUser {
   /** 
    * Add to room members, announce join 
    */
-  async handleJoin(name) {
+  async handleJoin(name, receiver) {
     if(!this.room) await this.initializeRoom()
 
     this.name = name;
+    this.receiver = receiver;
     await this.room.join(this);
     this.room.broadcast({
       type: 'note',
@@ -57,10 +59,13 @@ class ChatUser {
    * Handle a chat: broadcast to room. 
    */
   handleChat(text) {
+    const currentDate = new Date();
+    
     this.room.broadcast({
       name: this.name,
       type: 'chat',
-      text: text
+      text: text,
+      date: currentDate.toISOString(),
     });
   }
   
@@ -78,7 +83,7 @@ class ChatUser {
    */
   async handleMessage(msg) {
 
-    if (msg.type === 'join') await this.handleJoin(msg.name);
+    if (msg.type === 'join') await this.handleJoin(msg.name, msg.receiver);
     else if (msg.type === 'chat') this.handleChat(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }

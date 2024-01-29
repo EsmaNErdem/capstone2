@@ -16,6 +16,12 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM review_likes");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM followers");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM rooms");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM room_members");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM messages");
 
   await db.query(`
     INSERT INTO users(username,
@@ -66,6 +72,29 @@ async function commonBeforeAll() {
     `INSERT INTO followers
      (following, followed_by)
      VALUES ('u2', 'u1')`
+  );
+
+  await db.query(
+    `INSERT INTO rooms
+     (id, name)
+     VALUES ('1000', 'chatRoom1'),
+            ('2000', 'chatRoom2')`
+  );
+
+  await db.query(
+    `INSERT INTO room_members
+     (room, username)
+     VALUES ('1000', 'u1'),
+            ('2000', 'u1'),
+            ('1000', 'u2')`
+  );
+  
+  await db.query(
+    `INSERT INTO messages
+     (id, room, username, message)
+     VALUES ('1000', '1000', 'u1', 'Msg1'),
+            ('2000', '1000', 'u1', 'Msg2'),
+            ('3000', '1000', 'u1', 'Msg3')`
   );
 }
 

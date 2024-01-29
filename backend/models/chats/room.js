@@ -66,14 +66,28 @@ class Room {
       `SELECT username
       FROM room_members
       WHERE room = $1 AND username = $2`, [roomId.rows[0].id, member.name]
-      );
+    );
       
-      if(existingMember.rows.length === 0) {
-        await db.query(
-          `INSERT INTO room_members (room, username)
-          VALUES ($1, $2)`, [roomId.rows[0].id, member.name]
-          );    
-    }
+    const existingReceiver  =  await db.query(
+      `SELECT username
+      FROM room_members
+      WHERE room = $1 AND username = $2`, [roomId.rows[0].id, member.receiver]
+    );
+
+    if(existingMember.rows.length === 0) {
+      await db.query(
+        `INSERT INTO room_members (room, username)
+        VALUES ($1, $2)`, [roomId.rows[0].id, member.name]
+        );    
+    } 
+
+    if(existingReceiver.rows.length === 0) {
+      await db.query(
+        `INSERT INTO room_members (room, username)
+        VALUES ($1, $2)`, [roomId.rows[0].id, member.receiver]
+        );    
+    } 
+
 
     this.members.add(member);
   }
@@ -102,4 +116,4 @@ class Room {
   }
 }
 
-module.exports = Room;
+module.exports = {Room, ROOMS};
