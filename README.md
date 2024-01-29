@@ -5,7 +5,7 @@
 
 ## Introduction
 
-Welcome to the documentation of the Book Chat App. This project consists of a Node.js, Express, and PostgreSQL-based RESTful API for the backend and a React-based frontend. The application serves as a feature-rich book discussion platform, allowing users to explore, discuss, and engage with library of books from Google Book API.
+Welcome to the documentation of the Book Chat App. This project consists of a Node.js, Express, and PostgreSQL-based RESTful API for the backend and a React-based frontend. The application serves as a feature-rich book discussion platform, allowing users to explore, discuss, and engage with library of books from Google Book API and to LIVE CHAT with other users using WebSockets.
 
 
 ## Key Features
@@ -15,6 +15,8 @@ Welcome to the documentation of the Book Chat App. This project consists of a No
 - **Relational Database and Validation:** Design and implement a resilient PostgreSQL database schema coupled with JSON Schema validation. This ensures a smooth process of storing and retrieving data, enhancing overall database integrity and safeguarding against malformed data.
 
 - **User Authentication and Authorization:** Strengthen security measures with user registration, login functionalities, and JWT token-based authentication. Frontend validation is facilitated by Formik, guiding users through secure login and signup processes while maintaining data integrity.
+
+- **Live Chat:** Connects users to live chat privately usingn WebSockets. Users can also view all of their open chat room in chronogical order and continue conversation
 
 - **Browsing and Filtering Books:** Empower users to effortlessly browse and filter books, explore detailed information, like books, add reviews, and engage with liked reviews. Employ debouncing in the frontend to enhance user experience by preventing unnecessary API calls with filtering. In the backend, efficiently retrieve filtered data from the Google Books API through external API AJAX calls.
 
@@ -88,8 +90,14 @@ psql
 ```
 node server.js
 ```
+
+5. Create your a GoogleAPI key and put it in .env:
+
+```
+API_KEY= your key
+```
     
-5. Run Backend Tests: To run the tests and ensure everything is working correctly, use Jest:
+6. Run Backend Tests: To run the tests and ensure everything is working correctly, use Jest:
 
 ```
 jest -i
@@ -131,6 +139,12 @@ npm test
 
 - **Followers:** Represents follower-followee relationships between users, indicating who is being followed by whom.
 
+- **Rooms:** Represents chat room with a given room name, and timestamp.
+
+- **RoomMembers:** Represents users in given chat room id.
+
+- **Messages:** Tracks text messages with sender name, chat room id and text message, and timestamp
+
 ### Relationships
 
 - **BookLikes:** Establishes a many-to-many relationship between users and books, indicating users' liked books.
@@ -140,6 +154,12 @@ npm test
 - **ReviewLikes:** Forms a many-to-many relationship between users and reviews, showing which users liked which reviews.
 
 - **Followers:** Captures the follower-followee relationship between users, indicating who follows whom.
+
+- **RoomMembers:** Establishes a many-to-many relationship between users and chat rooms so a user can have many rooms while a room can hold several users.
+
+- **Messages:** Build a relationship between users table and room id 
+
+
 
 ### Database Query
 - SQL queries are parameterized to avoid injection attacks, ensuring the security of database interactions.
@@ -154,8 +174,8 @@ The Book Chat App has a strong foundation, but there's always room for improveme
 1. **User-Created Bookshelves:**
    Allow users to create personalized bookshelves to curate and organize their favorite books. Implement features such as adding, removing, and categorizing books within these user-defined bookshelves.
 
-2. **Chat System for Users:**
-   Introduce a real-time chat system that enables users to communicate with each other. This feature can enhance the sense of community within the app, fostering discussions, recommendations, and social interactions among book enthusiasts.
+2. ~~**Chat System for Users:**
+   Introduce a real-time chat system that enables users to communicate with each other. This feature can enhance the sense of community within the app, fostering discussions, recommendations, and social interactions among book enthusiasts.~~
 
 3. **User Profile Image Upload:**
    Enhance user profiles by enabling image uploads. Allow users to personalize their profiles by uploading custom profile images, adding a visual touch to their presence on the platform.

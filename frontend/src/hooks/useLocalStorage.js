@@ -10,13 +10,15 @@ import { useState, useEffect } from "react";
  */
 
 const useLocalStorage = (localStorageKey, initialValue = null) => {
-    let initialUserValue = initialValue
+    let initialUserValue
     if(localStorage.getItem(localStorageKey)) {
         try {
             initialUserValue = JSON.parse(localStorage.getItem(localStorageKey))
         } catch (e) {
             console.error("useLocalStorage custom hook: problem loading localStorage data", e);
         }
+    } else {
+        initialUserValue = initialValue
     }
 
     const [user, setUser] = useState(initialUserValue)

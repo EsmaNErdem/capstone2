@@ -4,9 +4,10 @@ import { ListItem, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Messages from "./Messages";
 import Alert from "../utilities/Alert";
-import "./Chat.css"
+import "./Chat.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "ws://localhost:3001";
+const url = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL.split('').splice(4).join('') : null
+const BASE_URL = process.env.REACT_APP_BASE_URL ? `ws${url}` : "ws://localhost:3001";
 
 /**
  * Chat Component

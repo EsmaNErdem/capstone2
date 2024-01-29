@@ -126,11 +126,17 @@ psql
 ```
 node server.js
 ```
-    
-5. Run Tests: To run the tests and ensure everything is working correctly, use Jest:
+
+5. Create your a GoogleAPI key and put it in .env:
 
 ```
-npm test
+API_KEY= your key
+```
+    
+6. Run Backend Tests: To run the tests and ensure everything is working correctly, use Jest:
+
+```
+jest -i
 ```
 
 ## Database Schema
@@ -151,6 +157,12 @@ npm test
 
 - **Followers:** Represents the follower-followee relationship between users. Each record shows who is being followed by whom.
 
+- **Rooms:** Represents chat room with a given room name, and timestamp.
+
+- **RoomMembers:** Represents users in given chat room id.
+
+- **Messages:** Tracks text messages with sender name, chat room id and text message, and timestamp.
+
 **Relationships:**
 
 - The **BookLikes** table establishes a many-to-many relationship between users and books, indicating which users like which books.
@@ -160,6 +172,10 @@ npm test
 - The **ReviewLikes** table forms a many-to-many relationship between users and reviews, showing which users liked which reviews.
 
 - The **Followers** table captures the follower-followee relationship between users, indicating who follows whom.
+
+- **RoomMembers:** Establishes a many-to-many relationship between users and chat rooms so a user can have many rooms while a room can hold several users.
+
+- **Messages:** Build a relationship between users table and room id .
 
 ### Database Query
 - SQL queries are parameterized to avoid injection attack. 

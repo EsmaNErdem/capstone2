@@ -42,7 +42,7 @@ const App = () => {
     console.debug("App useEffect loadUserInfo", "user=", user);
 
     const getCurrentUser = async () => {
-      if (user) {
+      if (user.token) {
         try{
           // set token on BookBlubApi for API call auth.
           BookClubApi.token = user.token
@@ -66,7 +66,7 @@ const App = () => {
     // data is fetched (or even if an error happens!), this will be set back
     // to true to control the spinner.
     setLoading(true)
-    getCurrentUser()
+    user ? getCurrentUser() : setLoading(false)
   }, [user])
 
   /** 
