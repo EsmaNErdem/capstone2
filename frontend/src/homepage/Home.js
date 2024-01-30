@@ -11,8 +11,12 @@ import "./Home.css"
  * 
  * Routes ==> Home
  */
-const Home = () => {
+const Home = ({ login }) => {
   const { currentUser } = useContext(UserContext);
+
+  const LoginTestUser = async () => {
+    await login({ username: 'TestUser', password: '123456789'})
+  }
 
   return (
     <div className="Home">
@@ -63,6 +67,9 @@ const Home = () => {
             </Button>
             <Button component={Link} to="/signup" href="#text-buttons" className="buttons">
                 Sign Up
+              </Button>
+            <Button onClick={LoginTestUser} className="buttons">
+                Login As a TestUser
               </Button>
            </div>
           </div>

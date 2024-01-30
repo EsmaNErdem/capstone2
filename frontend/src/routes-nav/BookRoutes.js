@@ -31,7 +31,7 @@ const BookRoutes = ({ login, signup }) => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home login={login} />} />
         <Route element={<ProtectedRoute/>}>
           <Route path="/books" element={<BookList />} />
           <Route path="/books/search" element={<BookSearchList />} />
