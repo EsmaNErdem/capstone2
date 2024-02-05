@@ -1,39 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import UserContext from '../auth/UserContext';
-import Chat from "./Chat";
-import Alert from "../utilities/Alert";
-import BookClubApi from "../api";
 import { ListItem, ListItemText, Avatar, Typography, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import Chat from "./Chat";
+import Alert from "../utilities/Alert";
+import usePreviousMessages from "../hooks/usePreviousMessages";
 
+/**
+ * ChatUser Component
+ * 
+ * Displays chat between current user and selected chat room receiver.
+ * 
+ * - Displays receiver image and usernane that linked to user's profile
+ * - Displays input text area for chat text input
+ * - Lists previous messages between users
+ * - uses custom hook that makes API call to load previous messages on component mount
+ * 
+ * - ChatList ==> ChatUser ==> Chat
+ */
 const ChatUser = ({ receiver, receiverImg }) => {
     console.debug("ChatUser");
 
     const { currentUser } = useContext(UserContext);
-    const [messages, setMessages] = useState([]);
     const [websocket, setWebsocket] = useState(false)
-    const [error, setError] = useState(null);
-
-     /**
-     * Fetches the previous messages between users from backend sends to child component after WebSocket connection is established
-     */ 
-     useEffect(function getPreviousMessages() {
-        console.debug("ChatUser useEffect getPreviousMessages");
-
-        const getMessages = async () => {
-            try{
-                if (websocket) {
-                    const roomName = `${receiver},${currentUser.username}`
-                    const previousMessages = await BookClubApi.getRoomPreviousMessages(roomName);
-                    setMessages([...previousMessages]);                 
-                }
-            } catch (e) {
-                console.error("ChatUser-previous messages useEffect API call data loading error:", e);
-                setError("An error occurred while fetching previous messages.");
-            }
-        }
-        getMessages();
-    }, [receiver, websocket]);
+    const { error, messages } = usePreviousMessages(receiver, currentUser.username, websocket, true);
 
     return (
         <div className="ChatUser" style={{ width: '100%', height: '100%', display:"flex", flexDirection:"column", justifyContent:"space-between", paddingLeft: 5 }}>

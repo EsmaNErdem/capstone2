@@ -104,7 +104,7 @@ describe("Chat class", () => {
     
     /************************************** findUserMessages */
     describe('findUserMessages method', () => {
-        test("Finds messages with given room id", async function () {
+        test("Finds last messages of each chat room with given username", async function () {
             const messages = await Chat.findUserMessages('u1');
             expect(messages).toEqual([
                 {   message: {

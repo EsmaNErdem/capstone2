@@ -22,30 +22,8 @@ const ChatDrawer = ({ isOpen, onClose, receiver }) => {
 
     const drawerRef = useRef();
     const { currentUser } = useContext(UserContext);
-    const [messages, setMessages] = useState([]);
     const [websocket, setWebsocket] = useState(false)
-    const [error, setError] = useState(null);
-
-    /**
-     * Fetches the previous messages between users from backend sends to child component after WebSocket connection is established
-     */ 
-    useEffect(function getPreviousMessages() {
-        console.debug("ChatDrawer useEffect getPreviousMessages");
-
-        const getMessages = async () => {
-            try{
-                if (isOpen && websocket) {
-                    const roomName = `${receiver},${currentUser.username}`
-                    const previousMessages = await BookClubApi.getRoomPreviousMessages(roomName);
-                    setMessages([...previousMessages]);                 
-                }
-            } catch (e) {
-                console.error("ChatDrawer-previous messages useEffect API call data loading error:", e);
-                setError("An error occurred while fetching previous messages.");
-            }
-        }
-        getMessages();
-    }, [isOpen, receiver, websocket]);
+    const { error, messages } = usePreviousMessages(receiver, currentUser.username, websocket, isOpen);
 
     return (
         <SwipeableDrawer

@@ -72,7 +72,7 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
             return () => {
                 console.log("closing WebSocket");
                 setMessages([]);
-                wsRef.current && wsRef.current.close();
+                if(wsRef.current) wsRef.current.close();
                 wsRef.current = null
             };
         }
@@ -94,14 +94,14 @@ const Chat = ({ isOpen, receiver, prevMessages=[], setWebsocket }) => {
             }));
         } else {
             console.error("WebSocket is not open or undefined.");
-            setError("WebSocket is not open or undefined. Please restart chat")
+            setError("Please restart chat")
         }
     };
 
     const handleChangeChat = (e) => {
         setFormData((data) => ({
             ...data,
-            text: e.target.value || undefined,
+            text: e.target.value || "",
         }));
     };
 
