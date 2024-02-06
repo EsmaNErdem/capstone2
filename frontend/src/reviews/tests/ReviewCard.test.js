@@ -82,26 +82,6 @@ test('it renders and matches with snapshot', async () => {
         });
         
     expect(asFragment()).toMatchSnapshot();
-
-    await act(async () => {
-        ({ asFragment } = render(
-            <MemoryRouter>
-                <CurrUserProvider>
-                    <ReviewCard
-                          reviewId={review.id}
-                          review={review.review}
-                          date={review.date}
-                          username={review.username} 
-                          userImg={review.userImg}
-                          bookId={review.book_id}
-                          reviewLikeCount={review.reviewLikeCount}
-                    />
-                </CurrUserProvider>
-            </MemoryRouter>
-        ));
-    });
-    
-expect(asFragment()).toMatchSnapshot();
 });
 
 test('render review and links to the correct book details page', async () => {

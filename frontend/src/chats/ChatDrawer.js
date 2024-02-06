@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useContext } from "react";
 import UserContext from '../auth/UserContext';
 import { Box, SwipeableDrawer, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chat from "./Chat";
 import Alert from "../utilities/Alert";
-import BookClubApi from "../api";
+import usePreviousMessages from "../hooks/usePreviousMessages";
 
 /**
  * ChatDrawer Component
@@ -13,7 +13,7 @@ import BookClubApi from "../api";
  * 
  * - Displays input text area for chat text input
  * - Lists previous messages between users
- * - Makes API call to load previous messages on component mount
+ * - uses custom hook that makes API call to load previous messages on component mount
  * 
  * - Profile ==> ChatDrawer ==> Chat
  */

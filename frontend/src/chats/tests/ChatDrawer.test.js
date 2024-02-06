@@ -3,8 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { UserProvider } from "../../testUtilities";
 import { render, act } from '@testing-library/react';
 import ChatDrawer from '../ChatDrawer';
-import Chat from '../Chat';
 import BookClubApi from '../../api';
+import * as usePreviousMessages from '../../hooks/usePreviousMessages';
 
 const mockMessages = [
     {
@@ -18,6 +18,7 @@ const mockMessages = [
         date: new Date().toISOString(),
     }
 ]
+
 jest.mock("../../api", () => ({
     __esModule: true,
     default: {
@@ -25,6 +26,14 @@ jest.mock("../../api", () => ({
     },
 }));
   
+
+beforeEach(() => {
+  jest.spyOn(usePreviousMessages, 'default').mockImplementation(() => ({
+    messages: mockMessages,
+    error: null,
+  }));
+});
+
 afterEach(() => {
     jest.clearAllMocks();
 });

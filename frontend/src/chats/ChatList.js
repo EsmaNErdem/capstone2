@@ -40,7 +40,6 @@ const ChatList = () => {
                 const userChatRooms = await BookClubApi.getUserPreviousMessages(currentUser.username);
                 setRooms([...userChatRooms]);
                 
-                console.log(userChatRooms)
                 if (Object.keys(userChatRooms).length !== 0) setReceiver(userChatRooms[0].user)
                 else setError("No message yet")
             } catch (e) {

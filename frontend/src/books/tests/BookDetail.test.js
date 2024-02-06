@@ -92,11 +92,11 @@ test('displays book details and reviews', async () => {
     await act(async () => {
         ({ getByText, getByTestId, getAllByTestId, getByLabelText, queryByLabelText, getByPlaceholderText } = render(
             <MemoryRouter>
-          <UserProvider>
-            <BookDetail />
-          </UserProvider>
-        </MemoryRouter>
-      ));
+              <UserProvider>
+                <BookDetail />
+              </UserProvider>
+            </MemoryRouter>
+          ));
     });
     
     expect(getByText('Book1')).toBeInTheDocument();
