@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ChatUser"
+    style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding-left: 5px;"
+  >
+    <a
+      href="/profile/undefined"
+      style="text-decoration: none;"
+    >
+      <li
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+      >
+        <div
+          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-v7dtn3-MuiAvatar-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+            data-testid="PersonIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+            style="color: orangered; font-size: 1.3rem;"
+          />
+        </div>
+      </li>
+    </a>
+    <hr
+      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+    />
+    <div
+      class="Chat"
+    >
+      <div
+        class="Chat-Messages"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 Messages css-1ps6pg7-MuiPaper-root"
+          style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;"
+        >
+          <ul
+            class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 Messages-sender css-ahj2mt-MuiTypography-root"
+            >
+              User1:
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+            >
+              test1
+            </p>
+          </ul>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+          >
+            11:47 PM
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 Messages css-1ps6pg7-MuiPaper-root"
+          style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;"
+        >
+          <ul
+            class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 Messages-sender css-ahj2mt-MuiTypography-root"
+            >
+              User2:
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+            >
+              test2
+            </p>
+          </ul>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+          >
+            11:47 PM
+          </p>
+        </div>
+      </div>
+      <div
+        class="Chat-ChatInput"
+      >
+        <li
+          class="MuiListItem-root MuiListItem-gutters ChatInput css-1nxmd3h-MuiListItem-root"
+        >
+          <div
+            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1nlta2y-MuiFormControl-root-MuiTextField-root"
+          >
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                id=":r1:"
+                rows="2"
+                type="text"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="css-ihdtdm"
+                >
+                  <span
+                    class="notranslate"
+                  >
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-11nzp8j-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="chat-send-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="SendIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </li>
+        <li
+          class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

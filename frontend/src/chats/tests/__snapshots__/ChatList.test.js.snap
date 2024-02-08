@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders and matches with snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ChatList"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 ChatList-Paper css-azc51k-MuiPaper-root"
+    >
+      <ul
+        class="MuiList-root MuiList-padding ChatList-Rooms css-h4y409-MuiList-root"
+        style="flex: 2;"
+      >
+        <li
+          class="MuiListItem-root MuiListItem-gutters MuiListItem-padding Mui-selected css-1p823my-MuiListItem-root"
+        >
+          <div
+            class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+          >
+            <img
+              alt="TestUser"
+              class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+              src="UserImg"
+            />
+          </div>
+          <div
+            class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+            >
+              TestUser
+            </span>
+            <p
+              class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+            >
+              <span>
+                TestUser:
+              </span>
+              <span>
+                TestMessage • Feb 7, 12:00 AM
+              </span>
+            </p>
+          </div>
+        </li>
+        <li
+          class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+        >
+          <div
+            class="MuiAvatar-root MuiAvatar-circular css-1fy7wd8-MuiAvatar-root"
+          >
+            <img
+              alt="TestUser2"
+              class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+              src="UserImg2"
+            />
+          </div>
+          <div
+            class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+            >
+              TestUser2
+            </span>
+            <p
+              class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+            >
+              <span>
+                TestUser2:
+              </span>
+              <span>
+                TestMessage2 • Feb 7, 12:00 AM
+              </span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <ul
+        class="MuiList-root MuiList-padding ChatList-Chat css-h4y409-MuiList-root"
+        style="flex: 4;"
+      >
+        <div
+          class="ChatUser"
+          style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding-left: 5px;"
+        >
+          <a
+            href="/profile/TestUser"
+            style="text-decoration: none;"
+          >
+            <li
+              class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+            >
+              <div
+                class="MuiAvatar-root MuiAvatar-circular css-1lbvhy8-MuiAvatar-root"
+              >
+                <img
+                  alt="TestUser"
+                  class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                  src="UserImg"
+                />
+              </div>
+              <div
+                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+                  style="color: orangered; font-size: 1.3rem;"
+                >
+                  TestUser
+                </p>
+              </div>
+            </li>
+          </a>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+          <div
+            class="Chat"
+          >
+            <div
+              class="Chat-Messages"
+            />
+            <div
+              class="Chat-ChatInput"
+            >
+              <li
+                class="MuiListItem-root MuiListItem-gutters ChatInput css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1nlta2y-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":r1:"
+                      rows="2"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-11nzp8j-MuiButtonBase-root-MuiIconButton-root"
+                  data-testid="chat-send-button"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="SendIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </li>
+              <li
+                class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+              />
+            </div>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

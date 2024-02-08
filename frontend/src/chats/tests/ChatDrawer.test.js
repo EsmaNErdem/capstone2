@@ -39,32 +39,32 @@ afterEach(() => {
 });
 
 test('renders without crashing', async () => {
-    BookClubApi.getRoomPreviousMessages.mockImplementationOnce(() => (mockMessages));
-  
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <UserProvider>
-            <ChatDrawer />
-          </UserProvider>
-        </MemoryRouter>
-      );
-    });
-  
+  BookClubApi.getRoomPreviousMessages.mockImplementationOnce(() => (mockMessages));
+
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <UserProvider>
+          <ChatDrawer />
+        </UserProvider>
+      </MemoryRouter>
+    );
   });
-  
-  test('it renders and matches with snapshot', async () => {
-    BookClubApi.getRoomPreviousMessages.mockImplementationOnce(() => (mockMessages));
-  
-    await act(async () => {
-      ({ asFragment } = render(
-        <MemoryRouter>
-          <UserProvider>
-            <ChatDrawer />
-          </UserProvider>
-        </MemoryRouter>
-      ));
-    });
-  
-    expect(asFragment()).toMatchSnapshot();
+
+});
+
+test('it renders and matches with snapshot', async () => {
+  BookClubApi.getRoomPreviousMessages.mockImplementationOnce(() => (mockMessages));
+
+  await act(async () => {
+    ({ asFragment } = render(
+      <MemoryRouter>
+        <UserProvider>
+          <ChatDrawer />
+        </UserProvider>
+      </MemoryRouter>
+    ));
   });
+
+  expect(asFragment()).toMatchSnapshot();
+});
