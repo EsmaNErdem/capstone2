@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { UserProvider } from "../../testUtilities";
-import { render, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import ChatList from '../ChatList';
 import BookClubApi from '../../api';
 

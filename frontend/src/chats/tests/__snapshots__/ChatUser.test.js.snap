@@ -68,7 +68,7 @@ exports[`it renders and matches with snapshot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
           >
-            11:47 PM
+            7:25 PM
           </p>
         </div>
         <div
@@ -92,7 +92,7 @@ exports[`it renders and matches with snapshot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
           >
-            11:47 PM
+            7:25 PM
           </p>
         </div>
       </div>
