@@ -55,7 +55,7 @@ test("Submitting the form calls login function", async () => {
    });        
 ```
 
--**CI/CD Pipeline:** Implemented a CI/CD pipeline using AWS services. In this pipeline, Amazon EC2 is utilized to build servers, while S3 provides data storage. CodeDeploy automates application deployments to EC2 instances, and CodePipeline orchestrates the build, test, and deploy phases of the release process.
+- **CI/CD Pipeline:** Implemented a CI/CD pipeline using AWS services. In this pipeline, Amazon EC2 is utilized to build servers, while S3 provides data storage. CodeDeploy automates application deployments to EC2 instances, and CodePipeline orchestrates the build, test, and deploy phases of the release process.
 
 ![CICD Pipeline](./static/backend-cicd.png)
 
