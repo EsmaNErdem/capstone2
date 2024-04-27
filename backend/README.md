@@ -94,6 +94,20 @@ function authenticateJWT(req, res, next) {
 
 - **Testing and Error Handling:** Thoroughly testing each route and model method to ensure a bug-free user experience, and implement robust error handling mechanisms.
 
+-**CI/CD Pipeline:** Implemented a CI/CD pipeline using AWS services. The CI/CD pipeline automates the process of building, testing, and deploying applications, streamlining development workflows and ensuring the rapid and reliable delivery of software updates. In this pipeline, Amazon EC2 is utilized to build servers, while S3 provides data storage. CodeDeploy automates application deployments to EC2 instances, and CodePipeline orchestrates the build, test, and deploy phases of the release process.
+
+- **Technologies Used:**
+
+- **Amazon EC2**: Amazon Elastic Compute Cloud (EC2) is utilized to provision virtual servers for building and deploying the application. EC2 instances provide scalable computing capacity and enable the creation of custom environments tailored to the project's requirements.
+
+- **Amazon S3**: Amazon Simple Storage Service (S3) is employed as a durable and scalable object storage solution for storing application artifacts, build artifacts, and other data used in the CI/CD pipeline. S3 buckets serve as repositories for the artifacts produced during the build process.
+
+- **AWS CodeDeploy**: AWS CodeDeploy automates the deployment of application code to Amazon EC2 instances. By defining deployment configurations and specifying deployment targets, CodeDeploy simplifies the process of rolling out updates to production environments, ensuring consistency and minimizing downtime.
+
+- **AWS CodePipeline**: AWS CodePipeline orchestrates the entire CI/CD workflow, automating the build, test, and deployment phases of the release process. CodePipeline facilitates continuous delivery by connecting source code repositories, build servers, testing frameworks, and deployment services into a seamless and automated pipeline.
+
+![CICD Pipeline](./static/backend-cicd.png)
+
 ## Tech Stack
 
 * Node.js/Express: The backend server is built using Node.js and the Express framework.
